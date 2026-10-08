@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:659","productId":704885,"cardId":"","name":"Starter Deck 31: RED Monkey.D.Luffy","rarity":"","alt":false,"target":4,"qty":0,"price":24.99},
-{"id":"Starter Decks:660","productId":704886,"cardId":"","name":"Starter Deck 31: RED Monkey.D.Luffy Display","rarity":"","alt":false,"target":4,"qty":0,"price":160},
-{"id":"Starter Decks:661","productId":712853,"cardId":"","name":"Starter Decks 31-36 [Set of 6]","rarity":"","alt":false,"target":4,"qty":0,"price":133.74},
+{"id":"Starter Decks:659","productId":704885,"cardId":"","name":"Starter Deck 31: RED Monkey.D.Luffy","rarity":"","alt":false,"target":1,"qty":0,"price":24.99},
+{"id":"Starter Decks:660","productId":704886,"cardId":"","name":"Starter Deck 31: RED Monkey.D.Luffy Display","rarity":"","alt":false,"target":1,"qty":0,"price":160},
+{"id":"Starter Decks:661","productId":712853,"cardId":"","name":"Starter Decks 31-36 [Set of 6]","rarity":"","alt":false,"target":1,"qty":0,"price":133.74},
 {"id":"Starter Decks:662","productId":706310,"cardId":"OP01-016","name":"Nami","rarity":"R","alt":false,"target":4,"qty":4,"price":0.95},
 {"id":"Starter Decks:663","productId":706311,"cardId":"OP04-016","name":"Bad Manners Kick Course","rarity":"R","alt":false,"target":4,"qty":4,"price":0.19},
 {"id":"Starter Decks:664","productId":706312,"cardId":"OP14-015","name":"Roronoa Zoro","rarity":"R","alt":false,"target":4,"qty":4,"price":0.05},

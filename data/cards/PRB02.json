@@ -375,8 +375,8 @@
 {"id":"PRB02:378","productId":655481,"cardId":"","name":"DON!! Card (Vegapunk) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":39.98},
 {"id":"PRB02:379","productId":655136,"cardId":"","name":"DON!! Card (Yamato)","rarity":"DON!!","alt":false,"target":4,"qty":6,"price":1},
 {"id":"PRB02:380","productId":655137,"cardId":"","name":"DON!! Card (Yamato) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":0,"price":194.71},
-{"id":"PRB02:381","productId":628452,"cardId":"","name":"Premium Booster Vol. 2 - Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":368.45},
-{"id":"PRB02:382","productId":628453,"cardId":"","name":"Premium Booster Vol. 2 - Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":3373.01},
-{"id":"PRB02:383","productId":628451,"cardId":"","name":"Premium Booster Vol. 2 - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":12.95},
-{"id":"PRB02:384","productId":657211,"cardId":"","name":"Premium Booster Vol. 2 - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":26.8}
+{"id":"PRB02:381","productId":628452,"cardId":"","name":"Premium Booster Vol. 2 - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":368.45},
+{"id":"PRB02:382","productId":628453,"cardId":"","name":"Premium Booster Vol. 2 - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3373.01},
+{"id":"PRB02:383","productId":628451,"cardId":"","name":"Premium Booster Vol. 2 - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":12.95},
+{"id":"PRB02:384","productId":657211,"cardId":"","name":"Premium Booster Vol. 2 - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":26.8}
 ]

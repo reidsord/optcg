@@ -157,11 +157,11 @@
 {"id":"OP12:160","productId":651174,"cardId":"","name":"DON!! Card (2Y) (Double Pack Set Vol. 8)","rarity":"DON!!","alt":false,"target":4,"qty":0,"price":1},
 {"id":"OP12:161","productId":651175,"cardId":"","name":"DON!! Card (3D) (Double Pack Set Vol. 8)","rarity":"DON!!","alt":null,"target":4,"qty":0,"price":1.89},
 {"id":"OP12:162","productId":646574,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":null,"target":4,"qty":25,"price":0.01},
-{"id":"OP12:163","productId":628348,"cardId":"","name":"Double Pack Set Vol. 8","rarity":"","alt":null,"target":4,"qty":0,"price":38},
-{"id":"OP12:164","productId":628349,"cardId":"","name":"Double Pack Set Vol. 8 Display","rarity":"","alt":null,"target":4,"qty":0,"price":345},
-{"id":"OP12:165","productId":650645,"cardId":"","name":"Legacy of the Master - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":16.18},
-{"id":"OP12:166","productId":628346,"cardId":"","name":"Legacy of the Master Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":279.99},
-{"id":"OP12:167","productId":628347,"cardId":"","name":"Legacy of the Master Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":3249.9},
-{"id":"OP12:168","productId":628345,"cardId":"","name":"Legacy of the Master Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":7.49},
+{"id":"OP12:163","productId":628348,"cardId":"","name":"Double Pack Set Vol. 8","rarity":"","alt":null,"target":1,"qty":0,"price":38},
+{"id":"OP12:164","productId":628349,"cardId":"","name":"Double Pack Set Vol. 8 Display","rarity":"","alt":null,"target":1,"qty":0,"price":345},
+{"id":"OP12:165","productId":650645,"cardId":"","name":"Legacy of the Master - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":16.18},
+{"id":"OP12:166","productId":628346,"cardId":"","name":"Legacy of the Master Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":279.99},
+{"id":"OP12:167","productId":628347,"cardId":"","name":"Legacy of the Master Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3249.9},
+{"id":"OP12:168","productId":628345,"cardId":"","name":"Legacy of the Master Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":7.49},
 {"id":"OP12:169","productId":651980,"cardId":"","name":"Special DON!! Card Pack DP-08","rarity":"","alt":null,"target":4,"qty":0,"price":2.99}
 ]

@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:588","productId":671479,"cardId":"","name":"Starter Deck 29: Egghead","rarity":"","alt":false,"target":4,"qty":0,"price":33},
-{"id":"Starter Decks:589","productId":672894,"cardId":"","name":"Starter Deck 29: Egghead Bonus Pack","rarity":"","alt":false,"target":4,"qty":0,"price":30},
-{"id":"Starter Decks:590","productId":671480,"cardId":"","name":"Starter Deck 29: Egghead Display","rarity":"","alt":false,"target":4,"qty":0,"price":175},
+{"id":"Starter Decks:588","productId":671479,"cardId":"","name":"Starter Deck 29: Egghead","rarity":"","alt":false,"target":1,"qty":0,"price":33},
+{"id":"Starter Decks:589","productId":672894,"cardId":"","name":"Starter Deck 29: Egghead Bonus Pack","rarity":"","alt":false,"target":1,"qty":0,"price":30},
+{"id":"Starter Decks:590","productId":671480,"cardId":"","name":"Starter Deck 29: Egghead Display","rarity":"","alt":false,"target":1,"qty":0,"price":175},
 {"id":"Starter Decks:591","productId":671534,"cardId":"ST29-001","name":"Monkey.D.Luffy (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.9},
 {"id":"Starter Decks:592","productId":671547,"cardId":"ST29-001","name":"Monkey.D.Luffy (001) (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":22.12},
 {"id":"Starter Decks:593","productId":671548,"cardId":"ST29-002","name":"Usopp","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},

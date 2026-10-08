@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:336","productId":545036,"cardId":"","name":"Starter Deck 16: GREEN Uta","rarity":"","alt":false,"target":4,"qty":0,"price":50},
-{"id":"Starter Decks:337","productId":545037,"cardId":"","name":"Starter Deck 16: GREEN Uta Display","rarity":"","alt":false,"target":4,"qty":0,"price":400},
-{"id":"Starter Decks:338","productId":545038,"cardId":"","name":"Starter Deck 16: GREEN Uta Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
+{"id":"Starter Decks:336","productId":545036,"cardId":"","name":"Starter Deck 16: GREEN Uta","rarity":"","alt":false,"target":1,"qty":0,"price":50},
+{"id":"Starter Decks:337","productId":545037,"cardId":"","name":"Starter Deck 16: GREEN Uta Display","rarity":"","alt":false,"target":1,"qty":0,"price":400},
+{"id":"Starter Decks:338","productId":545038,"cardId":"","name":"Starter Deck 16: GREEN Uta Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:339","productId":580991,"cardId":"P-029","name":"Bartolomeo","rarity":"PR","alt":false,"target":4,"qty":4,"price":0.07},
 {"id":"Starter Decks:340","productId":580992,"cardId":"P-057","name":"Fleeting Lullaby","rarity":"PR","alt":false,"target":4,"qty":4,"price":0.02},
 {"id":"Starter Decks:341","productId":580993,"cardId":"P-058","name":"Where the Wind Blows","rarity":"PR","alt":false,"target":4,"qty":4,"price":0.06},

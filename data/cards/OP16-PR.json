@@ -74,5 +74,5 @@
 {"id":"OP16-PR:77","productId":696769,"cardId":"OP16-114","name":"Laffitte","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"OP16-PR:78","productId":696801,"cardId":"OP16-115","name":"Black Vortex","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.69},
 {"id":"OP16-PR:79","productId":696770,"cardId":"OP16-117","name":"Black Hole","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"OP16-PR:80","productId":697491,"cardId":"","name":"The Time of Battle - Release Event Pack","rarity":"","alt":false,"target":4,"qty":0,"price":6.19}
+{"id":"OP16-PR:80","productId":697491,"cardId":"","name":"The Time of Battle - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":6.19}
 ]

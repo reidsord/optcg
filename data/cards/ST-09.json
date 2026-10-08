@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:194","productId":502978,"cardId":"","name":"Starter Deck 9: Yamato","rarity":"","alt":false,"target":4,"qty":0,"price":3.69},
-{"id":"Starter Decks:195","productId":502979,"cardId":"","name":"Starter Deck 9: Yamato Display","rarity":"","alt":false,"target":4,"qty":0,"price":88},
-{"id":"Starter Decks:196","productId":502980,"cardId":"","name":"Starter Deck 9: Yamato Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":5000},
+{"id":"Starter Decks:194","productId":502978,"cardId":"","name":"Starter Deck 9: Yamato","rarity":"","alt":false,"target":1,"qty":0,"price":3.69},
+{"id":"Starter Decks:195","productId":502979,"cardId":"","name":"Starter Deck 9: Yamato Display","rarity":"","alt":false,"target":1,"qty":0,"price":88},
+{"id":"Starter Decks:196","productId":502980,"cardId":"","name":"Starter Deck 9: Yamato Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":5000},
 {"id":"Starter Decks:197","productId":503523,"cardId":"ST09-001","name":"Yamato (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":3.5},
 {"id":"Starter Decks:198","productId":504457,"cardId":"ST09-002","name":"Uzuki Tempura","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:199","productId":504464,"cardId":"ST09-003","name":"Ulti","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},

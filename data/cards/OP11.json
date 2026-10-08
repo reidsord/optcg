@@ -155,14 +155,14 @@
 {"id":"OP11:158","productId":632773,"cardId":"OP09-015","name":"Lucky.Roux (TR)","rarity":"TR","alt":true,"target":1,"qty":1,"price":17.41},
 {"id":"OP11:159","productId":632508,"cardId":"ST16-004","name":"Shanks (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":183.5},
 {"id":"OP11:160","productId":632509,"cardId":"ST18-005","name":"Luffy-Tarou (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":273.8},
-{"id":"OP11:161","productId":636741,"cardId":"","name":"A Fist of Divine Speed - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":31},
+{"id":"OP11:161","productId":636741,"cardId":"","name":"A Fist of Divine Speed - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":31},
 {"id":"OP11:162","productId":620180,"cardId":"","name":"A Fist of Divine Speed Booster Box","rarity":"","alt":true,"target":1,"qty":0,"price":560},
 {"id":"OP11:163","productId":620181,"cardId":"","name":"A Fist of Divine Speed Booster Box Case","rarity":"","alt":true,"target":1,"qty":0,"price":6875},
-{"id":"OP11:164","productId":620179,"cardId":"","name":"A Fist of Divine Speed Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":9},
+{"id":"OP11:164","productId":620179,"cardId":"","name":"A Fist of Divine Speed Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":9},
 {"id":"OP11:165","productId":636742,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":null,"target":4,"qty":21,"price":0.05},
 {"id":"OP11:166","productId":636745,"cardId":"","name":"DON!! Card (Katakuri) (Double Pack Set Vol. 7)","rarity":"DON!!","alt":null,"target":4,"qty":2,"price":3.75},
 {"id":"OP11:167","productId":636744,"cardId":"","name":"DON!! Card (Koby) (Double Pack Set Vol. 7)","rarity":"DON!!","alt":null,"target":4,"qty":0,"price":0.5},
-{"id":"OP11:168","productId":606561,"cardId":"","name":"Double Pack Set Volume 7","rarity":"","alt":null,"target":4,"qty":0,"price":85},
-{"id":"OP11:169","productId":606562,"cardId":"","name":"Double Pack Set Volume 7 Display","rarity":"","alt":null,"target":4,"qty":0,"price":826},
+{"id":"OP11:168","productId":606561,"cardId":"","name":"Double Pack Set Volume 7","rarity":"","alt":null,"target":1,"qty":0,"price":85},
+{"id":"OP11:169","productId":606562,"cardId":"","name":"Double Pack Set Volume 7 Display","rarity":"","alt":null,"target":1,"qty":0,"price":826},
 {"id":"OP11:170","productId":636743,"cardId":"","name":"Special DON!! Card Pack DP-07","rarity":"","alt":null,"target":4,"qty":0,"price":3}
 ]

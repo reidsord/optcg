@@ -324,8 +324,8 @@
 {"id":"PRB01:327","productId":586810,"cardId":"","name":"DON!! Card (Yamato) (Gold)","rarity":"DON!!","alt":false,"target":4,"qty":0,"price":189.98},
 {"id":"PRB01:328","productId":593830,"cardId":"","name":"DON!! Card (Zoro)","rarity":"DON!!","alt":false,"target":4,"qty":5,"price":3.99},
 {"id":"PRB01:329","productId":587192,"cardId":"","name":"DON!! Card (Zoro) (Gold)","rarity":"DON!!","alt":false,"target":4,"qty":0,"price":870},
-{"id":"PRB01:330","productId":545399,"cardId":"","name":"Premium Booster - Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":885},
-{"id":"PRB01:331","productId":545400,"cardId":"","name":"Premium Booster - Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":9797},
-{"id":"PRB01:332","productId":545398,"cardId":"","name":"Premium Booster - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":29.99},
-{"id":"PRB01:333","productId":622980,"cardId":"","name":"Premium Booster - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":63.99}
+{"id":"PRB01:330","productId":545399,"cardId":"","name":"Premium Booster - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":885},
+{"id":"PRB01:331","productId":545400,"cardId":"","name":"Premium Booster - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":9797},
+{"id":"PRB01:332","productId":545398,"cardId":"","name":"Premium Booster - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":29.99},
+{"id":"PRB01:333","productId":622980,"cardId":"","name":"Premium Booster - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":63.99}
 ]

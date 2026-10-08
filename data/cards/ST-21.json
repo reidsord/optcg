@@ -1,8 +1,8 @@
 [
 {"id":"Starter Decks:416","productId":624351,"cardId":"","name":"DON!! Card","rarity":"DON!!","alt":false,"target":4,"qty":0,"price":0.03},
-{"id":"Starter Decks:417","productId":606575,"cardId":"","name":"Starter Deck EX: Gear 5","rarity":"","alt":false,"target":4,"qty":0,"price":64.01},
-{"id":"Starter Decks:418","productId":628485,"cardId":"","name":"Starter Deck EX: Gear 5 Bonus Pack","rarity":"","alt":false,"target":4,"qty":0,"price":83.76},
-{"id":"Starter Decks:419","productId":606576,"cardId":"","name":"Starter Deck EX: Gear 5 Display","rarity":"","alt":false,"target":4,"qty":0,"price":549.85},
+{"id":"Starter Decks:417","productId":606575,"cardId":"","name":"Starter Deck EX: Gear 5","rarity":"","alt":false,"target":1,"qty":0,"price":64.01},
+{"id":"Starter Decks:418","productId":628485,"cardId":"","name":"Starter Deck EX: Gear 5 Bonus Pack","rarity":"","alt":false,"target":1,"qty":0,"price":83.76},
+{"id":"Starter Decks:419","productId":606576,"cardId":"","name":"Starter Deck EX: Gear 5 Display","rarity":"","alt":false,"target":1,"qty":0,"price":549.85},
 {"id":"Starter Decks:420","productId":615564,"cardId":"ST21-001","name":"Monkey.D.Luffy (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":2.98},
 {"id":"Starter Decks:421","productId":615565,"cardId":"ST21-001","name":"Monkey.D.Luffy (001) (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":62},
 {"id":"Starter Decks:422","productId":615566,"cardId":"ST21-002","name":"Usopp","rarity":"C","alt":false,"target":4,"qty":8,"price":0.02},

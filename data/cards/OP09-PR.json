@@ -74,5 +74,5 @@
 {"id":"OP09-PR:77","productId":600757,"cardId":"OP09-114","name":"Lindbergh","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
 {"id":"OP09-PR:78","productId":600788,"cardId":"OP09-115","name":"Ice Block Partisan","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.29},
 {"id":"OP09-PR:79","productId":600758,"cardId":"OP09-116","name":"Never Underestimate the Power of Miracles!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.3},
-{"id":"OP09-PR:80","productId":600705,"cardId":"","name":"Emperors in the New World - 2nd Anniversary Tournament Pack","rarity":"","alt":false,"target":4,"qty":0,"price":9.23}
+{"id":"OP09-PR:80","productId":600705,"cardId":"","name":"Emperors in the New World - 2nd Anniversary Tournament Pack","rarity":"","alt":false,"target":1,"qty":0,"price":9.23}
 ]

@@ -74,5 +74,5 @@
 {"id":"OP08-PR:77","productId":576450,"cardId":"OP08-113","name":"S-Bear","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP08-PR:78","productId":576451,"cardId":"OP08-116","name":"Burn Bazooka","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP08-PR:79","productId":576481,"cardId":"OP08-117","name":"Burn Blade","rarity":"UC","alt":false,"target":4,"qty":1,"price":1.79},
-{"id":"OP08-PR:80","productId":577144,"cardId":"","name":"Two Legends - Pre-Release Pack","rarity":"","alt":false,"target":4,"qty":0,"price":5.99}
+{"id":"OP08-PR:80","productId":577144,"cardId":"","name":"Two Legends - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.99}
 ]

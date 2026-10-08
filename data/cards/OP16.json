@@ -158,11 +158,11 @@
 {"id":"OP16:161","productId":698314,"cardId":"","name":"DON!! Card (Alternate Art) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":2,"price":2},
 {"id":"OP16:162","productId":698316,"cardId":"","name":"DON!! Card (Double Pack Set Vol. 11) (Impel Down)","rarity":"DON!!","alt":true,"target":1,"qty":0,"price":0.25},
 {"id":"OP16:163","productId":698315,"cardId":"","name":"DON!! Card (Double Pack Set Vol. 11) (Luffy and Ace)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":3.5},
-{"id":"OP16:164","productId":693364,"cardId":"","name":"Double Pack Set Vol. 11","rarity":"","alt":false,"target":4,"qty":0,"price":25.95},
-{"id":"OP16:165","productId":693365,"cardId":"","name":"Double Pack Set Vol. 11 Display","rarity":"","alt":false,"target":4,"qty":0,"price":253.49},
+{"id":"OP16:164","productId":693364,"cardId":"","name":"Double Pack Set Vol. 11","rarity":"","alt":false,"target":1,"qty":0,"price":25.95},
+{"id":"OP16:165","productId":693365,"cardId":"","name":"Double Pack Set Vol. 11 Display","rarity":"","alt":false,"target":1,"qty":0,"price":253.49},
 {"id":"OP16:166","productId":701593,"cardId":"","name":"Special DON!! Card Pack DP-11","rarity":"","alt":null,"target":4,"qty":0,"price":4.75},
-{"id":"OP16:167","productId":689336,"cardId":"","name":"The Time of Battle Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":214.99},
-{"id":"OP16:168","productId":689338,"cardId":"","name":"The Time of Battle Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":2400},
-{"id":"OP16:169","productId":689341,"cardId":"","name":"The Time of Battle Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":5.95},
-{"id":"OP16:170","productId":689347,"cardId":"","name":"The Time of Battle Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":9.25}
+{"id":"OP16:167","productId":689336,"cardId":"","name":"The Time of Battle Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":214.99},
+{"id":"OP16:168","productId":689338,"cardId":"","name":"The Time of Battle Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2400},
+{"id":"OP16:169","productId":689341,"cardId":"","name":"The Time of Battle Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":5.95},
+{"id":"OP16:170","productId":689347,"cardId":"","name":"The Time of Battle Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":9.25}
 ]

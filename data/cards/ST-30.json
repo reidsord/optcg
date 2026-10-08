@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:622","productId":692138,"cardId":"","name":"Starter Deck EX: Luffy & Ace","rarity":"","alt":false,"target":4,"qty":0,"price":27.99},
-{"id":"Starter Decks:623","productId":692140,"cardId":"","name":"Starter Deck EX: Luffy & Ace Bonus Pack","rarity":"","alt":false,"target":4,"qty":0,"price":24.99},
-{"id":"Starter Decks:624","productId":692139,"cardId":"","name":"Starter Deck EX: Luffy & Ace Display","rarity":"","alt":false,"target":4,"qty":0,"price":170},
+{"id":"Starter Decks:622","productId":692138,"cardId":"","name":"Starter Deck EX: Luffy & Ace","rarity":"","alt":false,"target":1,"qty":0,"price":27.99},
+{"id":"Starter Decks:623","productId":692140,"cardId":"","name":"Starter Deck EX: Luffy & Ace Bonus Pack","rarity":"","alt":false,"target":1,"qty":0,"price":24.99},
+{"id":"Starter Decks:624","productId":692139,"cardId":"","name":"Starter Deck EX: Luffy & Ace Display","rarity":"","alt":false,"target":1,"qty":0,"price":170},
 {"id":"Starter Decks:625","productId":693256,"cardId":"ST30-001","name":"Luffy & Ace","rarity":"L","alt":false,"target":4,"qty":2,"price":2},
 {"id":"Starter Decks:626","productId":693257,"cardId":"ST30-001","name":"Luffy & Ace (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":53.21},
 {"id":"Starter Decks:627","productId":695418,"cardId":"ST30-002","name":"Inazuma","rarity":"C","alt":false,"target":4,"qty":8,"price":0.16},

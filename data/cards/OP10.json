@@ -151,8 +151,8 @@
 {"id":"OP10:154","productId":617176,"cardId":"ST15-002","name":"Edward.Newgate (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":189.99},
 {"id":"OP10:155","productId":617177,"cardId":"ST18-001","name":"Uso-Hachi (SP)","rarity":"C","alt":true,"target":1,"qty":0,"price":93.99},
 {"id":"OP10:156","productId":624357,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":true,"target":1,"qty":13,"price":0.1},
-{"id":"OP10:157","productId":624523,"cardId":"","name":"Royal Blood - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":9.84},
-{"id":"OP10:158","productId":586671,"cardId":"","name":"Royal Blood Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":247.49},
-{"id":"OP10:159","productId":586673,"cardId":"","name":"Royal Blood Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":2539.99},
-{"id":"OP10:160","productId":586670,"cardId":"","name":"Royal Blood Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":7.5}
+{"id":"OP10:157","productId":624523,"cardId":"","name":"Royal Blood - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":9.84},
+{"id":"OP10:158","productId":586671,"cardId":"","name":"Royal Blood Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":247.49},
+{"id":"OP10:159","productId":586673,"cardId":"","name":"Royal Blood Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2539.99},
+{"id":"OP10:160","productId":586670,"cardId":"","name":"Royal Blood Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":7.5}
 ]

@@ -153,12 +153,12 @@
 {"id":"OP06:156","productId":541671,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":null,"target":4,"qty":15,"price":0.31},
 {"id":"OP06:157","productId":542684,"cardId":"","name":"DON!! Card (Ivankov & Sanji) (Double Pack Set Vol. 3)","rarity":"DON!!","alt":null,"target":4,"qty":4,"price":1.49},
 {"id":"OP06:158","productId":542683,"cardId":"","name":"DON!! Card (Mihawk & Zoro) (Double Pack Set Vol. 3)","rarity":"DON!!","alt":null,"target":4,"qty":5,"price":3.66},
-{"id":"OP06:159","productId":541542,"cardId":"","name":"Double Pack Set Volume 3","rarity":"","alt":null,"target":4,"qty":0,"price":93},
-{"id":"OP06:160","productId":541543,"cardId":"","name":"Double Pack Set Volume 3 Display","rarity":"","alt":null,"target":4,"qty":0,"price":669.69},
-{"id":"OP06:161","productId":541544,"cardId":"","name":"Double Pack Set Volume 3 Display Case","rarity":"","alt":null,"target":4,"qty":0,"price":3000},
+{"id":"OP06:159","productId":541542,"cardId":"","name":"Double Pack Set Volume 3","rarity":"","alt":null,"target":1,"qty":0,"price":93},
+{"id":"OP06:160","productId":541543,"cardId":"","name":"Double Pack Set Volume 3 Display","rarity":"","alt":null,"target":1,"qty":0,"price":669.69},
+{"id":"OP06:161","productId":541544,"cardId":"","name":"Double Pack Set Volume 3 Display Case","rarity":"","alt":null,"target":1,"qty":0,"price":3000},
 {"id":"OP06:162","productId":543906,"cardId":"","name":"Special DON!! Card Pack DP-03","rarity":"","alt":null,"target":4,"qty":0,"price":3.01},
-{"id":"OP06:163","productId":515080,"cardId":"","name":"Wings of the Captain - Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":397.49},
-{"id":"OP06:164","productId":515081,"cardId":"","name":"Wings of the Captain - Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":4299.98},
-{"id":"OP06:165","productId":515077,"cardId":"","name":"Wings of the Captain - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":12.98},
-{"id":"OP06:166","productId":543371,"cardId":"","name":"Wings of the Captain - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":26.03}
+{"id":"OP06:163","productId":515080,"cardId":"","name":"Wings of the Captain - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":397.49},
+{"id":"OP06:164","productId":515081,"cardId":"","name":"Wings of the Captain - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":4299.98},
+{"id":"OP06:165","productId":515077,"cardId":"","name":"Wings of the Captain - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":12.98},
+{"id":"OP06:166","productId":543371,"cardId":"","name":"Wings of the Captain - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":26.03}
 ]

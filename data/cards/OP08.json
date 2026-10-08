@@ -153,12 +153,12 @@
 {"id":"OP08:156","productId":577568,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":true,"target":1,"qty":14,"price":0.05},
 {"id":"OP08:157","productId":576484,"cardId":"","name":"DON!! Card (Shattered) (Double Pack Set Vol. 5)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":2.25},
 {"id":"OP08:158","productId":576485,"cardId":"","name":"DON!! Card (Silhouette) (Double Pack Set Vol. 5)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":2.75},
-{"id":"OP08:159","productId":561689,"cardId":"","name":"Double Pack Set Volume 5","rarity":"","alt":null,"target":4,"qty":0,"price":58.95},
-{"id":"OP08:160","productId":561690,"cardId":"","name":"Double Pack Set Volume 5 Display","rarity":"","alt":null,"target":4,"qty":0,"price":390},
-{"id":"OP08:161","productId":561691,"cardId":"","name":"Double Pack Set Volume 5 Display Case","rarity":"","alt":null,"target":4,"qty":0,"price":0},
+{"id":"OP08:159","productId":561689,"cardId":"","name":"Double Pack Set Volume 5","rarity":"","alt":null,"target":1,"qty":0,"price":58.95},
+{"id":"OP08:160","productId":561690,"cardId":"","name":"Double Pack Set Volume 5 Display","rarity":"","alt":null,"target":1,"qty":0,"price":390},
+{"id":"OP08:161","productId":561691,"cardId":"","name":"Double Pack Set Volume 5 Display Case","rarity":"","alt":null,"target":1,"qty":0,"price":0},
 {"id":"OP08:162","productId":586061,"cardId":"","name":"Special DON!! Card Pack DP-05","rarity":"","alt":null,"target":4,"qty":0,"price":5},
-{"id":"OP08:163","productId":542504,"cardId":"","name":"Two Legends - Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":234},
-{"id":"OP08:164","productId":542505,"cardId":"","name":"Two Legends - Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":2831.99},
-{"id":"OP08:165","productId":542502,"cardId":"","name":"Two Legends - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":5.78},
-{"id":"OP08:166","productId":542503,"cardId":"","name":"Two Legends - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":16.76}
+{"id":"OP08:163","productId":542504,"cardId":"","name":"Two Legends - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":234},
+{"id":"OP08:164","productId":542505,"cardId":"","name":"Two Legends - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2831.99},
+{"id":"OP08:165","productId":542502,"cardId":"","name":"Two Legends - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":5.78},
+{"id":"OP08:166","productId":542503,"cardId":"","name":"Two Legends - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":16.76}
 ]
