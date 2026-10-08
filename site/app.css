@@ -266,6 +266,12 @@ dialog.card-dialog { width: min(820px, calc(100vw - 32px)); padding: 0; overflow
 :root[data-theme="dark"] .tile[style*="--set-pale"] { border-top-color: #f4f6f8; background: linear-gradient(180deg, color-mix(in srgb, #fff 9%, var(--surface)) 0, var(--surface) 75%); }
 :root[data-theme="dark"] .tile[style*="--set-pale"] .code { color: #f4f6f8; }
 :root[data-theme="dark"] .tile[style*="--set-pale"] .bar > i { background: #eef1f3; }
+.tile[style*="--set-c2"] { border-top-color: transparent; background: linear-gradient(90deg, var(--set-c2) 15%, var(--set-c) 85%) border-box top / 100% 5px no-repeat, linear-gradient(180deg, color-mix(in srgb, var(--set-c) 13%, var(--surface)) 0, var(--surface) 75%); }
+.tile[style*="--set-c2"] .bar > i { background: linear-gradient(90deg, var(--set-c2), var(--set-c)); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tile[style*="--set-c2"] { background: linear-gradient(90deg, var(--set-c2) 15%, var(--set-c) 85%) border-box top / 100% 5px no-repeat, linear-gradient(180deg, color-mix(in srgb, var(--set-c) 22%, var(--surface)) 0, var(--surface) 75%); }
+}
+:root[data-theme="dark"] .tile[style*="--set-c2"] { background: linear-gradient(90deg, var(--set-c2) 15%, var(--set-c) 85%) border-box top / 100% 5px no-repeat, linear-gradient(180deg, color-mix(in srgb, var(--set-c) 22%, var(--surface)) 0, var(--surface) 75%); }
 .tile { transition: transform .15s ease, border-color .15s ease; }
 .tile:hover { transform: translateY(-2px); }
 .card .art img { transition: transform .2s ease; }
