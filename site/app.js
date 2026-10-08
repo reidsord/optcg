@@ -611,7 +611,7 @@ function renderHome(main) {
       </div>
     </div>
     ${[...groups].filter(([, sets]) => sets.length).map(([name, sets]) => `
-      <div class="section-head"><h2>${esc(name)}</h2><span class="hint">${name === 'Booster sets' ? 'Base cards: four copies. Alternate arts, promos and sealed: one each.' : ''}</span></div>
+      <div class="section-head"><h2>${esc(name)}</h2><span class="hint">${name === 'Booster sets' ? 'Base cards: four copies. DON!! cards: ten. Alternate arts, promos and sealed: one each.' : ''}</span></div>
       <div class="tiles">
         ${sets.slice().sort(naturalSort).reverse().map((s) => {
           const p = setProgress(s.code);

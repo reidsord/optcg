@@ -39,7 +39,8 @@ The **Update prices and new cards** workflow runs every morning. It pulls
 TCGplayer data from [tcgcsv.com](https://tcgcsv.com), sets each card to its
 lowest listed price, adds newly listed cards to their set at 0 owned, and adds
 sets released after the newest one tracked. Targets follow the old workbook:
-four copies of base cards, one of each alternate art, promo and sealed product.
+four copies of base cards, ten of each DON!! card, and one of each alternate art,
+promo and sealed product.
 To leave a new set out, add its group id to `excludedGroups` in `data/meta.json`
 and remove it from `data/sets.json` and `data/cards/`. To drop a single card for
 good, delete its line and add its `productId` to `excludedProducts`.
