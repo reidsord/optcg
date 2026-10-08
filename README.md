@@ -3,9 +3,12 @@
 Reid's One Piece Card Game inventory: a small website (GitHub Pages) backed by
 JSON files in this repo.
 
-- **Home**: collection value, buy list, newest cards, notes and progress for every set.
+- **Home**: quick card search, collection value over time, the week's biggest
+  price movers, buy list, newest cards, notes and progress for every set.
 - **Cards**: every card with search, filters and shortcuts (owned, buy list,
-  most valuable, not owned, new). Tap + or − to change quantities.
+  most valuable, not owned, new). Tap + or − to change quantities, or tap a card
+  for its details, price history and other printings.
+- **Packs**: type card numbers as you open packs; each one adds a copy.
 - **Orders**: orders and preorders with paid and remaining totals.
 - **History**: recent quantity changes, with undo.
 
@@ -19,8 +22,11 @@ JSON files in this repo.
 | `data/orders.json`, `data/notes.json` | Orders and the notes box. |
 | `data/history.json` | The latest 1,000 quantity changes. |
 | `data/meta.json` | When prices were updated, plus the settings the daily job uses. |
+| `data/price-history.json` | Each card's price whenever it moved at least 5% and 10¢, one card per line. |
+| `data/value-history.json` | Collection value on each day the price job ran. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
 | `scripts/import_backup.py` | One-time import of a backup from the old ChatGPT-hosted app. |
+| `scripts/backfill_history.py` | One-time backfill of weekly past prices from tcgcsv.com's price archives. |
 
 Anyone with the link can view the site. Saving needs a GitHub fine-grained
 token with **Contents: Read and write** on this repository only; the site walks
@@ -42,6 +48,8 @@ good, delete its line and add its `productId` to `excludedProducts`.
 2. Run the **Deploy site** workflow once (later changes under `site/` deploy on their own).
 3. Optionally run **Update prices and new cards** to switch from the imported
    market prices to lowest listed prices right away.
+4. Optionally run **Backfill price history** once to fill the trend chart with
+   a year of weekly prices.
 
 ## Local preview
 
