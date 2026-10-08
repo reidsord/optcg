@@ -1,0 +1,54 @@
+name: Update prices and new cards
+
+on:
+  schedule:
+    - cron: "17 11 * * *" # daily, after tcgcsv.com publishes TCGplayer's overnight data
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/**"
+      - ".github/workflows/prices.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prices
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check against TCGplayer data (pull requests only)
+        if: github.event_name == 'pull_request'
+        run: python3 scripts/update_prices.py --dry-run
+
+      - name: Update prices and add new cards
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/update_prices.py
+
+      - name: Commit changes
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "optcg-price-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Daily price update"
+          # Quantity edits from the site can land while this runs; one card per
+          # line means those merge cleanly with price changes.
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
