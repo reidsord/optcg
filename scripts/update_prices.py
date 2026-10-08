@@ -54,6 +54,7 @@ def main(dry_run=False):
     meta = read_json(f"{DATA}/meta.json", {})
     sets = read_json(f"{DATA}/sets.json", [])
     excluded = set(meta.get("excludedGroups", []))
+    excluded_products = set(meta.get("excludedProducts", []))  # listings Reid removed on purpose
     watermark = meta.get("groupWatermark", 0)
 
     cards = {s["code"]: read_json(f"{DATA}/cards/{s['file']}", []) for s in sets}
@@ -109,7 +110,7 @@ def main(dry_run=False):
         # New listings go to the first set mapped to this group.
         home = set_codes[0]
         for p in sorted(products, key=lambda p: (not extended(p, "Number"), extended(p, "Number") or "", p["name"])):
-            if p["productId"] in known_products or "Japanese" in p["name"]:
+            if p["productId"] in known_products or p["productId"] in excluded_products or "Japanese" in p["name"]:
                 continue
             number = extended(p, "Number") or ""
             alt, target = classify(p["name"], number, home)
