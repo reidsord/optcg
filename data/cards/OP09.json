@@ -158,14 +158,14 @@
 {"id":"OP09:161","productId":596917,"cardId":"OP07-051","name":"Boa Hancock (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":789.01},
 {"id":"OP09:162","productId":596918,"cardId":"OP08-106","name":"Nami (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":730},
 {"id":"OP09:163","productId":600658,"cardId":"ST18-004","name":"Zoro-Juurou (ST18-004)","rarity":"TR","alt":true,"target":1,"qty":0,"price":48.88},
-{"id":"OP09:164","productId":604246,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":true,"target":1,"qty":13,"price":0.1},
-{"id":"OP09:165","productId":605126,"cardId":"","name":"DON!! Card (Blackbeard) (Double Pack Set Vol. 6)","rarity":"DON!!","alt":true,"target":1,"qty":2,"price":3.74},
-{"id":"OP09:166","productId":605125,"cardId":"","name":"DON!! Card (Buggy) (Double Pack Set Vol. 6)","rarity":"DON!!","alt":true,"target":1,"qty":3,"price":2},
+{"id":"OP09:164","productId":604246,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":true,"target":10,"qty":13,"price":0.1},
+{"id":"OP09:165","productId":605126,"cardId":"","name":"DON!! Card (Blackbeard) (Double Pack Set Vol. 6)","rarity":"DON!!","alt":true,"target":10,"qty":2,"price":3.74},
+{"id":"OP09:166","productId":605125,"cardId":"","name":"DON!! Card (Buggy) (Double Pack Set Vol. 6)","rarity":"DON!!","alt":true,"target":10,"qty":3,"price":2},
 {"id":"OP09:167","productId":563842,"cardId":"","name":"Double Pack Set Volume 6","rarity":"","alt":null,"target":1,"qty":0,"price":92.99},
 {"id":"OP09:168","productId":563843,"cardId":"","name":"Double Pack Set Volume 6 Display","rarity":"","alt":null,"target":1,"qty":0,"price":900},
 {"id":"OP09:169","productId":563834,"cardId":"","name":"Emperors in the New World - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":648.88},
 {"id":"OP09:170","productId":563835,"cardId":"","name":"Emperors in the New World - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":7500},
 {"id":"OP09:171","productId":563833,"cardId":"","name":"Emperors in the New World - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":15.99},
 {"id":"OP09:172","productId":606604,"cardId":"","name":"Emperors in the New World - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":35},
-{"id":"OP09:173","productId":617844,"cardId":"","name":"Special DON!! Card Pack DP-06","rarity":"","alt":null,"target":4,"qty":0,"price":4}
+{"id":"OP09:173","productId":617844,"cardId":"","name":"Special DON!! Card Pack DP-06","rarity":"","alt":null,"target":1,"qty":0,"price":4}
 ]

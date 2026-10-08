@@ -22,7 +22,7 @@
 {"id":"tcg:23907:602810","productId":602810,"cardId":"OP01-008","name":"Cavendish","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
 {"id":"tcg:23907:602811","productId":602811,"cardId":"OP01-019","name":"Bartolomeo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.09},
 {"id":"tcg:23907:602812","productId":602812,"cardId":"ST01-010","name":"Franky (010)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.06},
-{"id":"tcg:23907:672598","productId":672598,"cardId":"","name":"DON!! Card","rarity":"DON!!","alt":false,"target":4,"qty":0,"price":0.03},
+{"id":"tcg:23907:672598","productId":672598,"cardId":"","name":"DON!! Card","rarity":"DON!!","alt":false,"target":10,"qty":0,"price":0.03},
 {"id":"tcg:23907:705727","productId":705727,"cardId":"P-080","name":"Monkey.D.Luffy - P-080","rarity":"PR","alt":false,"target":4,"qty":0,"price":39.5},
 {"id":"tcg:23907:705728","productId":705728,"cardId":"P-022","name":"Monkey.D.Luffy - P-022","rarity":"PR","alt":false,"target":4,"qty":0,"price":3.99}
 ]

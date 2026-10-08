@@ -157,11 +157,11 @@
 {"id":"OP05:160","productId":498735,"cardId":"","name":"Awakening of the New Era - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":12990},
 {"id":"OP05:161","productId":498733,"cardId":"","name":"Awakening of the New Era - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":32.99},
 {"id":"OP05:162","productId":531575,"cardId":"","name":"Awakening of the New Era - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":82},
-{"id":"OP05:163","productId":529792,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":null,"target":4,"qty":15,"price":0.38},
-{"id":"OP05:164","productId":530120,"cardId":"","name":"DON!! Card (Manga) (Double Pack Set Volume 2)","rarity":"DON!!","alt":null,"target":4,"qty":2,"price":4},
-{"id":"OP05:165","productId":530119,"cardId":"","name":"DON!! Card (Silhouette) (Double Pack Set Volume 2)","rarity":"DON!!","alt":null,"target":4,"qty":3,"price":3.5},
+{"id":"OP05:163","productId":529792,"cardId":"","name":"DON!! Card (Alternate Art)","rarity":"DON!!","alt":null,"target":10,"qty":15,"price":0.38},
+{"id":"OP05:164","productId":530120,"cardId":"","name":"DON!! Card (Manga) (Double Pack Set Volume 2)","rarity":"DON!!","alt":null,"target":10,"qty":2,"price":4},
+{"id":"OP05:165","productId":530119,"cardId":"","name":"DON!! Card (Silhouette) (Double Pack Set Volume 2)","rarity":"DON!!","alt":null,"target":10,"qty":3,"price":3.5},
 {"id":"OP05:166","productId":527060,"cardId":"","name":"Double Pack Set Volume 2","rarity":"","alt":null,"target":1,"qty":0,"price":210},
 {"id":"OP05:167","productId":527062,"cardId":"","name":"Double Pack Set Volume 2 Display","rarity":"","alt":null,"target":1,"qty":0,"price":2176},
 {"id":"OP05:168","productId":527063,"cardId":"","name":"Double Pack Set Volume 2 Display Case","rarity":"","alt":null,"target":1,"qty":0,"price":15000},
-{"id":"OP05:169","productId":531974,"cardId":"","name":"Special DON!! Card Pack DP-02","rarity":"","alt":null,"target":4,"qty":0,"price":3.73}
+{"id":"OP05:169","productId":531974,"cardId":"","name":"Special DON!! Card Pack DP-02","rarity":"","alt":null,"target":1,"qty":0,"price":3.73}
 ]
