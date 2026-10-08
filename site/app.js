@@ -47,11 +47,22 @@ const tcgLink = (c) => `https://www.tcgplayer.com/product/${c.productId}`;
 function setGroup(code) {
   if (/^OP\d+$/.test(code)) return 'Booster sets';
   if (/^(EB|PRB)\d+$/.test(code)) return 'Extra and premium boosters';
-  if (/^(ST|SD)/.test(code)) return 'Starter decks';
   if (/PR\b|PRE|Prerelease/i.test(code)) return 'Pre-release and event cards';
+  if (/^(ST|SD)/.test(code)) return 'Starter decks';
   return 'Promos and other';
 }
 const GROUP_ORDER = ['Booster sets', 'Extra and premium boosters', 'Starter decks', 'Pre-release and event cards', 'Promos and other'];
+// Sets in display order: by group, then by number (OP02 before OP10), whatever order sets.json lists them in.
+const SERIES = ['OP', 'EB', 'PRB', 'ST', 'SD'];
+const series = (code) => { const i = SERIES.indexOf(code.match(/^[A-Z]+/)?.[0]); return i < 0 ? SERIES.length : i; };
+const setOrder = (a, b) =>
+  GROUP_ORDER.indexOf(setGroup(a.code)) - GROUP_ORDER.indexOf(setGroup(b.code)) ||
+  series(b.code) - series(a.code) || a.code.localeCompare(b.code, 'en', { numeric: true });
+// Set picker options, grouped like Home with the newest set first.
+const setOptions = (selected) => GROUP_ORDER.map((g) => {
+  const sets = S.sets.filter((s) => setGroup(s.code) === g).reverse();
+  return sets.length ? `<optgroup label="${esc(g)}">${options(sets.map((s) => [s.code, `${s.code} · ${s.name}`]), selected)}</optgroup>` : '';
+}).join('');
 
 // Each set gets its own color on Home; the golden angle keeps neighbouring sets far apart.
 const setHue = (code) => Math.round(((S.setByCode.get(code)?.index || 0) * 137.5 + 150) % 360);
@@ -233,6 +244,7 @@ async function load() {
   S.decks = decks;
   S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
   S.valueHist = valueHist;
+  sets.sort(setOrder);
   const files = await Promise.all(sets.map((s) => getJson(`data/cards/${s.file}`, sha)));
   S.sets = sets;
   S.setByCode = new Map(sets.map((s, i) => [s.code, { ...s, index: i }]));
@@ -561,7 +573,6 @@ function renderHome(main) {
 
   const groups = new Map(GROUP_ORDER.map((g) => [g, []]));
   for (const s of S.sets) groups.get(setGroup(s.code)).push(s);
-  const naturalSort = (a, b) => a.code.localeCompare(b.code, 'en', { numeric: true });
 
   main.innerHTML = `
     <div class="home-search">
@@ -613,7 +624,7 @@ function renderHome(main) {
     ${[...groups].filter(([, sets]) => sets.length).map(([name, sets]) => `
       <div class="section-head"><h2>${esc(name)}</h2><span class="hint">${name === 'Booster sets' ? 'Base cards: four copies. DON!! cards: ten. Alternate arts, promos and sealed: one each.' : ''}</span></div>
       <div class="tiles">
-        ${sets.slice().sort(naturalSort).reverse().map((s) => {
+        ${sets.slice().reverse().map((s) => {
           const p = setProgress(s.code);
           return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}" style="--set-hue:${setHue(s.code)}">
             <div class="code">${esc(s.code)}</div>
@@ -838,7 +849,7 @@ function renderCards(main) {
         ${PRESETS.map(([v, l]) => `<button type="button" class="chip" data-preset="${v}" aria-pressed="${f.preset === v}">${l}</button>`).join('')}
       </div>
       <div class="filters">
-        <select class="select" id="f-set" aria-label="Set"><option value="">All sets</option>${options(S.sets.map((s) => [s.code, `${s.code} · ${s.name}`]), f.set)}</select>
+        <select class="select" id="f-set" aria-label="Set"><option value="">All sets</option>${setOptions(f.set)}</select>
         <select class="select" id="f-own" aria-label="Ownership">${options([['', 'Any ownership'], ['owned', 'Owned'], ['none', 'Not owned'], ['short', 'Below target'], ['extra', 'Extras over target']], f.own)}</select>
         <select class="select" id="f-variant" aria-label="Variant">${options([['', 'All variants'], ['base', 'Base'], ['alt', 'Alternate art'], ['sealed', 'Sealed product'], ['other', 'Other']], f.variant)}</select>
         <select class="select" id="f-rarity" aria-label="Rarity"><option value="">All rarities</option>${options(rarities.map((r) => [r, r]), f.rarity)}</select>

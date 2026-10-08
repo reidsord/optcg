@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from datetime import timedelta
 
 from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round,
-                    read_json, read_price_history, read_value_history, set_file, set_groups, write_json,
+                    read_json, read_price_history, read_value_history, set_code, set_file, set_groups, write_json,
                     write_price_history, write_text, write_value_history)
 
 BASE = "https://tcgcsv.com/tcgplayer/68"
@@ -73,7 +73,7 @@ def main(dry_run=False):
     for g in sorted(groups, key=lambda g: g["groupId"]):
         if g["groupId"] <= watermark or g["groupId"] in tracked or g["groupId"] in excluded:
             continue
-        code = (g.get("abbreviation") or g["name"]).strip()
+        code = set_code(g.get("abbreviation") or g["name"])
         if code in codes:
             code = f"{code} ({g['groupId']})"
         entry = {"code": code, "name": g["name"], "groupId": g["groupId"], "file": set_file(code), "added": today}

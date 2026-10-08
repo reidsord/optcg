@@ -43,7 +43,7 @@
   },
   {
     "code": "OP05-PR",
-    "name": "OP05-PR",
+    "name": "Awakening of the New Era Pre-Release Cards",
     "groupId": 23368,
     "file": "OP05-PR.json"
   },
@@ -253,7 +253,7 @@
   },
   {
     "code": "ST-04",
-    "name": "Revision Pack Cards",
+    "name": "Starter Deck 4: Animal Kingdom Pirates",
     "groupId": 3190,
     "file": "ST-04.json"
   },
@@ -474,46 +474,46 @@
     "file": "OP-DD.json"
   },
   {
-    "code": "ST04",
-    "name": "Revision Pack Cards",
+    "code": "ST-04-RP",
+    "name": "Starter Deck 4 Revision Pack Cards",
     "groupId": 23890,
-    "file": "ST04.json"
+    "file": "ST-04-RP.json"
   },
   {
-    "code": "OP04 - Prerelease",
+    "code": "OP04-PR",
     "name": "Kingdoms of Intrigue Pre-Release Cards",
     "groupId": 23297,
-    "file": "OP04-Prerelease.json"
+    "file": "OP04-PR.json"
   },
   {
-    "code": "ST01 - Prerelease",
+    "code": "ST-01-PR",
     "name": "Super Pre-Release Starter Deck 1: Straw Hat Crew",
     "groupId": 17659,
-    "file": "ST01-Prerelease.json"
+    "file": "ST-01-PR.json"
   },
   {
-    "code": "ST02 PRE",
+    "code": "ST-02-PR",
     "name": "Super Pre-Release Starter Deck 2: Worst Generation",
     "groupId": 17658,
-    "file": "ST02-PRE.json"
+    "file": "ST-02-PR.json"
   },
   {
-    "code": "ST03 - Prerelease",
+    "code": "ST-03-PR",
     "name": "Super Pre-Release Starter Deck 3: The Seven Warlords of the Sea",
     "groupId": 17660,
-    "file": "ST03-Prerelease.json"
+    "file": "ST-03-PR.json"
   },
   {
-    "code": "ST04 PRE",
+    "code": "ST-04-PR",
     "name": "Super Pre-Release Starter Deck 4: Animal Kingdom Pirates",
     "groupId": 17661,
-    "file": "ST04-PRE.json"
+    "file": "ST-04-PR.json"
   },
   {
-    "code": "OP18 RE",
+    "code": "OP18-PR",
     "name": "The Dominance of God Release Event Cards",
     "groupId": 24834,
-    "file": "OP18-RE.json",
+    "file": "OP18-PR.json",
     "added": "2026-10-08"
   },
   {
