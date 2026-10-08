@@ -327,31 +327,9 @@ def squash(text):
     return re.sub(r"[^a-z0-9]", "", (text or "").lower())
 
 
-def probe_registration(cfg):
-    """Diagnostics: does Bandai TCG+ list events before their registration opens?"""
-    home, now = cfg["home"], datetime.now(timezone.utc).isoformat()
-    for flg in ("0", "1", "2", None):
-        params = [("game_title_id", ONE_PIECE), ("limit", PAGE), ("start_date", now[:10]), ("current_lat", home["lat"]),
-                  ("current_lng", home["lng"]), ("distance", cfg.get("radiusMiles", 50)), ("favorite", 0), ("order", 1), ("country_code[]", "US"), ("offset", 0)]
-        if flg is not None:
-            params.append(("application_open_flg", flg))
-        try:
-            body = json.loads(fetch(TCG_API + "?" + urllib.parse.urlencode(params)))["success"]
-        except Exception as e:
-            print(f"probe flg={flg}: {e}")
-            continue
-        page = body.get("event_list") or []
-        later = [e for e in page if (e.get("apply_start_datetime") or "") > now]
-        print(f"probe flg={flg}: total {body.get('total')}, first page {len(page)}, registration not open yet {len(later)}",
-              sorted({(e.get('apply_start_datetime'), e.get('event_series_title')) for e in later})[:5])
-        pre = [e for e in page if kind_of(e.get("event_series_title")) == "Prerelease"]
-        print("   prereleases:", [(e.get("event_series_title"), e.get("start_datetime"), e.get("apply_start_datetime")) for e in pre[:5]])
-
-
 def test_discord(query, path):
     """Write a Discord test message for live events (and products) matching every word of `query`."""
     cfg = read_json(f"{DATA}/alerts.json", {})
-    probe_registration(cfg)
     words = [squash(w) for w in query.split() if squash(w)]
     match = lambda *texts: all(w in squash(" ".join(t or "" for t in texts)) for w in words)
     events, _ = fetch_events(cfg, datetime.now(timezone.utc).date().isoformat())

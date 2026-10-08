@@ -50,7 +50,7 @@ To leave a new set out, add its group id to `excludedGroups` in `data/meta.json`
 and remove it from `data/sets.json` and `data/cards/`. To drop a single card for
 good, delete its line and add its `productId` to `excludedProducts`.
 
-The **Check events and drops** workflow runs every three hours. It reads
+The **Check events and drops** workflow runs every hour. It reads
 [Bandai TCG+](https://www.bandai-tcg-plus.com/)'s public event search for One
 Piece events within `radiusMiles` of `home` in `data/alerts.json`, the event and
 product pages on [the official card game site](https://en.onepiece-cardgame.com/),
@@ -66,7 +66,12 @@ To also post alerts to a Discord channel, create a webhook in the channel
 (**Edit Channel → Integrations → Webhooks → New Webhook → Copy Webhook URL**) and
 save the URL as a repository secret named `DISCORD_WEBHOOK_URL`
 (**Settings → Secrets and variables → Actions → New repository secret**). Each
-new event, announcement or product then posts there as a card with a link.
+new event, announcement or product then posts there as a card with a link, with
+the registration time shown in your own time zone. One to two hours before
+registration opens for an event in `notifyKinds`, a reminder posts too, so you
+can be in the Bandai TCG+ app when sign-ups go live. To check the webhook, run
+**Check events and drops** from the Actions tab with a test search such as
+`EB05 prerelease`; it posts the matching events (or the matching product) to Discord.
 
 ## Setup
 

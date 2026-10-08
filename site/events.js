@@ -1,6 +1,6 @@
 // Events tab: tournaments near home from Bandai TCG+, official event announcements,
 // and new products (Premium Bandai exclusives marked). The data files are written by
-// scripts/update_events.py every few hours.
+// scripts/update_events.py every hour.
 
 const BIG = ['Store Championship', 'Treasure Cup', 'Prerelease', 'Regionals', 'Release Event'];
 const KIND_HUE = {
@@ -86,7 +86,7 @@ export async function renderEvents(main, { getJson, ref }) {
     main.innerHTML = `
       <div class="section-head" style="margin-top:0">
         <div><h2>Tournaments${home ? ` within ${search.radiusMiles} miles of ${esc(home)}` : ''}</h2>
-        <div class="hint">From Bandai TCG+, checked every few hours. New big events also open a GitHub issue, which notifies you.</div></div>
+        <div class="hint">From Bandai TCG+, checked every hour. New big events notify you on Discord and GitHub, with a reminder before registration opens.</div></div>
       </div>
       ${!home ? `<p class="empty">Add your zip code in <code>data/alerts.json</code> to see tournaments near you.</p>` : `
       <div class="chips" role="group" aria-label="Event type">
