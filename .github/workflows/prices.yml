@@ -26,13 +26,19 @@ jobs:
         with:
           python-version: "3.12"
 
+      - run: pip install pillow
+
       - name: Check against TCGplayer data (pull requests only)
         if: github.event_name == 'pull_request'
-        run: python3 scripts/update_prices.py --dry-run
+        run: |
+          python3 scripts/update_prices.py --dry-run
+          python3 scripts/set_colors.py --all --dry-run
 
       - name: Update prices and add new cards
         if: github.event_name != 'pull_request'
-        run: python3 scripts/update_prices.py
+        run: |
+          python3 scripts/update_prices.py
+          python3 scripts/set_colors.py
 
       - name: Commit changes
         if: github.event_name != 'pull_request'
