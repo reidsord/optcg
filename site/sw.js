@@ -1,5 +1,5 @@
 // Keeps the site and the last data it loaded, so it opens offline and from the home screen.
-const SHELL = 'optcg-shell-v2';
+const SHELL = 'optcg-shell-v3';
 const DATA = 'optcg-data-v1';
 const FILES = ['./', 'index.html', 'app.css', 'app.js', 'events.js', 'icon.svg', 'icon-192.png', 'manifest.webmanifest'];
 
