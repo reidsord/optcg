@@ -1332,6 +1332,21 @@ $('#theme-toggle').onclick = () => {
   store.set('theme', next);
 };
 
+// Jump buttons: shown once the page is long and you've scrolled; each hides at its own end.
+function updateJump() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const y = scrollY;
+  $('#jump').hidden = max < innerHeight * 1.5 || (y < 300 && max - y < 300);
+  $('#jump-top').disabled = y < 300;
+  $('#jump-bottom').disabled = max - y < 300;
+}
+addEventListener('scroll', updateJump, { passive: true });
+addEventListener('resize', updateJump);
+new ResizeObserver(updateJump).observe(document.body);
+const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+$('#jump-top').onclick = () => scrollTo({ top: 0, behavior: smooth });
+$('#jump-bottom').onclick = () => scrollTo({ top: document.documentElement.scrollHeight, behavior: smooth });
+
 // Installable app: the service worker keeps the site and the last loaded data for offline use.
 if ('serviceWorker' in navigator && !LOCAL) navigator.serviceWorker.register('sw.js').catch(() => {});
 
