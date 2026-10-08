@@ -126,6 +126,11 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 .callout textarea { width: 100%; min-height: 96px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); padding: 8px 10px; resize: vertical; }
 .callout .notes-view { white-space: pre-wrap; margin: 6px 0 0; }
 
+/* Home quick search */
+.home-search { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.home-search .more-link { font-size: 14px; padding: 2px 4px; }
+.empty.small { padding: 12px 0; margin: 0; }
+
 /* Cards toolbar */
 .toolbar { display: flex; flex-direction: column; gap: 10px; }
 .search-row { display: flex; gap: 8px; }
@@ -168,6 +173,7 @@ select.select { padding: 6px 30px 6px 12px; min-height: 36px; appearance: none; 
 .row { display: grid; grid-template-columns: 44px 1fr auto auto; align-items: center; gap: 12px; padding: 8px 12px; border-top: 1px solid var(--line); }
 .row:first-child { border-top: 0; }
 .row img, .row .thumb { width: 44px; height: 61px; object-fit: contain; border-radius: 4px; background: var(--surface-2); }
+.row > div { min-width: 0; }
 .row .title { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .row .info { font-size: 12px; color: var(--muted); }
 .row .price { min-width: 64px; text-align: right; }
