@@ -2,7 +2,7 @@ name: Check events and drops
 
 on:
   schedule:
-    - cron: "41 */3 * * *" # every three hours
+    - cron: "41 * * * *" # hourly, so registration reminders land 1 to 2 hours ahead
   workflow_dispatch:
     inputs:
       test:
@@ -79,7 +79,11 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           f="$RUNNER_TEMP/discord.jsonl"
-          if [ -z "$DISCORD_WEBHOOK_URL" ] || [ ! -s "$f" ]; then exit 0; fi
+          [ -s "$f" ] || exit 0
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "::warning::No DISCORD_WEBHOOK_URL repository secret, so nothing was posted to Discord."
+            exit 0
+          fi
           while IFS= read -r payload; do
             curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
             sleep 1

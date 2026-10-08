@@ -32,6 +32,7 @@ UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, 
       "Accept": "application/json, text/html;q=0.9, */*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
 PAGE = 100
 MAX_EVENTS = 3000
+REMIND_AHEAD = timedelta(hours=2)  # the job runs hourly, so reminders land 1 to 2 hours ahead
 
 # Event kinds, matched against the event series title in this order.
 KINDS = [
@@ -236,6 +237,33 @@ def opens_text(e):
     return opens.strftime("%b %-d, %H:%M UTC")
 
 
+def discord_opens(e):
+    """Registration time as a Discord timestamp, shown in the reader's time zone with a countdown."""
+    try:
+        opens = datetime.fromisoformat(e["opens"])
+    except (TypeError, ValueError, KeyError):
+        return ""
+    if opens <= datetime.now(timezone.utc):
+        return "Open now"
+    t = int(opens.timestamp())
+    return f"Opens <t:{t}:f> (<t:{t}:R>)"
+
+
+def due_reminders(events, notify_kinds, now):
+    """Events whose registration opens within REMIND_AHEAD and haven't had a reminder yet."""
+    due = []
+    for e in events.values():
+        try:
+            opens = datetime.fromisoformat(e["opens"])
+        except (TypeError, ValueError, KeyError):
+            continue
+        if (e["kind"] in notify_kinds and not e.get("canceled") and not e.get("reminded")
+                and now < opens <= now + REMIND_AHEAD):
+            e["reminded"] = True
+            due.append(e)
+    return due
+
+
 def notification(new_events, new_news, new_drops, cfg):
     lines = []
     if new_events:
@@ -263,9 +291,13 @@ def notification(new_events, new_news, new_drops, cfg):
     return "\n".join(lines) + "\n"
 
 
-def discord_payloads(new_events, new_news, new_drops):
+def discord_payloads(new_events, new_news, new_drops, reminders=()):
     """Discord webhook messages: one embed per item, at most 10 embeds per message."""
     embeds = []
+    for e in sorted(reminders, key=lambda e: e["opens"]):
+        t = int(datetime.fromisoformat(e["opens"]).timestamp())
+        embeds.append({"title": f"Registration opening soon: {e['kind']} at {e['store']}"[:256], "url": TCG_EVENT.format(e["id"]),
+                       "description": f"**Opens <t:{t}:f> (<t:{t}:R>)**\n{e['title']}, {when(e)}\n{e['address']}"[:4000], "color": 0xF2B705})
     for e in sorted(new_events, key=lambda e: e.get("start") or ""):
         fee = "Free" if e.get("fee") == 0 else (f"${e['fee']}" if e.get("fee") is not None else None)
         fields = [{"name": "When", "value": when(e), "inline": True}]
@@ -274,7 +306,7 @@ def discord_payloads(new_events, new_news, new_drops):
         if fee:
             fields.append({"name": "Fee", "value": fee, "inline": True})
         if opens_text(e):
-            fields.append({"name": "Registration", "value": opens_text(e), "inline": True})
+            fields.append({"name": "Registration", "value": discord_opens(e), "inline": True})
         embeds.append({"title": f"{e['kind']}: {e['store']}"[:256], "url": TCG_EVENT.format(e["id"]),
                        "description": f"{e['title']}\n{e['address']}"[:4000], "color": 0xD93F0B, "fields": fields})
     for a in new_news:
@@ -286,7 +318,8 @@ def discord_payloads(new_events, new_news, new_drops):
         if d.get("image"):
             embed["thumbnail"] = {"url": d["image"]}
         embeds.append(embed)
-    return [{"username": "OPTCG alerts", "content": "New on the [Events tab](https://reidsord.github.io/optcg/#events)" if i == 0 else None,
+    content = "Registration opens soon" if reminders and not (new_events or new_news or new_drops) else "New on the [Events tab](https://reidsord.github.io/optcg/#events)"
+    return [{"username": "OPTCG alerts", "content": content if i == 0 else None,
              "embeds": embeds[i:i + 10], "allowed_mentions": {"parse": []}} for i in range(0, len(embeds), 10)]
 
 
@@ -299,7 +332,7 @@ def probe_registration(cfg):
     home, now = cfg["home"], datetime.now(timezone.utc).isoformat()
     for flg in ("0", "1", "2", None):
         params = [("game_title_id", ONE_PIECE), ("limit", PAGE), ("start_date", now[:10]), ("current_lat", home["lat"]),
-                  ("current_lng", home["lng"]), ("distance", 300), ("favorite", 0), ("order", 1), ("country_code[]", "US")]
+                  ("current_lng", home["lng"]), ("distance", cfg.get("radiusMiles", 50)), ("favorite", 0), ("order", 1), ("country_code[]", "US")]
         if flg is not None:
             params.append(("application_open_flg", flg))
         try:
@@ -384,6 +417,11 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
             if eid not in events and (prev.get("start") or "") >= cutoff and not fresh_search:
                 events[eid] = prev
 
+    for eid, e in events.items():  # remember which events already had a registration reminder
+        if old_events.get(eid, {}).get("reminded"):
+            e["reminded"] = True
+    reminders = due_reminders(events, notify_kinds, now) if search == old_search else []
+
     try:
         news = fetch_announcements()
         new_news = merge_seen(news, old_news, today)
@@ -414,7 +452,8 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         if write_text(f"{DATA}/drops.json", '{"items":' + dump_rows(drop_rows).rstrip("\n") + "}\n"):
             print(f"Wrote {len(drop_rows)} products.")
 
-    print(f"New worth a notification: {len(new_events)} events, {len(new_news)} announcements, {len(new_drops)} products.")
+    print(f"New worth a notification: {len(new_events)} events, {len(new_news)} announcements, {len(new_drops)} products, "
+          f"{len(reminders)} registration reminders.")
     if notify_path and (new_events or new_news or new_drops):
         parts = []
         if new_events:
@@ -426,9 +465,9 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         with open(notify_path, "w", encoding="utf-8") as f:
             f.write(", ".join(parts) + "\n")
             f.write(notification(new_events, new_news, new_drops, cfg))
-    if discord_path and (new_events or new_news or new_drops):
+    if discord_path and (new_events or new_news or new_drops or reminders):
         with open(discord_path, "w", encoding="utf-8") as f:
-            for payload in discord_payloads(new_events, new_news, new_drops):
+            for payload in discord_payloads(new_events, new_news, new_drops, reminders):
                 f.write(json.dumps({k: v for k, v in payload.items() if v is not None}, ensure_ascii=False) + "\n")
     if dry_run:
         print("Discord sample:", json.dumps(discord_payloads(sorted(events.values(), key=lambda e: e.get("start") or "")[:2], list(news.values())[:1], list(drops.values())[:1]))[:1500])
