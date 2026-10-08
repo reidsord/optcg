@@ -1,0 +1,9 @@
+{
+  "pricesUpdatedAt": "2026-10-08T18:03:27.342Z",
+  "priceSource": "TCGplayer market price (imported from the old app)",
+  "importedAt": "2026-10-08T18:48:24+00:00",
+  "groupWatermark": 24833,
+  "excludedGroups": [
+    24306
+  ]
+}
