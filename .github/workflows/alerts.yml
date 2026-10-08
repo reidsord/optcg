@@ -1,21 +1,63 @@
 name: Check events and drops
 
 on:
+  schedule:
+    - cron: "41 */3 * * *" # every three hours
   workflow_dispatch:
   pull_request:
     paths:
-      - "scripts/probe_sources.py"
+      - "scripts/update_events.py"
       - ".github/workflows/alerts.yml"
 
 permissions:
-  contents: read
+  contents: write
+  issues: write
+
+concurrency:
+  group: alerts
+  cancel-in-progress: false
 
 jobs:
-  probe:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: python3 scripts/probe_sources.py
+
+      - name: Check sources (pull requests only)
+        if: github.event_name == 'pull_request'
+        run: python3 scripts/update_events.py --dry-run --test-home 32.7767,-96.7970
+
+      - name: Look for new events and drops
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md"
+
+      - name: Commit changes
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "optcg-alerts-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/events.json data/drops.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Update events and drops"
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Open an issue for anything new
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f="$RUNNER_TEMP/alert.md"
+          [ -s "$f" ] || exit 0
+          gh label create alert --color D93F0B --description "New tournaments and drops" --force
+          gh issue create --title "$(head -n 1 "$f")" --body "$(tail -n +2 "$f")" --label alert
