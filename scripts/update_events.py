@@ -5,9 +5,10 @@
 - data/events.json keeps upcoming events within the radius, one per line.
 - data/drops.json keeps One Piece products seen on Premium Bandai USA, one per line.
 - Anything seen for the first time, of a kind worth a notification, is written to
-  the file named by --notify (Markdown), which the workflow posts as a GitHub issue.
+  the file named by --notify (Markdown), which the workflow posts as a GitHub issue,
+  and to --discord (one webhook message per line) when a Discord webhook is set up.
 
-Usage: python3 scripts/update_events.py [--dry-run] [--notify PATH] [--test-home LAT,LNG]
+Usage: python3 scripts/update_events.py [--dry-run] [--notify PATH] [--discord PATH] [--test-home LAT,LNG]
 """
 import json
 import math
@@ -262,6 +263,33 @@ def notification(new_events, new_news, new_drops, cfg):
     return "\n".join(lines) + "\n"
 
 
+def discord_payloads(new_events, new_news, new_drops):
+    """Discord webhook messages: one embed per item, at most 10 embeds per message."""
+    embeds = []
+    for e in sorted(new_events, key=lambda e: e.get("start") or ""):
+        fee = "Free" if e.get("fee") == 0 else (f"${e['fee']}" if e.get("fee") is not None else None)
+        fields = [{"name": "When", "value": when(e), "inline": True}]
+        if e.get("miles") is not None:
+            fields.append({"name": "Distance", "value": f"{e['miles']} mi", "inline": True})
+        if fee:
+            fields.append({"name": "Fee", "value": fee, "inline": True})
+        if opens_text(e):
+            fields.append({"name": "Registration", "value": opens_text(e), "inline": True})
+        embeds.append({"title": f"{e['kind']}: {e['store']}"[:256], "url": TCG_EVENT.format(e["id"]),
+                       "description": f"{e['title']}\n{e['address']}"[:4000], "color": 0xD93F0B, "fields": fields})
+    for a in new_news:
+        embeds.append({"title": a["name"][:256], "url": a["url"], "description": a.get("when") or "Official announcement",
+                       "color": 0x1F8A64})
+    for d in new_drops:
+        embed = {"title": d["name"][:256], "url": d["url"], "color": 0xB0306A if d.get("premiumBandai") else 0x5865F2,
+                 "description": " · ".join(x for x in ["Premium Bandai" if d.get("premiumBandai") else d.get("category", ""), d.get("price", "")] if x) or "New product"}
+        if d.get("image"):
+            embed["thumbnail"] = {"url": d["image"]}
+        embeds.append(embed)
+    return [{"username": "OPTCG alerts", "content": "New on the [Events tab](https://reidsord.github.io/optcg/#events)" if i == 0 else None,
+             "embeds": embeds[i:i + 10], "allowed_mentions": {"parse": []}} for i in range(0, len(embeds), 10)]
+
+
 def merge_seen(found, old, today):
     """Carry first-seen dates over; return the items not seen before."""
     new = []
@@ -273,7 +301,7 @@ def merge_seen(found, old, today):
     return new
 
 
-def main(dry_run=False, notify_path=None, test_home=None):
+def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
     now = datetime.now(timezone.utc)
     today = now.date().isoformat()
     cfg = read_json(f"{DATA}/alerts.json", {})
@@ -311,7 +339,8 @@ def main(dry_run=False, notify_path=None, test_home=None):
 
     try:
         news = fetch_announcements()
-        new_news = merge_seen(news, old_news, today) if old_news else []
+        new_news = merge_seen(news, old_news, today)
+        new_news = new_news if old_news else []  # first run: fill the list without alerts
     except Exception as e:
         print(f"Official events page failed: {e}")
         news, new_news = old_news, []
@@ -321,7 +350,8 @@ def main(dry_run=False, notify_path=None, test_home=None):
     if drops is None:
         drops = old_drops
     else:
-        new_drops = merge_seen(drops, old_drops, today) if old_drops else []
+        new_drops = merge_seen(drops, old_drops, today)
+        new_drops = new_drops if old_drops else []
         for pid, prev in old_drops.items():  # products fall off the first pages; keep them as history
             drops.setdefault(pid, prev)
 
@@ -349,7 +379,12 @@ def main(dry_run=False, notify_path=None, test_home=None):
         with open(notify_path, "w", encoding="utf-8") as f:
             f.write(", ".join(parts) + "\n")
             f.write(notification(new_events, new_news, new_drops, cfg))
+    if discord_path and (new_events or new_news or new_drops):
+        with open(discord_path, "w", encoding="utf-8") as f:
+            for payload in discord_payloads(new_events, new_news, new_drops):
+                f.write(json.dumps({k: v for k, v in payload.items() if v is not None}, ensure_ascii=False) + "\n")
     if dry_run:
+        print("Discord sample:", json.dumps(discord_payloads(sorted(events.values(), key=lambda e: e.get("start") or "")[:2], list(news.values())[:1], list(drops.values())[:1]))[:1500])
         sample = sorted(events.values(), key=lambda e: e.get("start") or "")
         print(notification([e for e in sample if e["kind"] in notify_kinds][:8], list(news.values())[:5], list(drops.values())[:8], cfg))
         kinds = {}
@@ -363,4 +398,5 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     path = args[args.index("--notify") + 1] if "--notify" in args else None
     home = args[args.index("--test-home") + 1] if "--test-home" in args else None
-    main(dry_run="--dry-run" in args, notify_path=path, test_home=home)
+    discord = args[args.index("--discord") + 1] if "--discord" in args else None
+    main(dry_run="--dry-run" in args, notify_path=path, test_home=home, discord_path=discord)
