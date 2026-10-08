@@ -2,6 +2,8 @@
 // Data lives as JSON in the GitHub repo; edits save back as commits using a
 // fine-grained token kept in this browser only.
 
+import { renderEvents } from './events.js';
+
 const REPO = 'reidsord/optcg';
 const BRANCH = 'main';
 const API = 'https://api.github.com';
@@ -224,6 +226,7 @@ async function commitFiles(updaters, message) {
 
 async function load() {
   const sha = await latestSha();
+  S.sha = sha;
   const [sets, orders, notes, history, meta] = await Promise.all([
     getJson('data/sets.json', sha), getJson('data/orders.json', sha), getJson('data/notes.json', sha),
     getJson('data/history.json', sha), getJson('data/meta.json', sha),
@@ -1317,10 +1320,10 @@ function render() {
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'decks', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'events', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
 }
 
 window.addEventListener('hashchange', () => { render(); window.scrollTo({ top: 0 }); });

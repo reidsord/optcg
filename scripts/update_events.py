@@ -39,6 +39,7 @@ KINDS = [
     ("Prerelease", re.compile(r"pre-?release", re.I)),
     ("Regionals", re.compile(r"regional|national|championship|finals", re.I)),
     ("Release Event", re.compile(r"release event|anniversary|launch", re.I)),
+    ("Extra Battle", re.compile(r"extra (?:grand )?battle", re.I)),
     ("Pirates Party", re.compile(r"pirates party", re.I)),
     ("Store Tournament", re.compile(r"store tournament|standard battle", re.I)),
 ]
