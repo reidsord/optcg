@@ -62,6 +62,12 @@ automated visits, so its card game drops are picked up from the official site,
 which marks them **Premium Bandai**. Changing `home` or `radiusMiles` refreshes
 the list without sending alerts for everything already there.
 
+To also post alerts to a Discord channel, create a webhook in the channel
+(**Edit Channel → Integrations → Webhooks → New Webhook → Copy Webhook URL**) and
+save the URL as a repository secret named `DISCORD_WEBHOOK_URL`
+(**Settings → Secrets and variables → Actions → New repository secret**). Each
+new event, announcement or product then posts there as a card with a link.
+
 ## Setup
 
 1. In **Settings → Pages**, set **Source** to **GitHub Actions**.

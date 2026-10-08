@@ -29,11 +29,11 @@ jobs:
 
       - name: Check sources (pull requests only)
         if: github.event_name == 'pull_request'
-        run: python3 scripts/update_events.py --dry-run --test-home 32.7767,-96.7970
+        run: python3 scripts/update_events.py --dry-run --test-home 39.6134,-86.1047
 
       - name: Look for new events and drops
         if: github.event_name != 'pull_request'
-        run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md"
+        run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md" --discord "$RUNNER_TEMP/discord.jsonl"
 
       - name: Commit changes
         if: github.event_name != 'pull_request'
@@ -61,3 +61,15 @@ jobs:
           [ -s "$f" ] || exit 0
           gh label create alert --color D93F0B --description "New tournaments and drops" --force
           gh issue create --title "$(head -n 1 "$f")" --body "$(tail -n +2 "$f")" --label alert
+
+      - name: Post to Discord
+        if: github.event_name != 'pull_request'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          f="$RUNNER_TEMP/discord.jsonl"
+          if [ -z "$DISCORD_WEBHOOK_URL" ] || [ ! -s "$f" ]; then exit 0; fi
+          while IFS= read -r payload; do
+            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
+            sleep 1
+          done < "$f"
