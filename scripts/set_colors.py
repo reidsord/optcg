@@ -4,7 +4,8 @@ Samples the product image TCGplayer shows for the set's box, skips the white
 background and greys, and keeps the most common strong color. The site uses it
 for the set's tile on Home. Pre-release and release event sets (OP14-PR) take
 their main set's color. Sets that already have a color are left alone, so a
-color can also be set by hand in data/sets.json.
+color can also be set by hand in data/sets.json, with an optional color2
+for two-tone boxes (OP16 is black and red).
 
 Usage: python3 scripts/set_colors.py [--all] [--dry-run]
 Needs Pillow (pip install pillow).
@@ -105,6 +106,8 @@ def main(redo=False, dry_run=False):
         parent = m and by_code.get(m.group(1))
         if parent and parent.get("color") and (redo or not s.get("color")) and s.get("color") != parent["color"]:
             s["color"] = parent["color"]
+            if parent.get("color2"):
+                s["color2"] = parent["color2"]
             print(f"{s['code']}: {s['color']} from {parent['code']}")
             changed += 1
     print(f"{changed} set colors {'would change' if dry_run else 'changed'}")

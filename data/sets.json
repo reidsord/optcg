@@ -46,28 +46,30 @@
     "name": "Awakening of the New Era",
     "groupId": 23213,
     "file": "OP05.json",
-    "color": "#cba97e"
+    "color": "#ffffff"
   },
   {
     "code": "OP05-PR",
     "name": "Awakening of the New Era Pre-Release Cards",
     "groupId": 23368,
     "file": "OP05-PR.json",
-    "color": "#cba97e"
+    "color": "#ffffff"
   },
   {
     "code": "OP06",
     "name": "Wings of the Captain",
     "groupId": 23272,
     "file": "OP06.json",
-    "color": "#8a5047"
+    "color": "#12838a",
+    "color2": "#151515"
   },
   {
     "code": "OP06-PR",
     "name": "Wings of the Captain Pre-Release Cards",
     "groupId": 23424,
     "file": "OP06-PR.json",
-    "color": "#8a5047"
+    "color": "#12838a",
+    "color2": "#151515"
   },
   {
     "code": "OP07",
@@ -102,14 +104,16 @@
     "name": "Emperors in the New World",
     "groupId": 23589,
     "file": "OP09.json",
-    "color": "#844942"
+    "color": "#c9a227",
+    "color2": "#151515"
   },
   {
     "code": "OP09-PR",
     "name": "Emperors in the New World: 2nd Anniversary Tournament Cards",
     "groupId": 23590,
     "file": "OP09-PR.json",
-    "color": "#844942"
+    "color": "#c9a227",
+    "color2": "#151515"
   },
   {
     "code": "OP10",
@@ -200,14 +204,16 @@
     "name": "The Time of Battle",
     "groupId": 24664,
     "file": "OP16.json",
-    "color": "#9d5147"
+    "color": "#b3202a",
+    "color2": "#151515"
   },
   {
     "code": "OP16-PR",
     "name": "The Time of Battle Release Event Cards",
     "groupId": 24677,
     "file": "OP16-PR.json",
-    "color": "#9d5147"
+    "color": "#b3202a",
+    "color2": "#151515"
   },
   {
     "code": "OP17",
@@ -235,7 +241,7 @@
     "name": "Extra Booster: Anime 25th Collection",
     "groupId": 23834,
     "file": "EB02.json",
-    "color": "#d18078"
+    "color": "#c8a77a"
   },
   {
     "code": "EB03",
