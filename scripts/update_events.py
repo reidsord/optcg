@@ -290,6 +290,53 @@ def discord_payloads(new_events, new_news, new_drops):
              "embeds": embeds[i:i + 10], "allowed_mentions": {"parse": []}} for i in range(0, len(embeds), 10)]
 
 
+def squash(text):
+    return re.sub(r"[^a-z0-9]", "", (text or "").lower())
+
+
+def probe_registration(cfg):
+    """Diagnostics: does Bandai TCG+ list events before their registration opens?"""
+    home, now = cfg["home"], datetime.now(timezone.utc).isoformat()
+    for flg in ("0", "1", "2", None):
+        params = [("game_title_id", ONE_PIECE), ("limit", PAGE), ("start_date", now[:10]), ("current_lat", home["lat"]),
+                  ("current_lng", home["lng"]), ("distance", 300), ("favorite", 0), ("order", 1), ("country_code[]", "US")]
+        if flg is not None:
+            params.append(("application_open_flg", flg))
+        try:
+            body = json.loads(fetch(TCG_API + "?" + urllib.parse.urlencode(params)))["success"]
+        except Exception as e:
+            print(f"probe flg={flg}: {e}")
+            continue
+        page = body.get("event_list") or []
+        later = [e for e in page if (e.get("apply_start_datetime") or "") > now]
+        print(f"probe flg={flg}: total {body.get('total')}, first page {len(page)}, registration not open yet {len(later)}",
+              sorted({(e.get('apply_start_datetime'), e.get('event_series_title')) for e in later})[:5])
+        pre = [e for e in page if kind_of(e.get("event_series_title")) == "Prerelease"]
+        print("   prereleases:", [(e.get("event_series_title"), e.get("start_datetime"), e.get("apply_start_datetime")) for e in pre[:5]])
+
+
+def test_discord(query, path):
+    """Write a Discord test message for live events (and products) matching every word of `query`."""
+    cfg = read_json(f"{DATA}/alerts.json", {})
+    probe_registration(cfg)
+    words = [squash(w) for w in query.split() if squash(w)]
+    match = lambda *texts: all(w in squash(" ".join(t or "" for t in texts)) for w in words)
+    events, _ = fetch_events(cfg, datetime.now(timezone.utc).date().isoformat())
+    hits = [e for e in (events or {}).values() if match(e["kind"], e["title"]) and not e.get("canceled")]
+    drops = read_json(f"{DATA}/drops.json", {}).get("items", [])
+    products = [d for d in drops if any(w in squash(d["name"]) for w in words if not w.isalpha())][:1]
+    print(f"Test '{query}': {len(hits)} events, {len(products)} products")
+    payloads = discord_payloads(hits[:9], [], products)
+    note = (f"Test alert for \"{query}\": {len(hits)} matching event{'s' if len(hits) != 1 else ''} within {cfg.get('radiusMiles', 50)} miles"
+            + ("." if hits else " so far, so this shows the matching product instead. Real alerts post when events go live."))
+    if not payloads:
+        payloads = [{"username": "OPTCG alerts", "embeds": [], "allowed_mentions": {"parse": []}}]
+    payloads[0]["content"] = note
+    with open(path, "w", encoding="utf-8") as f:
+        for payload in payloads:
+            f.write(json.dumps({k: v for k, v in payload.items() if v is not None}, ensure_ascii=False) + "\n")
+
+
 def merge_seen(found, old, today):
     """Carry first-seen dates over; return the items not seen before."""
     new = []
@@ -399,4 +446,7 @@ if __name__ == "__main__":
     path = args[args.index("--notify") + 1] if "--notify" in args else None
     home = args[args.index("--test-home") + 1] if "--test-home" in args else None
     discord = args[args.index("--discord") + 1] if "--discord" in args else None
+    if "--test-discord" in args:
+        test_discord(args[args.index("--test-discord") + 1], discord or "discord.jsonl")
+        sys.exit(0)
     main(dry_run="--dry-run" in args, notify_path=path, test_home=home, discord_path=discord)

@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "41 */3 * * *" # every three hours
   workflow_dispatch:
+    inputs:
+      test:
+        description: "Send a Discord test for events matching these words (e.g. EB05 prerelease). Leave empty for a normal check."
+        required: false
+        default: ""
   pull_request:
     paths:
       - "scripts/update_events.py"
@@ -32,11 +37,17 @@ jobs:
         run: python3 scripts/update_events.py --dry-run --test-home 39.6134,-86.1047
 
       - name: Look for new events and drops
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md" --discord "$RUNNER_TEMP/discord.jsonl"
 
+      - name: Build a Discord test message
+        if: inputs.test
+        env:
+          TEST_QUERY: ${{ inputs.test }}
+        run: python3 scripts/update_events.py --test-discord "$TEST_QUERY" --discord "$RUNNER_TEMP/discord.jsonl"
+
       - name: Commit changes
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         run: |
           git config user.name "optcg-alerts-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -53,7 +64,7 @@ jobs:
           exit 1
 
       - name: Open an issue for anything new
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
