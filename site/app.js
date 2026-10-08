@@ -23,7 +23,7 @@ const store = {
 const S = {
   sets: [], setByCode: new Map(), cards: [], byId: new Map(),
   orders: [], notes: '', history: [], meta: {},
-  token: store.get('gh-token'), login: null, canEdit: false,
+  homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
   pendingCards: {}, pendingOrders: false, pendingNotes: false,
   saving: false, saveTimer: null, error: null,
 };
@@ -414,6 +414,11 @@ function renderHome(main) {
   const naturalSort = (a, b) => a.code.localeCompare(b.code, 'en', { numeric: true });
 
   main.innerHTML = `
+    <div class="home-search">
+      <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="home-q" type="search" placeholder="Find a card: name, card ID, or set" value="${esc(S.homeQ)}" aria-label="Find a card" autocomplete="off"></label>
+      <div id="home-results" aria-live="polite"></div>
+    </div>
     <div class="callouts">
       <a class="callout tile" href="#cards?preset=buy">
         <h3>Buy list</h3>
@@ -457,6 +462,30 @@ function renderHome(main) {
 
   const notes = $('#notes', main);
   if (notes) notes.addEventListener('input', () => { S.notes = notes.value; S.pendingNotes = true; changed(); });
+
+  const input = $('#home-q', main);
+  let typing;
+  input.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => { S.homeQ = input.value; renderHomeResults(); }, 120); });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && input.value.trim()) location.hash = '#cards?q=' + encodeURIComponent(input.value.trim()); });
+  renderHomeResults();
+}
+
+// Quick lookup on Home: closest matches first, with price and quantity buttons.
+const HOME_RESULTS = 12;
+function renderHomeResults() {
+  const box = $('#home-results');
+  if (!box) return;
+  const q = S.homeQ.trim();
+  if (!q) { box.innerHTML = ''; return; }
+  const f = { ...readQuery(), q, preset: 'all', set: '', own: '', variant: '', rarity: '', sort: '' };
+  const lower = q.toLowerCase();
+  const rank = (c) => (c.cardId.toLowerCase() === lower ? 0 : c.name.toLowerCase().startsWith(lower) ? 1 : 2) * 2 + (c.qty > 0 ? 0 : 1);
+  const list = filterCards(f).map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]);
+  const all = '#cards?q=' + encodeURIComponent(q);
+  box.innerHTML = list.length
+    ? `<div class="list">${list.slice(0, HOME_RESULTS).map((c) => cardHtml(c, f, 'list')).join('')}</div>
+       ${list.length > HOME_RESULTS ? `<a class="more-link" href="${all}">See all ${count(list.length)} matches in Cards</a>` : ''}`
+    : '<p class="empty small">No cards match.</p>';
 }
 
 // Cards view state lives in the URL hash so links like #cards?set=OP01 work.
