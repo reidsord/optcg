@@ -1,4 +1,4 @@
-"""Temporary: learn the Bandai TCG+ event API parameters and Premium Bandai item markup."""
+"""Temporary: event search parameters and where Premium Bandai lists products."""
 import json
 import re
 import time
@@ -8,54 +8,77 @@ UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, 
       "Accept": "application/json, text/html;q=0.9, */*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
 
 
-def get(url, timeout=60):
+def get(url, timeout=60, show=True):
     t = time.time()
     try:
         with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=timeout) as r:
             body = r.read().decode("utf-8", "replace")
             print(f"{r.status} {len(body)}b {time.time() - t:.1f}s {url}")
             return body
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", "replace")
+        print(f"HTTP {e.code} {time.time() - t:.1f}s {url} {body[:300]!r}")
+        return ""
     except Exception as e:
         print(f"ERR {e} {time.time() - t:.1f}s {url}")
         return ""
 
 
-print("#### api_url.js")
-print(get("https://www.bandai-tcg-plus.com/js/api_url.js")[:1500])
 bundle = get("https://www.bandai-tcg-plus.com/dist/js/bundle.js")
-print("#### bundle: event list call sites")
-for m in list(re.finditer(r"event/list", bundle))[:8]:
-    print("...", bundle[max(0, m.start() - 1500):m.start() + 800].replace("\n", " "), "\n")
-print("#### bundle: query keys near event")
-keys = sorted(set(re.findall(r'[?&]([a-z_]+)=', bundle)) | set(re.findall(r'"?(\w*(?:pref|country|series|tab|keyword|area|geo|lat|lng|distance|radius|date|status|sort|order)\w*)"?\s*:', bundle)))
-print(keys[:400])
-print("#### series ids/titles")
-print(sorted(set(re.findall(r'(?:series|Series)[A-Za-z_]*["\']?\s*[:=]\s*["\']?[^,}{]{0,60}', bundle)))[:80])
+print("#### createSendQuery")
+for m in list(re.finditer(r"createSendQuery:function", bundle))[:2]:
+    print(bundle[m.start():m.start() + 4000], "\n")
+print("#### tabList")
+for m in list(re.finditer(r"tabList:", bundle))[:2]:
+    print(bundle[m.start():m.start() + 800], "\n")
 
-print("#### event list samples")
-for q in ["game_title_id=4&limit=50&offset=0&country_code=US",
-          "game_title_id=4&limit=50&offset=0&selected_tab=3",
-          "game_title_id=4&limit=50&offset=0&pref_code=US-TX"]:
-    body = get(f"https://api.bandai-tcg-plus.com/api/user/event/list?{q}", timeout=90)
+print("#### params")
+p = get("https://api.bandai-tcg-plus.com/api/user/event/list/params")
+try:
+    d = json.loads(p)["success"]
+    for k, v in d.items():
+        if isinstance(v, list):
+            print(k, len(v))
+            for row in v:
+                if str(row.get("game_title_id", "")) == "4" or "event_series" not in k:
+                    print("   ", json.dumps(row)[:400])
+        else:
+            print(k, json.dumps(v)[:2000])
+except Exception as e:
+    print("parse", e, p[:500])
+
+
+def summary(q):
+    body = get(f"https://api.bandai-tcg-plus.com/api/user/event/list?{q}", timeout=120)
     try:
         d = json.loads(body)["success"]
-        ev = d.get("event_list", [])
-        print("keys", [k for k in d if k != "event_list"], {k: d[k] for k in d if k != "event_list"})
-        print("countries", sorted({e.get("country_code") for e in ev}), "count", len(ev))
-        for e in ev[:50]:
-            print(" ", e["id"], e.get("country_code"), e.get("pref_code"), e.get("start_datetime"), "apply", e.get("apply_start_datetime"),
-                  "|", e.get("event_series_title"), "|", e.get("organizer_name"), "| fmt", e.get("game_format_ids"), "st", e.get("status_id"), e.get("series_type"))
+        ev = d["event_list"]
+        print("   total", d.get("total"), "n", len(ev), "countries", sorted({e.get("country_code") for e in ev}),
+              "prefs", sorted({e.get("pref_code") for e in ev})[:12], "series", sorted({e.get("event_series_title") for e in ev})[:8],
+              "start", min((e["start_datetime"] for e in ev), default=None), max((e["start_datetime"] for e in ev), default=None))
     except Exception as e:
-        print("parse fail", e, body[:300])
+        print("   parse", e, body[:200])
 
-print("#### event detail")
-print(get("https://api.bandai-tcg-plus.com/api/user/event/7008890")[:3000])
 
-print("#### premium bandai series page")
+print("#### filter tests")
+for q in ["game_title_id=4&limit=20&offset=0&country_code[]=US",
+          "game_title_id=4&limit=20&offset=0&country_code[]=US&pref_code[]=US-TX",
+          "game_title_id=4&limit=20&offset=0&country_code[]=US&start_date=2026-11-01",
+          "game_title_id=4&limit=20&offset=0&country_code[]=US&latitude=32.78&longitude=-96.80&distance=50",
+          "game_title_id=4&limit=20&offset=0&country_code[]=US&lat=32.78&lng=-96.80&distance=50"]:
+    summary(q)
+
+print("#### premium bandai")
+for u in ["https://p-bandai.com/robots.txt", "https://p-bandai.com/sitemap.xml", "https://p-bandai.com/us/sitemap.xml"]:
+    b = get(u)
+    print(b[:1500])
 page = get("https://p-bandai.com/us/series/onepiece-series")
-for m in list(re.finditer(r"/us/item/(F\d+)", page))[:3]:
-    print("...", re.sub(r"\s+", " ", page[max(0, m.start() - 600):m.start() + 1500]), "\n")
-print("#### item page")
-item = get("https://p-bandai.com/us/item/F2909282001")
-print(re.sub(r"\s+", " ", item)[:6000])
-print("json-ld:", re.findall(r'<script type="application/ld\+json">(.*?)</script>', item, re.S)[:3])
+js = re.findall(r'src="(/assets/[^"]+\.js)"', page) + re.findall(r'href="(/assets/[^"]+\.js)"', page)
+print("assets", js)
+found = set()
+for path in js[:15]:
+    src = get("https://p-bandai.com" + path, show=False)
+    found |= set(re.findall(r'["\'`](/(?:api|v\d|us/api)[^"\'`\s]{2,120})', src))
+    found |= set(re.findall(r'https://[a-z0-9.-]+/[a-z0-9/_-]*api[^"\'`\s]{0,120}', src))
+print("api paths", sorted(found)[:120])
+print("links on series page", sorted(set(re.findall(r'href="(/us/[^"]+)"', page)))[:150])
