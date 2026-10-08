@@ -178,6 +178,6 @@
 {"id":"OP13:181","productId":628353,"cardId":"","name":"Carrying On His Will Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":5543.97},
 {"id":"OP13:182","productId":628351,"cardId":"","name":"Carrying On His Will Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":9.55},
 {"id":"OP13:183","productId":652643,"cardId":"","name":"Carrying On His Will Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":17.95},
-{"id":"OP13:184","productId":660744,"cardId":"","name":"DON!! Card (Gol.D.Roger)","rarity":"DON!!","alt":false,"target":4,"qty":18,"price":0.01},
-{"id":"OP13:185","productId":660710,"cardId":"","name":"DON!! Card (Gol.D.Roger) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":3.81}
+{"id":"OP13:184","productId":660744,"cardId":"","name":"DON!! Card (Gol.D.Roger)","rarity":"DON!!","alt":false,"target":10,"qty":18,"price":0.01},
+{"id":"OP13:185","productId":660710,"cardId":"","name":"DON!! Card (Gol.D.Roger) (Gold)","rarity":"DON!!","alt":true,"target":10,"qty":1,"price":3.81}
 ]

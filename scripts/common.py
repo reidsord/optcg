@@ -24,7 +24,10 @@ def set_file(code):
 def classify(name, card_number, set_code):
     """Return (alt, target) for a newly listed product, following the existing rules:
     sealed product has no card number and counts once; alternate arts count once;
-    base cards count four times, except the loose Promo set which counts once."""
+    base cards count four times, except the loose Promo set which counts once;
+    DON!! cards count ten times."""
+    if re.match(r"DON!! Card(?! Pack)", name or ""):
+        return None, 10  # DON!! cards: a full set of ten
     if not card_number:
         return None, 1
     if ALT_PATTERN.search(name or ""):
