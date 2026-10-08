@@ -74,5 +74,5 @@
 {"id":"OP12-PR:77","productId":649325,"cardId":"OP12-114","name":"Wyper","rarity":"UC","alt":false,"target":4,"qty":0,"price":9},
 {"id":"OP12-PR:78","productId":649326,"cardId":"OP12-115","name":"I Love You!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":9.61},
 {"id":"OP12-PR:79","productId":649248,"cardId":"OP12-116","name":"We'll Ring the Bell Waiting for You!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.35},
-{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":4,"qty":0,"price":5.24}
+{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.24}
 ]

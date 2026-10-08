@@ -1,8 +1,8 @@
 [
-{"id":"Starter Decks:319","productId":545033,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate","rarity":"","alt":false,"target":4,"qty":0,"price":51.98},
-{"id":"Starter Decks:320","productId":545034,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display","rarity":"","alt":false,"target":4,"qty":0,"price":500},
-{"id":"Starter Decks:321","productId":545035,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
-{"id":"Starter Decks:322","productId":594381,"cardId":"","name":"Starter Decks 15-20 [Set of 6]","rarity":"","alt":false,"target":4,"qty":0,"price":700},
+{"id":"Starter Decks:319","productId":545033,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate","rarity":"","alt":false,"target":1,"qty":0,"price":51.98},
+{"id":"Starter Decks:320","productId":545034,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display","rarity":"","alt":false,"target":1,"qty":0,"price":500},
+{"id":"Starter Decks:321","productId":545035,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
+{"id":"Starter Decks:322","productId":594381,"cardId":"","name":"Starter Decks 15-20 [Set of 6]","rarity":"","alt":false,"target":1,"qty":0,"price":700},
 {"id":"Starter Decks:323","productId":580976,"cardId":"OP02-001","name":"Edward.Newgate (OP02-001)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.1},
 {"id":"Starter Decks:324","productId":580977,"cardId":"OP02-008","name":"Jozu","rarity":"R","alt":false,"target":4,"qty":4,"price":0.22},
 {"id":"Starter Decks:325","productId":580978,"cardId":"OP02-018","name":"Marco","rarity":"R","alt":false,"target":4,"qty":4,"price":0.02},

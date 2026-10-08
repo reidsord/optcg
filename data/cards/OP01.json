@@ -153,13 +153,13 @@
 {"id":"OP01:156","productId":454666,"cardId":"OP01-120","name":"Shanks (Parallel) (Manga) (Alternate Art)","rarity":"SEC","alt":true,"target":1,"qty":0,"price":2799},
 {"id":"OP01:157","productId":454667,"cardId":"OP01-121","name":"Yamato","rarity":"SEC","alt":false,"target":4,"qty":4,"price":4},
 {"id":"OP01:158","productId":454669,"cardId":"OP01-121","name":"Yamato (Parallel)","rarity":"SEC","alt":true,"target":1,"qty":1,"price":44.88},
-{"id":"OP01:159","productId":532645,"cardId":"","name":"Box Promotion Pack","rarity":"","alt":null,"target":4,"qty":0,"price":33.33},
+{"id":"OP01:159","productId":532645,"cardId":"","name":"Box Promotion Pack","rarity":"","alt":null,"target":1,"qty":0,"price":33.33},
 {"id":"OP01:160","productId":456059,"cardId":"","name":"DON!! Card (Manga) (Alternate Art)","rarity":"DON!!","alt":null,"target":4,"qty":3,"price":3.75},
 {"id":"OP01:161","productId":456320,"cardId":"","name":"DON!! Card // One Piece Film RED Promo","rarity":"DON!!","alt":null,"target":4,"qty":10,"price":0.01},
-{"id":"OP01:162","productId":450086,"cardId":"","name":"Romance Dawn - Booster Box (Wave 1 - Blue)","rarity":"","alt":null,"target":4,"qty":0,"price":4845.99},
-{"id":"OP01:163","productId":557280,"cardId":"","name":"Romance Dawn - Booster Box (Wave 2 - White)","rarity":"","alt":null,"target":4,"qty":1,"price":1213.69},
-{"id":"OP01:164","productId":650853,"cardId":"","name":"Romance Dawn - Booster Box Case (Wave 1 - Blue)","rarity":"","alt":null,"target":4,"qty":0,"price":75000},
-{"id":"OP01:165","productId":450087,"cardId":"","name":"Romance Dawn - Booster Box Case (Wave 2 - White)","rarity":"","alt":null,"target":4,"qty":0,"price":21000},
-{"id":"OP01:166","productId":450085,"cardId":"","name":"Romance Dawn - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":65},
-{"id":"OP01:167","productId":531774,"cardId":"","name":"Romance Dawn - Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":131.01}
+{"id":"OP01:162","productId":450086,"cardId":"","name":"Romance Dawn - Booster Box (Wave 1 - Blue)","rarity":"","alt":null,"target":1,"qty":0,"price":4845.99},
+{"id":"OP01:163","productId":557280,"cardId":"","name":"Romance Dawn - Booster Box (Wave 2 - White)","rarity":"","alt":null,"target":1,"qty":1,"price":1213.69},
+{"id":"OP01:164","productId":650853,"cardId":"","name":"Romance Dawn - Booster Box Case (Wave 1 - Blue)","rarity":"","alt":null,"target":1,"qty":0,"price":75000},
+{"id":"OP01:165","productId":450087,"cardId":"","name":"Romance Dawn - Booster Box Case (Wave 2 - White)","rarity":"","alt":null,"target":1,"qty":0,"price":21000},
+{"id":"OP01:166","productId":450085,"cardId":"","name":"Romance Dawn - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":65},
+{"id":"OP01:167","productId":531774,"cardId":"","name":"Romance Dawn - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":131.01}
 ]

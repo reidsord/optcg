@@ -210,12 +210,12 @@
 {"id":"OP14:213","productId":672186,"cardId":"","name":"DON!! Card (Dracule Mihawk) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":0,"price":13.21},
 {"id":"OP14:214","productId":672188,"cardId":"","name":"DON!! Card (Egghead)","rarity":"DON!!","alt":true,"target":1,"qty":11,"price":0.12},
 {"id":"OP14:215","productId":672190,"cardId":"","name":"DON!! Card (Egghead) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":7.13},
-{"id":"OP14:216","productId":666578,"cardId":"","name":"Double Pack Set Vol. 9","rarity":"","alt":null,"target":4,"qty":0,"price":31.99},
-{"id":"OP14:217","productId":666579,"cardId":"","name":"Double Pack Set Vol. 9 Display","rarity":"","alt":null,"target":4,"qty":0,"price":276},
+{"id":"OP14:216","productId":666578,"cardId":"","name":"Double Pack Set Vol. 9","rarity":"","alt":null,"target":1,"qty":0,"price":31.99},
+{"id":"OP14:217","productId":666579,"cardId":"","name":"Double Pack Set Vol. 9 Display","rarity":"","alt":null,"target":1,"qty":0,"price":276},
 {"id":"OP14:218","productId":675812,"cardId":"","name":"Special DON!! Card Pack DP-09","rarity":"","alt":null,"target":4,"qty":0,"price":3.5},
-{"id":"OP14:219","productId":672372,"cardId":"","name":"The Azure Sea's Seven - Dash Pack","rarity":"","alt":null,"target":4,"qty":0,"price":1.99},
-{"id":"OP14:220","productId":665598,"cardId":"","name":"The Azure Sea's Seven Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":249.99},
-{"id":"OP14:221","productId":665599,"cardId":"","name":"The Azure Sea's Seven Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":2879.97},
-{"id":"OP14:222","productId":666577,"cardId":"","name":"The Azure Sea's Seven Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":6.99},
-{"id":"OP14:223","productId":666576,"cardId":"","name":"The Azure Sea's Seven Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":11}
+{"id":"OP14:219","productId":672372,"cardId":"","name":"The Azure Sea's Seven - Dash Pack","rarity":"","alt":null,"target":1,"qty":0,"price":1.99},
+{"id":"OP14:220","productId":665598,"cardId":"","name":"The Azure Sea's Seven Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":249.99},
+{"id":"OP14:221","productId":665599,"cardId":"","name":"The Azure Sea's Seven Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2879.97},
+{"id":"OP14:222","productId":666577,"cardId":"","name":"The Azure Sea's Seven Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":6.99},
+{"id":"OP14:223","productId":666576,"cardId":"","name":"The Azure Sea's Seven Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":11}
 ]

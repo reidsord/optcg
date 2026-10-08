@@ -76,5 +76,5 @@
 {"id":"OP03-PR:79","productId":501726,"cardId":"OP03-118","name":"Ikoku Sovereignty","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.79},
 {"id":"OP03-PR:80","productId":501692,"cardId":"OP03-120","name":"Tropical Torment","rarity":"C","alt":false,"target":4,"qty":0,"price":0.85},
 {"id":"OP03-PR:81","productId":501693,"cardId":"OP03-121","name":"Thunder Bolt","rarity":"C","alt":false,"target":4,"qty":0,"price":0.64},
-{"id":"OP03-PR:82","productId":502624,"cardId":"","name":"Pillars of Strength - Pre-Release Pack","rarity":"","alt":false,"target":4,"qty":0,"price":15.98}
+{"id":"OP03-PR:82","productId":502624,"cardId":"","name":"Pillars of Strength - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":15.98}
 ]

@@ -174,10 +174,10 @@
 {"id":"OP13:177","productId":657448,"cardId":"OP09-119","name":"Monkey.D.Luffy - OP09-119 (SP)","rarity":"SEC","alt":true,"target":1,"qty":0,"price":295.18},
 {"id":"OP13:178","productId":657449,"cardId":"OP10-030","name":"Smoker - OP10-030 (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":65.99},
 {"id":"OP13:179","productId":659982,"cardId":"OP11-058","name":"Monkey.D.Luffy - OP11-058 (TR)","rarity":"TR","alt":true,"target":1,"qty":0,"price":30},
-{"id":"OP13:180","productId":628352,"cardId":"","name":"Carrying On His Will Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":432},
-{"id":"OP13:181","productId":628353,"cardId":"","name":"Carrying On His Will Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":5543.97},
-{"id":"OP13:182","productId":628351,"cardId":"","name":"Carrying On His Will Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":9.55},
-{"id":"OP13:183","productId":652643,"cardId":"","name":"Carrying On His Will Sleeved Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":17.95},
+{"id":"OP13:180","productId":628352,"cardId":"","name":"Carrying On His Will Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":432},
+{"id":"OP13:181","productId":628353,"cardId":"","name":"Carrying On His Will Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":5543.97},
+{"id":"OP13:182","productId":628351,"cardId":"","name":"Carrying On His Will Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":9.55},
+{"id":"OP13:183","productId":652643,"cardId":"","name":"Carrying On His Will Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":17.95},
 {"id":"OP13:184","productId":660744,"cardId":"","name":"DON!! Card (Gol.D.Roger)","rarity":"DON!!","alt":false,"target":4,"qty":18,"price":0.01},
 {"id":"OP13:185","productId":660710,"cardId":"","name":"DON!! Card (Gol.D.Roger) (Gold)","rarity":"DON!!","alt":true,"target":1,"qty":1,"price":3.81}
 ]

@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:233","productId":515294,"cardId":"","name":"Starter Deck 11: Uta","rarity":"","alt":false,"target":4,"qty":0,"price":12},
-{"id":"Starter Decks:234","productId":515296,"cardId":"","name":"Starter Deck 11: Uta Display","rarity":"","alt":false,"target":4,"qty":0,"price":119.15},
-{"id":"Starter Decks:235","productId":515297,"cardId":"","name":"Starter Deck 11: Uta Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
+{"id":"Starter Decks:233","productId":515294,"cardId":"","name":"Starter Deck 11: Uta","rarity":"","alt":false,"target":1,"qty":0,"price":12},
+{"id":"Starter Decks:234","productId":515296,"cardId":"","name":"Starter Deck 11: Uta Display","rarity":"","alt":false,"target":1,"qty":0,"price":119.15},
+{"id":"Starter Decks:235","productId":515297,"cardId":"","name":"Starter Deck 11: Uta Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:236","productId":533879,"cardId":"ST11-001","name":"Uta (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":2},
 {"id":"Starter Decks:237","productId":533880,"cardId":"ST11-002","name":"Uta (002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.29},
 {"id":"Starter Decks:238","productId":533881,"cardId":"ST11-003","name":"Backlight","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},

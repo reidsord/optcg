@@ -104,7 +104,7 @@
 {"id":"EB02:107","productId":629188,"cardId":"OP08-057","name":"King (SP)","rarity":"L","alt":true,"target":1,"qty":0,"price":0},
 {"id":"EB02:108","productId":629189,"cardId":"OP08-058","name":"Charlotte Pudding (SP)","rarity":"L","alt":true,"target":1,"qty":0,"price":1500},
 {"id":"EB02:109","productId":629190,"cardId":"OP08-098","name":"Kalgara (SP)","rarity":"L","alt":true,"target":1,"qty":0,"price":900},
-{"id":"EB02:110","productId":594069,"cardId":"","name":"Extra Booster: Anime 25th Collection Box","rarity":"","alt":null,"target":4,"qty":0,"price":769.99},
-{"id":"EB02:111","productId":594070,"cardId":"","name":"Extra Booster: Anime 25th Collection Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":7700.99},
-{"id":"EB02:112","productId":594068,"cardId":"","name":"Extra Booster: Anime 25th Collection Pack","rarity":"","alt":null,"target":4,"qty":0,"price":17.99}
+{"id":"EB02:110","productId":594069,"cardId":"","name":"Extra Booster: Anime 25th Collection Box","rarity":"","alt":null,"target":1,"qty":0,"price":769.99},
+{"id":"EB02:111","productId":594070,"cardId":"","name":"Extra Booster: Anime 25th Collection Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":7700.99},
+{"id":"EB02:112","productId":594068,"cardId":"","name":"Extra Booster: Anime 25th Collection Pack","rarity":"","alt":null,"target":1,"qty":0,"price":17.99}
 ]

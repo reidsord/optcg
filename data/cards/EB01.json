@@ -79,7 +79,7 @@
 {"id":"EB01:82","productId":544600,"cardId":"EB01-060","name":"Did Someone Say...Kami?","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"EB01:83","productId":544601,"cardId":"EB01-061","name":"Mr.2.Bon.Kurei (Bentham)","rarity":"SEC","alt":false,"target":4,"qty":2,"price":17},
 {"id":"EB01:84","productId":544602,"cardId":"EB01-061","name":"Mr.2.Bon.Kurei (Bentham) (Alternate Art)","rarity":"SEC","alt":true,"target":1,"qty":0,"price":98},
-{"id":"EB01:85","productId":521161,"cardId":"","name":"Memorial Collection - Booster Box","rarity":"","alt":null,"target":4,"qty":0,"price":867.59},
-{"id":"EB01:86","productId":521162,"cardId":"","name":"Memorial Collection - Booster Box Case","rarity":"","alt":null,"target":4,"qty":0,"price":11897},
-{"id":"EB01:87","productId":521160,"cardId":"","name":"Memorial Collection - Booster Pack","rarity":"","alt":null,"target":4,"qty":0,"price":39.61}
+{"id":"EB01:85","productId":521161,"cardId":"","name":"Memorial Collection - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":867.59},
+{"id":"EB01:86","productId":521162,"cardId":"","name":"Memorial Collection - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":11897},
+{"id":"EB01:87","productId":521160,"cardId":"","name":"Memorial Collection - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":39.61}
 ]

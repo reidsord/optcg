@@ -1,7 +1,7 @@
 [
-{"id":"Starter Decks:241","productId":536585,"cardId":"","name":"Starter Deck 12: Zoro and Sanji","rarity":"","alt":false,"target":4,"qty":0,"price":41},
-{"id":"Starter Decks:242","productId":536586,"cardId":"","name":"Starter Deck 12: Zoro and Sanji Display","rarity":"","alt":false,"target":4,"qty":0,"price":350},
-{"id":"Starter Decks:243","productId":536587,"cardId":"","name":"Starter Deck 12: Zoro and Sanji Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
+{"id":"Starter Decks:241","productId":536585,"cardId":"","name":"Starter Deck 12: Zoro and Sanji","rarity":"","alt":false,"target":1,"qty":0,"price":41},
+{"id":"Starter Decks:242","productId":536586,"cardId":"","name":"Starter Deck 12: Zoro and Sanji Display","rarity":"","alt":false,"target":1,"qty":0,"price":350},
+{"id":"Starter Decks:243","productId":536587,"cardId":"","name":"Starter Deck 12: Zoro and Sanji Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:244","productId":539151,"cardId":"ST12-001","name":"Roronoa Zoro & Sanji","rarity":"L","alt":false,"target":4,"qty":2,"price":11},
 {"id":"Starter Decks:245","productId":542108,"cardId":"ST12-002","name":"Kuina","rarity":"C","alt":false,"target":4,"qty":8,"price":0.05},
 {"id":"Starter Decks:246","productId":542109,"cardId":"ST12-003","name":"Dracule Mihawk","rarity":"SR","alt":false,"target":4,"qty":4,"price":5},

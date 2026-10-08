@@ -74,5 +74,5 @@
 {"id":"OP06-PR:77","productId":541719,"cardId":"OP06-113","name":"Raki","rarity":"C","alt":false,"target":4,"qty":0,"price":3.65},
 {"id":"OP06-PR:78","productId":541751,"cardId":"OP06-114","name":"Wyper","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.68},
 {"id":"OP06-PR:79","productId":541720,"cardId":"OP06-117","name":"The Ark Maxim","rarity":"C","alt":false,"target":4,"qty":1,"price":1.94},
-{"id":"OP06-PR:80","productId":537437,"cardId":"","name":"Wings of the Captain - Pre-Release Pack","rarity":"","alt":false,"target":4,"qty":0,"price":5.9}
+{"id":"OP06-PR:80","productId":537437,"cardId":"","name":"Wings of the Captain - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.9}
 ]

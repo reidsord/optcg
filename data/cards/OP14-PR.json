@@ -88,5 +88,5 @@
 {"id":"OP14-PR:91","productId":671849,"cardId":"OP14-115","name":"Rindo","rarity":"C","alt":false,"target":4,"qty":0,"price":3.99},
 {"id":"OP14-PR:92","productId":671850,"cardId":"OP14-116","name":"Salamander","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP14-PR:93","productId":671881,"cardId":"OP14-117","name":"Brick Bat","rarity":"UC","alt":false,"target":4,"qty":0,"price":1},
-{"id":"OP14-PR:94","productId":671882,"cardId":"","name":"The Azure Sea's Seven - Release Event Pack","rarity":"","alt":false,"target":4,"qty":0,"price":5.18}
+{"id":"OP14-PR:94","productId":671882,"cardId":"","name":"The Azure Sea's Seven - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.18}
 ]

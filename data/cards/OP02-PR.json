@@ -74,5 +74,5 @@
 {"id":"OP02-PR:77","productId":486701,"cardId":"OP02-116","name":"Yamakaji","rarity":"C","alt":false,"target":4,"qty":0,"price":0.8},
 {"id":"OP02-PR:78","productId":486731,"cardId":"OP02-117","name":"Ice Age","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.75},
 {"id":"OP02-PR:79","productId":486702,"cardId":"OP02-118","name":"Yasakani Sacred Jewel","rarity":"C","alt":false,"target":4,"qty":0,"price":1.5},
-{"id":"OP02-PR:80","productId":482217,"cardId":"","name":"Paramount War - Pre-Release Pack","rarity":"","alt":false,"target":4,"qty":0,"price":39.99}
+{"id":"OP02-PR:80","productId":482217,"cardId":"","name":"Paramount War - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":39.99}
 ]
