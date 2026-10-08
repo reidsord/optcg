@@ -515,5 +515,27 @@
     "groupId": 24834,
     "file": "OP18-RE.json",
     "added": "2026-10-08"
+  },
+  {
+    "code": "EB04",
+    "name": "EB04 cards (released in OP14 and OP15)",
+    "groupId": 24537,
+    "groupIds": [
+      24537,
+      24637
+    ],
+    "cardPrefix": "EB04-",
+    "file": "EB04.json"
+  },
+  {
+    "code": "EB04-PR",
+    "name": "EB04 Release Event Cards (OP14 and OP15)",
+    "groupId": 24579,
+    "groupIds": [
+      24579,
+      24638
+    ],
+    "cardPrefix": "EB04-",
+    "file": "EB04-PR.json"
   }
 ]

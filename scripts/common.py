@@ -21,6 +21,11 @@ def set_file(code):
     return re.sub(r"[^A-Za-z0-9]+", "-", code).strip("-") + ".json"
 
 
+def set_groups(s):
+    """TCGplayer groups a set's cards come from. Usually one; a set split out of others lists several."""
+    return s.get("groupIds") or [s["groupId"]]
+
+
 def classify(name, card_number, set_code):
     """Return (alt, target) for a newly listed product, following the existing rules:
     sealed product has no card number and counts once; alternate arts count once;

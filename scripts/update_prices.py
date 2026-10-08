@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from datetime import timedelta
 
 from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round,
-                    read_json, read_price_history, read_value_history, set_file, write_json,
+                    read_json, read_price_history, read_value_history, set_file, set_groups, write_json,
                     write_price_history, write_text, write_value_history)
 
 BASE = "https://tcgcsv.com/tcgplayer/68"
@@ -67,7 +67,7 @@ def main(dry_run=False):
     known_products = {c["productId"] for rows in cards.values() for c in rows}
 
     groups = fetch(f"{BASE}/groups")
-    tracked = {s["groupId"] for s in sets}
+    tracked = {g for s in sets for g in set_groups(s)}
     codes = {s["code"] for s in sets}
     new_sets = []
     for g in sorted(groups, key=lambda g: g["groupId"]):
@@ -84,10 +84,13 @@ def main(dry_run=False):
     if groups:
         meta["groupWatermark"] = max(watermark, max(g["groupId"] for g in groups))
 
-    # Several tracked sets can share one TCGplayer group (e.g. the Starter Deck 4 revision pack).
+    # Several tracked sets can share one TCGplayer group (e.g. the Starter Deck 4 revision pack),
+    # and a set can draw cards from several groups (EB04 cards were printed in OP14 and OP15).
     by_group = {}
     for s in sets:
-        by_group.setdefault(s["groupId"], []).append(s["code"])
+        for g in set_groups(s):
+            by_group.setdefault(g, []).append(s["code"])
+    prefix = {s["code"]: s["cardPrefix"] for s in sets if s.get("cardPrefix")}
 
     def value():
         return sum((c.get("qty") or 0) * (c.get("price") or 0) for rows in cards.values() for c in rows)
@@ -113,13 +116,14 @@ def main(dry_run=False):
                     c["price"] = low
                     price_changes += 1
 
-        # New listings go to the first set mapped to this group.
-        home = set_codes[0]
+        # New listings go to the set claiming their card number prefix, else the group's own set.
+        home = next((c for c in set_codes if c not in prefix), set_codes[0])
         for p in sorted(products, key=lambda p: (not extended(p, "Number"), extended(p, "Number") or "", p["name"])):
             if p["productId"] in known_products or p["productId"] in excluded_products or "Japanese" in p["name"]:
                 continue
             number = extended(p, "Number") or ""
-            alt, target = classify(p["name"], number, home)
+            dest = next((c for c in set_codes if c in prefix and number.startswith(prefix[c])), home)
+            alt, target = classify(p["name"], number, dest)
             card = card_row({
                 "id": f"p{p['productId']}",
                 "productId": p["productId"],
@@ -132,9 +136,9 @@ def main(dry_run=False):
                 "price": lowest_price(rows_by_product.get(p["productId"], [])),
                 "added": today,
             })
-            cards[home].append(card)
+            cards[dest].append(card)
             known_products.add(p["productId"])
-            new_cards.append(f"{home} {number} {p['name']}")
+            new_cards.append(f"{dest} {number} {p['name']}")
 
     print(f"Collection value ${value_before:,.2f} -> ${value():,.2f}")
     print(f"{price_changes} price changes, {len(new_cards)} new cards, {len(new_sets)} new sets, {len(failed)} failed groups")
