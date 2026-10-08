@@ -3,223 +3,260 @@
     "code": "OP01",
     "name": "Romance Dawn",
     "groupId": 3188,
-    "file": "OP01.json"
+    "file": "OP01.json",
+    "color": "#152b55"
   },
   {
     "code": "OP02",
     "name": "Paramount War",
     "groupId": 17698,
-    "file": "OP02.json"
+    "file": "OP02.json",
+    "color": "#642d27"
   },
   {
     "code": "OP02-PR",
     "name": "Paramount War Pre-Release Cards",
     "groupId": 22934,
-    "file": "OP02-PR.json"
+    "file": "OP02-PR.json",
+    "color": "#642d27"
   },
   {
     "code": "OP03",
     "name": "Pillars of Strength",
     "groupId": 22890,
-    "file": "OP03.json"
+    "file": "OP03.json",
+    "color": "#1e4046"
   },
   {
     "code": "OP03-PR",
     "name": "Pillars of Strength Pre-Release Cards",
     "groupId": 23232,
-    "file": "OP03-PR.json"
+    "file": "OP03-PR.json",
+    "color": "#1e4046"
   },
   {
     "code": "OP04",
     "name": "Kingdoms of Intrigue",
     "groupId": 23024,
-    "file": "OP04.json"
+    "file": "OP04.json",
+    "color": "#bda325"
   },
   {
     "code": "OP05",
     "name": "Awakening of the New Era",
     "groupId": 23213,
-    "file": "OP05.json"
+    "file": "OP05.json",
+    "color": "#cba97e"
   },
   {
     "code": "OP05-PR",
     "name": "Awakening of the New Era Pre-Release Cards",
     "groupId": 23368,
-    "file": "OP05-PR.json"
+    "file": "OP05-PR.json",
+    "color": "#cba97e"
   },
   {
     "code": "OP06",
     "name": "Wings of the Captain",
     "groupId": 23272,
-    "file": "OP06.json"
+    "file": "OP06.json",
+    "color": "#8a5047"
   },
   {
     "code": "OP06-PR",
     "name": "Wings of the Captain Pre-Release Cards",
     "groupId": 23424,
-    "file": "OP06-PR.json"
+    "file": "OP06-PR.json",
+    "color": "#8a5047"
   },
   {
     "code": "OP07",
     "name": "500 Years in the Future",
     "groupId": 23387,
-    "file": "OP07.json"
+    "file": "OP07.json",
+    "color": "#ecda6a"
   },
   {
     "code": "OP07-PR",
     "name": "500 Years in the Future Pre-Release Cards",
     "groupId": 23512,
-    "file": "OP07-PR.json"
+    "file": "OP07-PR.json",
+    "color": "#ecda6a"
   },
   {
     "code": "OP08",
     "name": "Two Legends",
     "groupId": 23462,
-    "file": "OP08.json"
+    "file": "OP08.json",
+    "color": "#0f615a"
   },
   {
     "code": "OP08-PR",
     "name": "Two Legends Pre-Release Cards",
     "groupId": 23737,
-    "file": "OP08-PR.json"
+    "file": "OP08-PR.json",
+    "color": "#0f615a"
   },
   {
     "code": "OP09",
     "name": "Emperors in the New World",
     "groupId": 23589,
-    "file": "OP09.json"
+    "file": "OP09.json",
+    "color": "#844942"
   },
   {
     "code": "OP09-PR",
     "name": "Emperors in the New World: 2nd Anniversary Tournament Cards",
     "groupId": 23590,
-    "file": "OP09-PR.json"
+    "file": "OP09-PR.json",
+    "color": "#844942"
   },
   {
     "code": "OP10",
     "name": "Royal Blood",
     "groupId": 23766,
-    "file": "OP10.json"
+    "file": "OP10.json",
+    "color": "#2e2b65"
   },
   {
     "code": "OP10-PR",
     "name": "Royal Blood Release Event Cards",
     "groupId": 24068,
-    "file": "OP10-PR.json"
+    "file": "OP10-PR.json",
+    "color": "#2e2b65"
   },
   {
     "code": "OP11",
     "name": "A Fist of Divine Speed",
     "groupId": 24241,
-    "file": "OP11.json"
+    "file": "OP11.json",
+    "color": "#811f5d"
   },
   {
     "code": "OP11-PR",
     "name": "A Fist of Divine Speed Release Event Cards",
     "groupId": 24242,
-    "file": "OP11-PR.json"
+    "file": "OP11-PR.json",
+    "color": "#811f5d"
   },
   {
     "code": "OP12",
     "name": "Legacy of the Master",
     "groupId": 24302,
-    "file": "OP12.json"
+    "file": "OP12.json",
+    "color": "#186745"
   },
   {
     "code": "OP12-PR",
     "name": "Legacy of the Master Release Event Cards",
     "groupId": 24406,
-    "file": "OP12-PR.json"
+    "file": "OP12-PR.json",
+    "color": "#186745"
   },
   {
     "code": "OP13",
     "name": "Carrying On His Will",
     "groupId": 24303,
-    "file": "OP13.json"
+    "file": "OP13.json",
+    "color": "#a8232d"
   },
   {
     "code": "OP13-PR",
     "name": "Carrying On His Will: 3rd Anniversary Tournament Cards",
     "groupId": 24498,
-    "file": "OP13-PR.json"
+    "file": "OP13-PR.json",
+    "color": "#a8232d"
   },
   {
     "code": "OP14",
     "name": "The Azure Sea's Seven",
     "groupId": 24537,
-    "file": "OP14.json"
+    "file": "OP14.json",
+    "color": "#182a7d"
   },
   {
     "code": "OP14-PR",
     "name": "The Azure Sea's Seven Release Event Cards",
     "groupId": 24579,
-    "file": "OP14-PR.json"
+    "file": "OP14-PR.json",
+    "color": "#182a7d"
   },
   {
     "code": "OP15",
     "name": "Adventure on Kami's Island",
     "groupId": 24637,
-    "file": "OP15.json"
+    "file": "OP15.json",
+    "color": "#e4d250"
   },
   {
     "code": "OP15-PR",
     "name": "Adventure on Kami's Island Release Event Cards",
     "groupId": 24638,
-    "file": "OP15-PR.json"
+    "file": "OP15-PR.json",
+    "color": "#e4d250"
   },
   {
     "code": "OP16",
     "name": "The Time of Battle",
     "groupId": 24664,
-    "file": "OP16.json"
+    "file": "OP16.json",
+    "color": "#9d5147"
   },
   {
     "code": "OP16-PR",
     "name": "The Time of Battle Release Event Cards",
     "groupId": 24677,
-    "file": "OP16-PR.json"
+    "file": "OP16-PR.json",
+    "color": "#9d5147"
   },
   {
     "code": "OP17",
     "name": "The World's Strongest Warriors",
     "groupId": 24736,
-    "file": "OP17.json"
+    "file": "OP17.json",
+    "color": "#c69c3d"
   },
   {
     "code": "OP17-PR",
     "name": "The World's Strongest Warriors Release Event Cards",
     "groupId": 24775,
-    "file": "OP17-PR.json"
+    "file": "OP17-PR.json",
+    "color": "#c69c3d"
   },
   {
     "code": "EB01",
     "name": "Extra Booster: Memorial Collection",
     "groupId": 23333,
-    "file": "EB01.json"
+    "file": "EB01.json",
+    "color": "#d287a6"
   },
   {
     "code": "EB02",
     "name": "Extra Booster: Anime 25th Collection",
     "groupId": 23834,
-    "file": "EB02.json"
+    "file": "EB02.json",
+    "color": "#d18078"
   },
   {
     "code": "EB03",
     "name": "Extra Booster: One Piece Heroines Edition",
     "groupId": 24545,
-    "file": "EB03.json"
+    "file": "EB03.json",
+    "color": "#9e2c33"
   },
   {
     "code": "PRB01",
     "name": "Premium Booster -The Best-",
     "groupId": 23496,
-    "file": "PRB01.json"
+    "file": "PRB01.json",
+    "color": "#987e47"
   },
   {
     "code": "PRB02",
     "name": "Premium Booster -The Best- Vol. 2",
     "groupId": 24305,
-    "file": "PRB02.json"
+    "file": "PRB02.json",
+    "color": "#9e3e2d"
   },
   {
     "code": "Promo",
@@ -237,223 +274,260 @@
     "code": "ST-01",
     "name": "Starter Deck 1: Straw Hat Crew",
     "groupId": 3189,
-    "file": "ST-01.json"
+    "file": "ST-01.json",
+    "color": "#913128"
   },
   {
     "code": "ST-02",
     "name": "Starter Deck 2: Worst Generation",
     "groupId": 3191,
-    "file": "ST-02.json"
+    "file": "ST-02.json",
+    "color": "#367238"
   },
   {
     "code": "ST-03",
     "name": "Starter Deck 3: The Seven Warlords of The Sea",
     "groupId": 3192,
-    "file": "ST-03.json"
+    "file": "ST-03.json",
+    "color": "#2f438b"
   },
   {
     "code": "ST-04",
     "name": "Starter Deck 4: Animal Kingdom Pirates",
     "groupId": 3190,
-    "file": "ST-04.json"
+    "file": "ST-04.json",
+    "color": "#472176"
   },
   {
     "code": "ST-05",
     "name": "Starter Deck 5: Film Edition",
     "groupId": 17687,
-    "file": "ST-05.json"
+    "file": "ST-05.json",
+    "color": "#c5936e"
   },
   {
     "code": "ST-06",
     "name": "Starter Deck 6: Absolute Justice",
     "groupId": 17699,
-    "file": "ST-06.json"
+    "file": "ST-06.json",
+    "color": "#a35c35"
   },
   {
     "code": "ST-07",
     "name": "Starter Deck 7: Big Mom Pirates",
     "groupId": 22930,
-    "file": "ST-07.json"
+    "file": "ST-07.json",
+    "color": "#cdbe3a"
   },
   {
     "code": "ST-08",
     "name": "Starter Deck 8: Monkey.D.Luffy",
     "groupId": 22956,
-    "file": "ST-08.json"
+    "file": "ST-08.json",
+    "color": "#9f7051"
   },
   {
     "code": "ST-09",
     "name": "Starter Deck 9: Yamato",
     "groupId": 22957,
-    "file": "ST-09.json"
+    "file": "ST-09.json",
+    "color": "#c9ba52"
   },
   {
     "code": "ST-10",
     "name": "Ultra Deck: The Three Captains",
     "groupId": 23243,
-    "file": "ST-10.json"
+    "file": "ST-10.json",
+    "color": "#22103d"
   },
   {
     "code": "ST-11",
     "name": "Starter Deck 11: Uta",
     "groupId": 23250,
-    "file": "ST-11.json"
+    "file": "ST-11.json",
+    "color": "#ab4f73"
   },
   {
     "code": "ST-12",
     "name": "Starter Deck 12: Zoro and Sanji",
     "groupId": 23348,
-    "file": "ST-12.json"
+    "file": "ST-12.json",
+    "color": "#1a2aa7"
   },
   {
     "code": "ST-13",
     "name": "Ultra Deck: The Three Brothers",
     "groupId": 23349,
-    "file": "ST-13.json"
+    "file": "ST-13.json",
+    "color": "#702f26"
   },
   {
     "code": "ST-14",
     "name": "Starter Deck 14: 3D2Y",
     "groupId": 23489,
-    "file": "ST-14.json"
+    "file": "ST-14.json",
+    "color": "#ab6e47"
   },
   {
     "code": "ST-15",
     "name": "Starter Deck 15: RED Edward.Newgate",
     "groupId": 23490,
-    "file": "ST-15.json"
+    "file": "ST-15.json",
+    "color": "#b92a2f"
   },
   {
     "code": "ST-16",
     "name": "Starter Deck 16: GREEN Uta",
     "groupId": 23491,
-    "file": "ST-16.json"
+    "file": "ST-16.json",
+    "color": "#39892a"
   },
   {
     "code": "ST-17",
     "name": "Starter Deck 17: BLUE Donquixote Doflamingo",
     "groupId": 23492,
-    "file": "ST-17.json"
+    "file": "ST-17.json",
+    "color": "#23519a"
   },
   {
     "code": "ST-18",
     "name": "Starter Deck 18: PURPLE Monkey.D.Luffy",
     "groupId": 23493,
-    "file": "ST-18.json"
+    "file": "ST-18.json",
+    "color": "#8c1da0"
   },
   {
     "code": "ST-19",
     "name": "Starter Deck 19: BLACK Smoker",
     "groupId": 23494,
-    "file": "ST-19.json"
+    "file": "ST-19.json",
+    "color": "#34576a"
   },
   {
     "code": "ST-20",
     "name": "Starter Deck 20: YELLOW Charlotte Katakuri",
     "groupId": 23495,
-    "file": "ST-20.json"
+    "file": "ST-20.json",
+    "color": "#ded024"
   },
   {
     "code": "ST-21",
     "name": "Starter Deck EX: Gear 5",
     "groupId": 23991,
-    "file": "ST-21.json"
+    "file": "ST-21.json",
+    "color": "#5f4286"
   },
   {
     "code": "ST-22",
     "name": "Starter Deck 22: Ace & Newgate",
     "groupId": 24304,
-    "file": "ST-22.json"
+    "file": "ST-22.json",
+    "color": "#1c73ac"
   },
   {
     "code": "ST-23",
     "name": "Starter Deck 23: RED Shanks",
     "groupId": 24282,
-    "file": "ST-23.json"
+    "file": "ST-23.json",
+    "color": "#9b2b34"
   },
   {
     "code": "ST-24",
     "name": "Starter Deck 24: GREEN Jewelry Bonney",
     "groupId": 24283,
-    "file": "ST-24.json"
+    "file": "ST-24.json",
+    "color": "#2b8061"
   },
   {
     "code": "ST-25",
     "name": "Starter Deck 25: BLUE Buggy",
     "groupId": 24284,
-    "file": "ST-25.json"
+    "file": "ST-25.json",
+    "color": "#3478a4"
   },
   {
     "code": "ST-26",
     "name": "Starter Deck 26: PURPLE/BLACK Monkey.D.Luffy",
     "groupId": 24285,
-    "file": "ST-26.json"
+    "file": "ST-26.json",
+    "color": "#633c7a"
   },
   {
     "code": "ST-27",
     "name": "Starter Deck 27: BLACK Marshall.D.Teach",
     "groupId": 24286,
-    "file": "ST-27.json"
+    "file": "ST-27.json",
+    "color": "#9d6056"
   },
   {
     "code": "ST-28",
     "name": "Starter Deck 28: GREEN/YELLOW Yamato",
     "groupId": 24287,
-    "file": "ST-28.json"
+    "file": "ST-28.json",
+    "color": "#ccbb4e"
   },
   {
     "code": "ST-29",
     "name": "Starter Deck 29: Egghead",
     "groupId": 24575,
-    "file": "ST-29.json"
+    "file": "ST-29.json",
+    "color": "#e5ce3a"
   },
   {
     "code": "ST-30",
     "name": "Starter Deck EX: Luffy & Ace",
     "groupId": 24678,
-    "file": "ST-30.json"
+    "file": "ST-30.json",
+    "color": "#a8382b"
   },
   {
     "code": "ST-31",
     "name": "Starter Deck 31: RED Monkey.D.Luffy",
     "groupId": 24749,
-    "file": "ST-31.json"
+    "file": "ST-31.json",
+    "color": "#b32731"
   },
   {
     "code": "ST-32",
     "name": "Starter Deck 32: GREEN Roronoa Zoro",
     "groupId": 24750,
-    "file": "ST-32.json"
+    "file": "ST-32.json",
+    "color": "#18805d"
   },
   {
     "code": "ST-33",
     "name": "Starter Deck 33: BLUE Kuzan",
     "groupId": 24751,
-    "file": "ST-33.json"
+    "file": "ST-33.json",
+    "color": "#2076a6"
   },
   {
     "code": "ST-34",
     "name": "Starter Deck 34: PURPLE Charlotte Katakuri",
     "groupId": 24752,
-    "file": "ST-34.json"
+    "file": "ST-34.json",
+    "color": "#77277d"
   },
   {
     "code": "ST-35",
     "name": "Starter Deck 35: RED/BLACK Sabo",
     "groupId": 24753,
-    "file": "ST-35.json"
+    "file": "ST-35.json",
+    "color": "#9d352a"
   },
   {
     "code": "ST-36",
     "name": "Starter Deck 36: YELLOW Eustass\"Captain\"Kid",
     "groupId": 24754,
-    "file": "ST-36.json"
+    "file": "ST-36.json",
+    "color": "#dcc02e"
   },
   {
     "code": "EB05",
     "name": "Extra Booster: One Piece Heroine's Edition Vol. 2",
     "groupId": 24820,
-    "file": "EB05.json"
+    "file": "EB05.json",
+    "color": "#d88eb0"
   },
   {
     "code": "OP18",
@@ -465,7 +539,8 @@
     "code": "SD01",
     "name": "Set Sail Deck Set",
     "groupId": 24708,
-    "file": "SD01.json"
+    "file": "SD01.json",
+    "color": "#dbc91e"
   },
   {
     "code": "OP-DD",
@@ -483,31 +558,36 @@
     "code": "OP04-PR",
     "name": "Kingdoms of Intrigue Pre-Release Cards",
     "groupId": 23297,
-    "file": "OP04-PR.json"
+    "file": "OP04-PR.json",
+    "color": "#bda325"
   },
   {
     "code": "ST-01-PR",
     "name": "Super Pre-Release Starter Deck 1: Straw Hat Crew",
     "groupId": 17659,
-    "file": "ST-01-PR.json"
+    "file": "ST-01-PR.json",
+    "color": "#913128"
   },
   {
     "code": "ST-02-PR",
     "name": "Super Pre-Release Starter Deck 2: Worst Generation",
     "groupId": 17658,
-    "file": "ST-02-PR.json"
+    "file": "ST-02-PR.json",
+    "color": "#367238"
   },
   {
     "code": "ST-03-PR",
     "name": "Super Pre-Release Starter Deck 3: The Seven Warlords of the Sea",
     "groupId": 17660,
-    "file": "ST-03-PR.json"
+    "file": "ST-03-PR.json",
+    "color": "#2f438b"
   },
   {
     "code": "ST-04-PR",
     "name": "Super Pre-Release Starter Deck 4: Animal Kingdom Pirates",
     "groupId": 17661,
-    "file": "ST-04-PR.json"
+    "file": "ST-04-PR.json",
+    "color": "#472176"
   },
   {
     "code": "OP18-PR",

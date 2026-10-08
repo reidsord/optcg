@@ -61,10 +61,10 @@ def main_color(img):
     for i in range(0, len(data), 3):
         r, g, b = data[i], data[i + 1], data[i + 2]
         h, s, v = colorsys.rgb_to_hsv(r / 255, g / 255, b / 255)
-        if s < 0.35 or v < 0.2:  # white background, greys, shadows
+        if s < 0.3 or v < 0.2:  # white background, greys, shadows
             continue
         k = int(h * 24) % 24
-        w = s * s * v  # favor vivid box colors over skin tones and muted art
+        w = s * v
         acc = bins.setdefault(k, [0.0, 0.0, 0.0, 0.0])
         acc[0] += w
         acc[1] += r * w
