@@ -9,6 +9,8 @@ JSON files in this repo.
   most valuable, not owned, new). Tap + or − to change quantities, or tap a card
   for its details, price history and other printings.
 - **Packs**: type card numbers as you open packs; each one adds a copy.
+- **Decks**: paste a decklist to see what you own, what's missing and what it
+  costs; missing cards copy straight into TCGplayer Mass Entry.
 - **Orders**: orders and preorders with paid and remaining totals.
 - **History**: recent quantity changes, with undo.
 
@@ -24,6 +26,7 @@ JSON files in this repo.
 | `data/meta.json` | When prices were updated, plus the settings the daily job uses. |
 | `data/price-history.json` | Each card's price whenever it moved at least 5% and 10¢, one card per line. |
 | `data/value-history.json` | Collection value on each day the price job ran. |
+| `data/decks.json` | Decks saved on the Decks tab. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
 | `scripts/import_backup.py` | One-time import of a backup from the old ChatGPT-hosted app. |
 
@@ -47,6 +50,10 @@ good, delete its line and add its `productId` to `excludedProducts`.
 2. Run the **Deploy site** workflow once (later changes under `site/` deploy on their own).
 3. Optionally run **Update prices and new cards** to switch from the imported
    market prices to lowest listed prices right away.
+
+On a phone, open the site and use **Share → Add to Home Screen** (iPhone) or
+**Install app** (Android). It then opens full screen and shows the last loaded
+collection when offline.
 
 ## Local preview
 
