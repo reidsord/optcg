@@ -58,8 +58,12 @@ const series = (code) => { const i = SERIES.indexOf(code.match(/^[A-Z]+/)?.[0]);
 const setOrder = (a, b) =>
   GROUP_ORDER.indexOf(setGroup(a.code)) - GROUP_ORDER.indexOf(setGroup(b.code)) ||
   series(b.code) - series(a.code) || a.code.localeCompare(b.code, 'en', { numeric: true });
+// Small sets the set picker shows as one item.
+const BUNDLES = [{ code: 'ST-SPR', name: 'Super Pre-Release Starter Decks (ST-01 to ST-04)', group: 'Starter decks', test: (code) => /^ST-\d+-PR$/.test(code) }];
+const bundleOf = (code) => BUNDLES.find((b) => b.test(code));
+const bundleSets = (code) => { const b = BUNDLES.find((x) => x.code === code); return b ? S.sets.filter((s) => b.test(s.code)).map((s) => s.code) : null; };
 // Pre-release and release event sets (OP14-PR) belong to their main set (OP14) in the set picker.
-const parentSet = (code) => { const m = /^(.+)-PR$/.exec(code); return m && S.setByCode.has(m[1]) ? m[1] : null; };
+const parentSet = (code) => { const m = !bundleOf(code) && /^(.+)-PR$/.exec(code); return m && S.setByCode.has(m[1]) ? m[1] : null; };
 const eventSets = (code) => S.sets.filter((s) => parentSet(s.code) === code).map((s) => s.code);
 const eventLabel = (code) => {
   const name = S.setByCode.get(code)?.name || '';
@@ -67,8 +71,11 @@ const eventLabel = (code) => {
 };
 // Set picker options, grouped like Home with the newest set first.
 const setOptions = (selected) => GROUP_ORDER.map((g) => {
-  const sets = S.sets.filter((s) => setGroup(s.code) === g && !parentSet(s.code)).reverse();
-  return sets.length ? `<optgroup label="${esc(g)}">${options(sets.map((s) => [s.code, `${s.code} · ${s.name}`]), selected)}</optgroup>` : '';
+  const items = [
+    ...BUNDLES.filter((b) => b.group === g && bundleSets(b.code).length).map((b) => [b.code, b.name]),
+    ...S.sets.filter((s) => setGroup(s.code) === g && !parentSet(s.code) && !bundleOf(s.code)).reverse().map((s) => [s.code, `${s.code} · ${s.name}`]),
+  ];
+  return items.length ? `<optgroup label="${esc(g)}">${options(items, selected)}</optgroup>` : '';
 }).join('');
 
 // Each set gets its own color on Home; the golden angle keeps neighbouring sets far apart.
@@ -742,9 +749,10 @@ const SORTS = [['set', 'Set order'], ['price-desc', 'Price: high to low'], ['pri
 
 function readQuery() {
   const q = new URLSearchParams(location.hash.split('?')[1] || '');
-  // ed: '' for the whole set, 'main' for the main set only, 'event' for its release event cards only.
+  // ed: '' for the main set, 'event' for its pre-release or release event cards.
   let set = q.get('set') || '', ed = q.get('ed') || '';
-  if (parentSet(set)) { ed = 'event'; set = parentSet(set); } // links from Home tiles like OP14-PR
+  if (bundleOf(set)) set = bundleOf(set).code; // links from Home tiles like ST-01-PR
+  else if (parentSet(set)) { ed = 'event'; set = parentSet(set); } // and like OP14-PR
   return {
     q: q.get('q') || '', preset: q.get('preset') || 'all', set, ed, own: q.get('own') || '',
     variant: q.get('variant') || '', rarity: q.get('rarity') || '', sort: q.get('sort') || '',
@@ -760,7 +768,7 @@ function writeQuery(f) {
 
 function filterCards(f) {
   const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
-  const sets = f.set && new Set(f.ed === 'main' ? [f.set] : f.ed === 'event' ? eventSets(f.set) : [f.set, ...eventSets(f.set)]);
+  const sets = f.set && new Set(bundleSets(f.set) || (f.ed === 'event' && eventSets(f.set).length ? eventSets(f.set) : [f.set]));
   let list = S.cards.filter((c) => {
     if (sets && !sets.has(c.set)) return false;
     if (f.own === 'owned' && !(c.qty > 0)) return false;
@@ -862,7 +870,7 @@ function renderCards(main) {
       <div class="set-row">
         <select class="select set-pick${f.set ? ' on' : ''}" id="f-set" aria-label="Set"><option value="">All sets</option>${setOptions(f.set)}</select>
         ${f.set && eventSets(f.set).length ? `<div class="seg" role="group" aria-label="Which cards in ${esc(f.set)}">
-          ${[['', 'Whole set'], ['main', 'Main set'], ['event', eventLabel(eventSets(f.set)[0])]].map(([v, l]) =>
+          ${[['', 'Main set'], ['event', eventLabel(eventSets(f.set)[0])]].map(([v, l]) =>
             `<button type="button" data-ed="${v}" aria-pressed="${f.ed === v}">${esc(l)}</button>`).join('')}
         </div>` : ''}
       </div>
