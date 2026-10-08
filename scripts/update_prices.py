@@ -82,6 +82,10 @@ def main(dry_run=False):
     for s in sets:
         by_group.setdefault(s["groupId"], []).append(s["code"])
 
+    def value():
+        return sum((c.get("qty") or 0) * (c.get("price") or 0) for rows in cards.values() for c in rows)
+
+    value_before = value()
     price_changes, new_cards, failed = 0, [], []
     for group_id, set_codes in by_group.items():
         try:
@@ -105,7 +109,7 @@ def main(dry_run=False):
         # New listings go to the first set mapped to this group.
         home = set_codes[0]
         for p in sorted(products, key=lambda p: (not extended(p, "Number"), extended(p, "Number") or "", p["name"])):
-            if p["productId"] in known_products:
+            if p["productId"] in known_products or "Japanese" in p["name"]:
                 continue
             number = extended(p, "Number") or ""
             alt, target = classify(p["name"], number, home)
@@ -125,6 +129,7 @@ def main(dry_run=False):
             known_products.add(p["productId"])
             new_cards.append(f"{home} {number} {p['name']}")
 
+    print(f"Collection value ${value_before:,.2f} -> ${value():,.2f}")
     print(f"{price_changes} price changes, {len(new_cards)} new cards, {len(new_sets)} new sets, {len(failed)} failed groups")
     for line in new_sets:
         print("  new set:", line)
