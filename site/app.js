@@ -23,6 +23,8 @@ const store = {
 const S = {
   sets: [], setByCode: new Map(), cards: [], byId: new Map(),
   orders: [], notes: '', history: [], meta: {},
+  priceHist: new Map(), valueHist: [], range: store.get('range') || '365', chartCleanup: null,
+  packLog: (() => { try { return JSON.parse(store.get('pack-log') || '[]'); } catch { return []; } })(),
   homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
   pendingCards: {}, pendingOrders: false, pendingNotes: false,
   saving: false, saveTimer: null, error: null,
@@ -38,6 +40,7 @@ const buyNeed = (c) =>
   kind(c) === 'base' && isBoosterSet(c.set) && !isSealed(c) && c.rarity !== 'DON!!' && c.qty < c.target ? c.target - c.qty : 0;
 const isNew = (c) => c.added && Date.now() - Date.parse(c.added) < NEW_DAYS * 864e5;
 const image = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_200w.jpg`;
+const bigImage = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_in_1000x1000.jpg`;
 const tcgLink = (c) => `https://www.tcgplayer.com/product/${c.productId}`;
 
 function setGroup(code) {
@@ -48,6 +51,108 @@ function setGroup(code) {
   return 'Promos and other';
 }
 const GROUP_ORDER = ['Booster sets', 'Extra and premium boosters', 'Starter decks', 'Pre-release and event cards', 'Promos and other'];
+
+// ---------- Price trends ----------
+// price-history.json keeps a point only when a price moves, so a card's price on a
+// day is its latest point on or before that day.
+
+const isoDay = (t = Date.now()) => new Date(t).toISOString().slice(0, 10);
+const daysAgo = (n) => isoDay(Date.now() - n * 864e5);
+
+function priceOn(c, day) {
+  let price = null;
+  for (const [d, v] of S.priceHist.get(c.productId) || []) { if (d > day) break; price = v; }
+  return price;
+}
+
+function weekChange(c) {
+  const was = priceOn(c, daysAgo(7));
+  if (c.price == null || !was) return null;
+  return { was, d: c.price - was, pct: (c.price - was) / was };
+}
+
+// Badge only for moves worth noticing, so cheap cards jumping a few cents stay quiet.
+function changeBadge(c, always = false) {
+  const ch = weekChange(c);
+  if (!ch || (!always && (Math.abs(ch.pct) < 0.1 || Math.abs(ch.d) < 0.25)) || ch.d === 0) return '';
+  const up = ch.d > 0;
+  return `<span class="chg ${up ? 'up' : 'down'}" title="Over 7 days, from ${money(ch.was)}">${up ? '▲' : '▼'} ${Math.round(Math.abs(ch.pct) * 100)}%</span>`;
+}
+
+function niceTicks(lo, hi, n = 4) {
+  if (lo === hi) { lo -= 1; hi += 1; }
+  const raw = (hi - lo) / n;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((s) => s >= raw);
+  const ticks = [];
+  for (let v = Math.floor(lo / step) * step; v <= hi + step * 0.001; v += step) ticks.push(+v.toFixed(10));
+  if (ticks[ticks.length - 1] < hi) ticks.push(ticks[ticks.length - 1] + step);
+  return ticks;
+}
+
+const shortMoney = (v) => (Math.abs(v) >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'k' : money(v).replace(/\.00$/, ''));
+const dayLabel = (d, year) => new Date(d + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...(year ? { year: 'numeric' } : {}), timeZone: 'UTC' });
+
+// One-series line chart with a hover crosshair. points: [{ d: 'YYYY-MM-DD', v }].
+// step: the value holds until the next point (prices); otherwise points join directly.
+function lineChart(el, points, { height = 220, step = false } = {}) {
+  const draw = () => {
+    const W = Math.max(el.clientWidth, 200), H = height, L = 52, R = 10, T = 40, B = 24;
+    const xs = points.map((p) => Date.parse(p.d));
+    const x0 = xs[0], x1 = Math.max(xs[xs.length - 1], x0 + 864e5);
+    const vs = points.map((p) => p.v);
+    const ticks = niceTicks(Math.min(...vs), Math.max(...vs));
+    const y0 = ticks[0], y1 = ticks[ticks.length - 1];
+    const X = (t) => L + ((t - x0) / (x1 - x0)) * (W - L - R);
+    const Y = (v) => T + (1 - (v - y0) / (y1 - y0 || 1)) * (H - T - B);
+    let path = '';
+    points.forEach((p, i) => {
+      const x = X(xs[i]).toFixed(1), y = Y(p.v).toFixed(1);
+      if (!i) path = `M${x},${y}`;
+      else path += step ? `H${x}V${y}` : `L${x},${y}`;
+    });
+    const area = `${path}V${H - B}H${X(xs[0]).toFixed(1)}Z`;
+    const years = new Date(x0).getUTCFullYear() !== new Date(x1).getUTCFullYear();
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Line chart from ${esc(dayLabel(points[0].d, true))} to ${esc(dayLabel(points[points.length - 1].d, true))}">
+      ${ticks.map((t) => `<line class="grid" x1="${L}" x2="${W - R}" y1="${Y(t)}" y2="${Y(t)}"/><text class="axis" x="${L - 8}" y="${Y(t) + 4}" text-anchor="end">${shortMoney(t)}</text>`).join('')}
+      <path class="area" d="${area}"/><path class="line" d="${path}"/>
+      <text class="axis" x="${L}" y="${H - 6}">${dayLabel(points[0].d, years)}</text>
+      <text class="axis" x="${W - R}" y="${H - 6}" text-anchor="end">${dayLabel(points[points.length - 1].d, years)}</text>
+      <g class="hover" visibility="hidden"><line class="cross" y1="${T}" y2="${H - B}"/><circle r="4.5"/></g>
+      <rect class="hit" x="${L}" y="0" width="${W - L - R}" height="${H}"/>
+    </svg><div class="tip" hidden></div>`;
+    const svg = el.querySelector('svg'), g = el.querySelector('.hover'), tip = el.querySelector('.tip');
+    const show = (e) => {
+      const r = svg.getBoundingClientRect();
+      const t = x0 + ((e.clientX - r.left) * (W / r.width) - L) / (W - L - R) * (x1 - x0);
+      let i = 0;
+      if (step) { while (i < xs.length - 1 && xs[i + 1] <= t) i++; }
+      else xs.forEach((x, j) => { if (Math.abs(x - t) < Math.abs(xs[i] - t)) i = j; });
+      const px = step ? X(Math.min(Math.max(t, x0), x1)) : X(xs[i]);
+      g.setAttribute('visibility', 'visible');
+      g.querySelector('line').setAttribute('x1', px); g.querySelector('line').setAttribute('x2', px);
+      g.querySelector('circle').setAttribute('cx', px); g.querySelector('circle').setAttribute('cy', Y(points[i].v));
+      tip.hidden = false;
+      tip.innerHTML = `<b>${money(points[i].v)}</b><span>${dayLabel(step ? isoDay(Math.min(Math.max(t, x0), x1)) : points[i].d, true)}</span>`;
+      const left = (px / W) * r.width;
+      tip.style.left = Math.min(Math.max(left, 60), r.width - 60) + 'px';
+    };
+    svg.addEventListener('pointermove', show);
+    svg.addEventListener('pointerdown', show);
+    svg.addEventListener('pointerleave', () => { g.setAttribute('visibility', 'hidden'); tip.hidden = true; });
+  };
+  draw();
+  let w = el.clientWidth;
+  const ro = new ResizeObserver(() => { if (el.clientWidth !== w) { w = el.clientWidth; draw(); } });
+  ro.observe(el);
+  return () => ro.disconnect();
+}
+
+function cardPriceSeries(c) {
+  const pts = (S.priceHist.get(c.productId) || []).map(([d, v]) => ({ d, v }));
+  if (c.price != null && (!pts.length || pts[pts.length - 1].d < isoDay())) pts.push({ d: isoDay(), v: c.price });
+  return pts;
+}
 
 // ---------- GitHub ----------
 
@@ -119,6 +224,10 @@ async function load() {
     getJson('data/sets.json', sha), getJson('data/orders.json', sha), getJson('data/notes.json', sha),
     getJson('data/history.json', sha), getJson('data/meta.json', sha),
   ]);
+  const optional = (path) => getJson(path, sha).catch(() => []);
+  const [priceHist, valueHist] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json')]);
+  S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
+  S.valueHist = valueHist;
   const files = await Promise.all(sets.map((s) => getJson(`data/cards/${s.file}`, sha)));
   S.sets = sets;
   S.setByCode = new Map(sets.map((s, i) => [s.code, { ...s, index: i }]));
@@ -419,6 +528,22 @@ function renderHome(main) {
         <input id="home-q" type="search" placeholder="Find a card: name, card ID, or set" value="${esc(S.homeQ)}" aria-label="Find a card" autocomplete="off"></label>
       <div id="home-results" aria-live="polite"></div>
     </div>
+    <div class="trends">
+      <section class="callout chart-card">
+        <div class="chart-head">
+          <div><h3>Collection value</h3><div class="big" id="value-now"></div><div class="muted small" id="value-change"></div></div>
+          <div class="chips" role="group" aria-label="Time range">
+            ${RANGES.map(([v, l]) => `<button type="button" class="chip" data-range="${v}" aria-pressed="${S.range === v}">${l}</button>`).join('')}
+          </div>
+        </div>
+        <div class="chart" id="value-chart"></div>
+        <p class="muted small chart-note" id="value-note"></p>
+      </section>
+      <section class="callout movers">
+        <h3>Biggest movers this week</h3>
+        <div id="movers"></div>
+      </section>
+    </div>
     <div class="callouts">
       <a class="callout tile" href="#cards?preset=buy">
         <h3>Buy list</h3>
@@ -463,11 +588,73 @@ function renderHome(main) {
   const notes = $('#notes', main);
   if (notes) notes.addEventListener('input', () => { S.notes = notes.value; S.pendingNotes = true; changed(); });
 
+  renderValueChart();
+  main.querySelectorAll('[data-range]').forEach((b) => (b.onclick = () => {
+    S.range = b.dataset.range;
+    store.set('range', S.range);
+    main.querySelectorAll('[data-range]').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    renderValueChart();
+  }));
+  renderMovers();
+
   const input = $('#home-q', main);
   let typing;
   input.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => { S.homeQ = input.value; renderHomeResults(); }, 120); });
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && input.value.trim()) location.hash = '#cards?q=' + encodeURIComponent(input.value.trim()); });
   renderHomeResults();
+}
+
+const RANGES = [['30', '1M'], ['90', '3M'], ['365', '1Y'], ['all', 'All']];
+
+function valueSeries() {
+  const live = { d: isoDay(), v: totals().value };
+  const pts = S.valueHist.filter((r) => r.date < live.d).map((r) => ({ d: r.date, v: r.value, backfill: r.backfill }));
+  pts.push(live);
+  return S.range === 'all' ? pts : pts.filter((p) => p.d >= daysAgo(+S.range));
+}
+
+function renderValueChart() {
+  const el = $('#value-chart');
+  if (!el) return;
+  S.chartCleanup?.();
+  const pts = valueSeries();
+  const now = pts[pts.length - 1].v;
+  $('#value-now').textContent = money(now);
+  const first = pts[0];
+  const change = $('#value-change'), note = $('#value-note');
+  if (pts.length < 2) {
+    change.textContent = '';
+    el.innerHTML = `<p class="chart-empty">The chart fills in as the daily price update runs.</p>`;
+    note.textContent = '';
+    return;
+  }
+  const d = now - first.v;
+  change.innerHTML = `<span class="${d >= 0 ? 'delta-up' : 'delta-down'}">${d >= 0 ? '▲ +' : '▼ −'}${money(Math.abs(d))} (${first.v ? Math.abs(Math.round((d / first.v) * 1000) / 10) : 0}%)</span> since ${esc(dayLabel(first.d, true))}`;
+  S.chartCleanup = lineChart(el, pts);
+  const firstReal = S.valueHist.find((r) => !r.backfill);
+  note.textContent = pts.some((p) => p.backfill) && firstReal
+    ? `Before ${dayLabel(firstReal.date, true)}, values price today's cards at that week's lowest listed prices.`
+    : '';
+}
+
+function renderMovers() {
+  const el = $('#movers');
+  if (!el) return;
+  const moves = S.cards
+    .filter((c) => c.qty > 0)
+    .map((c) => ({ c, ch: weekChange(c) }))
+    .filter((m) => m.ch && m.ch.d)
+    .sort((a, b) => Math.abs(b.c.qty * b.ch.d) - Math.abs(a.c.qty * a.ch.d))
+    .slice(0, 6);
+  el.innerHTML = moves.length
+    ? `<ul class="mover-list">${moves.map(({ c, ch }) => {
+        const up = ch.d > 0, total = c.qty * ch.d;
+        return `<li data-id="${esc(c.id)}"><button type="button" class="mover" data-open>
+          <span class="mover-name"><b>${esc(c.name)}</b><span class="muted">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${c.qty} owned · ${money(ch.was)} → ${money(c.price)}</span></span>
+          <span class="mover-amt ${up ? 'delta-up' : 'delta-down'}">${up ? '▲ +' : '▼ −'}${money(Math.abs(total))}</span>
+        </button></li>`;
+      }).join('')}</ul>`
+    : '<p class="muted small">No price moves yet. This fills in after a week of daily price updates.</p>';
 }
 
 // Quick lookup on Home: closest matches first, with price and quantity buttons.
@@ -563,23 +750,23 @@ function cardHtml(c, f, view) {
   const img = `<img src="${image(c)}" alt="" loading="lazy" decoding="async" data-fallback="${esc(c.name)}">`;
   if (view === 'list') {
     return `<div class="row" data-id="${esc(c.id)}">
-      <a href="${tcgLink(c)}" target="_blank" rel="noopener" aria-label="${esc(c.name)} on TCGplayer">${img}</a>
-      <div><div class="title">${esc(c.name)}</div><div class="info">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${esc(cardInfo(c, f))}</div></div>
-      <span class="price">${c.price != null ? money(c.price) : '–'}</span>
+      <a href="${tcgLink(c)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(c.name)}">${img}</a>
+      <div><div class="title" data-open>${esc(c.name)}</div><div class="info">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${esc(cardInfo(c, f))}</div></div>
+      <span class="price">${c.price != null ? money(c.price) : '–'}${changeBadge(c)}</span>
       ${qtyControl(c)}
     </div>`;
   }
   return `<article class="card" data-id="${esc(c.id)}">
-    <a class="art" href="${tcgLink(c)}" target="_blank" rel="noopener" aria-label="${esc(c.name)} on TCGplayer">
+    <a class="art" href="${tcgLink(c)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(c.name)}">
       ${img}
       ${isNew(c) ? '<span class="badge new">New</span>' : ''}
       <span class="badge${c.qty > 0 ? ' owned' : ''}">${c.qty > 0 ? `${c.qty} owned` : 'Not owned'}</span>
     </a>
     <div class="body">
       <div class="meta">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}</div>
-      <div class="title">${esc(c.name)}</div>
+      <div class="title" data-open>${esc(c.name)}</div>
       <div class="info">${esc(cardInfo(c, f))}</div>
-      <div class="foot-row"><span class="price">${c.price != null ? money(c.price) : '–'}</span>${qtyControl(c)}</div>
+      <div class="foot-row"><span class="price">${c.price != null ? money(c.price) : '–'}${changeBadge(c)}</span>${qtyControl(c)}</div>
     </div>
   </article>`;
 }
@@ -676,22 +863,204 @@ function renderCardsKeepFocus() {
 // Quantity steppers and broken images, handled once for every list.
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-step]');
-  if (!btn) return;
-  const host = btn.closest('[data-id]');
-  const c = S.byId.get(host.dataset.id);
-  setQty(c, c.qty + Number(btn.dataset.step));
-  host.querySelector('output').textContent = c.qty;
-  const badge = host.querySelector('.badge:not(.new)');
-  if (badge) { badge.textContent = c.qty > 0 ? `${c.qty} owned` : 'Not owned'; badge.classList.toggle('owned', c.qty > 0); }
+  if (btn) {
+    const c = S.byId.get(btn.closest('[data-id]').dataset.id);
+    setQty(c, c.qty + Number(btn.dataset.step));
+    showQty(c);
+    return;
+  }
+  // Tapping a card's picture or name opens its details; ctrl/cmd-click still opens TCGplayer.
+  const open = e.target.closest('[data-open]');
+  if (open && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+    e.preventDefault();
+    openCard(open.closest('[data-id]').dataset.id);
+  }
 });
+
+// The same card can be on screen twice (a list and its detail sheet), so update every copy.
+function showQty(c) {
+  document.querySelectorAll(`[data-id="${CSS.escape(c.id)}"]`).forEach((host) => {
+    const own = (sel) => [...host.querySelectorAll(sel)].filter((el) => el.closest('[data-id]') === host);
+    own('output').forEach((o) => (o.textContent = c.qty));
+    own('.badge:not(.new)').forEach((b) => { b.textContent = c.qty > 0 ? `${c.qty} owned` : 'Not owned'; b.classList.toggle('owned', c.qty > 0); });
+    own('[data-worth]').forEach((w) => (w.textContent = worthText(c)));
+  });
+}
 document.addEventListener('error', (e) => {
   const img = e.target;
   if (img.tagName !== 'IMG' || !img.dataset.fallback) return;
+  if (img.dataset.small && !img.src.endsWith(img.dataset.small)) { img.src = img.dataset.small; return; }
   const span = document.createElement('span');
   span.className = img.closest('.row') ? 'thumb noimg' : 'noimg';
   span.textContent = img.closest('.row') ? '' : img.dataset.fallback;
   img.replaceWith(span);
 }, true);
+
+// ---------- Card details ----------
+
+const worthText = (c) => `${c.qty} owned · target ${c.target}${c.price != null ? ` · worth ${money(c.qty * c.price)}` : ''}`;
+
+function openCard(id) {
+  const c = S.byId.get(id);
+  if (!c) return;
+  const d = $('#card-dialog');
+  const set = S.setByCode.get(c.set);
+  const others = c.cardId ? S.cards.filter((o) => o.cardId === c.cardId && o.id !== c.id) : [];
+  others.sort((a, b) => (b.qty > 0) - (a.qty > 0) || (a.price || 0) - (b.price || 0));
+  const ch = weekChange(c);
+  const f = { preset: 'all' };
+  d.innerHTML = `
+    <div class="sheet" data-id="${esc(c.id)}">
+      <button type="button" class="icon-btn sheet-close" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <div class="sheet-main">
+        <a class="sheet-art" href="${tcgLink(c)}" target="_blank" rel="noopener" aria-label="${esc(c.name)} on TCGplayer">
+          <img src="${bigImage(c)}" data-small="${image(c)}" data-fallback="${esc(c.name)}" alt="">
+        </a>
+        <div class="sheet-info">
+          <div class="meta">${esc(c.set)}${set ? ' · ' + esc(set.name) : ''}</div>
+          <h2>${esc(c.name)}</h2>
+          <div class="muted small">${[c.cardId, c.rarity, kind(c) === 'alt' ? 'Alternate art' : kind(c) === 'base' ? 'Base' : isSealed(c) ? 'Sealed' : ''].filter(Boolean).map(esc).join(' · ')}</div>
+          <div class="sheet-price">
+            <span class="big">${c.price != null ? money(c.price) : 'No listing'}</span>
+            ${changeBadge(c, true)}
+            <span class="muted small">${ch ? `${money(ch.was)} a week ago · ` : ''}lowest listed on TCGplayer</span>
+          </div>
+          <div class="sheet-qty">${qtyControl(c)}<span class="muted small" data-worth>${esc(worthText(c))}</span></div>
+          <h3>Price history</h3>
+          <div class="chart small-chart" id="card-chart"></div>
+          <div class="sheet-actions">
+            <a class="btn primary" href="${tcgLink(c)}" target="_blank" rel="noopener">View on TCGplayer</a>
+            <a class="btn" href="#cards?q=${encodeURIComponent(c.cardId || c.name)}" data-close>Find similar</a>
+          </div>
+        </div>
+      </div>
+      ${others.length ? `<h3 class="sheet-sub">Other printings of ${esc(c.cardId)}</h3>
+        <div class="list">${others.map((o) => cardHtml(o, f, 'list')).join('')}</div>` : ''}
+    </div>`;
+  if (!d.open) d.showModal();
+  d.scrollTop = 0;
+  const series = cardPriceSeries(c);
+  const chart = $('#card-chart', d);
+  S.sheetCleanup?.();
+  S.sheetCleanup = series.length > 1
+    ? lineChart(chart, series, { height: 180, step: true })
+    : (chart.innerHTML = '<p class="chart-empty">Price history starts with the next price changes.</p>', null);
+}
+
+$('#card-dialog').addEventListener('click', (e) => {
+  const d = $('#card-dialog');
+  if (e.target === d || e.target.closest('[data-close]')) d.close();
+});
+$('#card-dialog').addEventListener('close', () => { S.sheetCleanup?.(); S.sheetCleanup = null; });
+
+// ---------- Pack opening ----------
+
+const setPrefix = (code) => (code.match(/^[A-Z]+\d*/) || [''])[0];
+
+function packMatches(q, setCode) {
+  q = q.trim();
+  if (!q) return [];
+  let id = q.toUpperCase().replace(/\s+/g, '');
+  if (/^\d{1,3}$/.test(id)) id = `${setPrefix(setCode)}-${id.padStart(3, '0')}`;
+  let list = S.cards.filter((c) => c.cardId && c.cardId.toUpperCase() === id);
+  if (!list.length) list = filterCards({ q, preset: 'all', set: '', own: '', variant: '', rarity: '', sort: '' }).filter((c) => !isSealed(c));
+  const rank = (c) => (c.set === setCode ? 0 : 3) + (kind(c) === 'base' ? 0 : kind(c) === 'alt' ? 1 : 2);
+  return list.map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]).slice(0, 8);
+}
+
+function packRow(c, extra = '') {
+  return `<div class="row pack-row" data-id="${esc(c.id)}">
+    <img src="${image(c)}" alt="" loading="lazy" data-fallback="${esc(c.name)}">
+    <div><div class="title">${esc(c.name)}</div><div class="info">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}${c.rarity ? ' · ' + esc(c.rarity) : ''}${kind(c) === 'alt' ? ' · Alt' : ''} · ${c.qty} owned</div></div>
+    <span class="price">${c.price != null ? money(c.price) : '–'}</span>
+    ${extra}
+  </div>`;
+}
+
+function renderPacks(main) {
+  const boosters = S.sets.filter((s) => /^(OP|EB|PRB|ST)\d+/.test(s.code)).map((s) => s.code).sort((a, b) => b.localeCompare(a, 'en', { numeric: true }));
+  const newestOP = boosters.find((code) => /^OP\d+$/.test(code));
+  let setCode = store.get('pack-set');
+  if (!S.setByCode.has(setCode)) setCode = newestOP || S.sets[0]?.code;
+  if (!S.canEdit) {
+    main.innerHTML = `<div class="callout pack-signin"><h3>Pack opening</h3><p>Type card numbers as you open packs and each one is added to your collection. Sign in first so the changes can save.</p><button class="btn primary" id="pack-signin" type="button">Sign in</button></div>`;
+    $('#pack-signin', main).onclick = openAccount;
+    return;
+  }
+  const others = S.sets.map((s) => s.code).filter((code) => !boosters.includes(code));
+  main.innerHTML = `<div class="packs">
+    <div class="pack-bar">
+      <select class="select" id="pack-set" aria-label="Set you're opening">
+        <optgroup label="Boosters and decks">${options(boosters.map((code) => [code, `${code} · ${S.setByCode.get(code).name}`]), setCode)}</optgroup>
+        <optgroup label="Other">${options(others.map((code) => [code, `${code} · ${S.setByCode.get(code).name}`]), setCode)}</optgroup>
+      </select>
+      <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        <input id="pack-q" type="text" placeholder="Card number, e.g. 108 or ST01-012" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" aria-label="Card number or name"></label>
+    </div>
+    <p class="muted small pack-help">Type the number from the card and press Enter to add one copy of the highlighted printing. Tap a different printing to add that one instead.</p>
+    <div id="pack-matches"></div>
+    <div class="section-head"><h2>This session</h2><span class="hint" id="pack-summary"></span></div>
+    <div id="pack-log"></div></div>`;
+
+  const input = $('#pack-q', main);
+  let matches = [], sel = 0;
+  const showMatches = () => {
+    const box = $('#pack-matches', main);
+    if (!input.value.trim()) { box.innerHTML = ''; return; }
+    box.innerHTML = matches.length
+      ? `<div class="list">${matches.map((c, i) => packRow(c, `<button type="button" class="btn${i === sel ? ' primary' : ''} pack-add" data-add="${i}" aria-label="Add one ${esc(c.name)}">+1</button>`).replace('class="row pack-row"', `class="row pack-row${i === sel ? ' sel' : ''}"`)).join('')}</div>`
+      : '<p class="empty small">No card with that number. Check the set, or type the full number like OP15-108.</p>';
+  };
+  const add = (c) => {
+    setQty(c, c.qty + 1);
+    S.packLog.unshift({ id: c.id, t: Date.now() });
+    store.set('pack-log', JSON.stringify(S.packLog.slice(0, 500)));
+    input.value = ''; matches = []; sel = 0;
+    showMatches(); showLog();
+    input.focus();
+  };
+  const showLog = () => {
+    const log = S.packLog.map((p) => S.byId.get(p.id)).filter(Boolean);
+    const value = log.reduce((n, c) => n + (c.price || 0), 0);
+    const best = log.reduce((b, c) => ((c.price || 0) > (b?.price || 0) ? c : b), null);
+    $('#pack-summary', main).innerHTML = log.length
+      ? `${count(log.length)} ${log.length === 1 ? 'card' : 'cards'} · ${money(value)} pulled${best ? ` · best: ${esc(best.name)} (${money(best.price)})` : ''} · <button class="link-btn" id="pack-clear" type="button">Start over</button>`
+      : '';
+    $('#pack-log', main).innerHTML = log.length
+      ? `<div class="list">${log.map((c, i) => packRow(c, `<button type="button" class="link-btn" data-undo-pull="${i}">Undo</button>`)).join('')}</div>`
+      : '<p class="muted small">Cards you add show up here, newest first.</p>';
+    const clear = $('#pack-clear', main);
+    if (clear) clear.onclick = () => { S.packLog = []; store.set('pack-log', null); showLog(); };
+  };
+
+  input.addEventListener('input', () => { matches = packMatches(input.value, setCode); sel = 0; showMatches(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (matches.length) { sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length; showMatches(); }
+    } else if (e.key === 'Enter' && matches[sel]) { e.preventDefault(); add(matches[sel]); }
+  });
+  $('#pack-set', main).onchange = (e) => {
+    setCode = e.target.value;
+    store.set('pack-set', setCode);
+    matches = packMatches(input.value, setCode); sel = 0; showMatches();
+    input.focus();
+  };
+  $('.packs', main).addEventListener('click', (e) => {
+    const addBtn = e.target.closest('[data-add]');
+    if (addBtn) { add(matches[+addBtn.dataset.add]); return; }
+    const undo = e.target.closest('[data-undo-pull]');
+    if (undo) {
+      const [p] = S.packLog.splice(+undo.dataset.undoPull, 1);
+      const c = S.byId.get(p.id);
+      if (c) setQty(c, c.qty - 1);
+      store.set('pack-log', JSON.stringify(S.packLog));
+      showLog();
+    }
+  });
+  showLog();
+  if (matchMedia('(pointer: fine)').matches) input.focus();
+}
 
 function renderOrders(main) {
   const paid = S.orders.reduce((n, o) => n + (Number.isFinite(o.paid) ? o.paid : 0), 0);
@@ -783,11 +1152,13 @@ function renderHistory(main) {
 function render() {
   S.cleanup?.();
   S.cleanup = null;
+  S.chartCleanup?.();
+  S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, orders: renderOrders, history: renderHistory })[S.view](main);
 }
 
 window.addEventListener('hashchange', () => { render(); window.scrollTo({ top: 0 }); });

@@ -4,6 +4,8 @@
   category 68 is the English One Piece Card Game; Japanese is a separate category).
 - Adds cards newly listed in a tracked set, at 0 owned.
 - Adds whole sets released after the newest set already tracked.
+- Records price moves in data/price-history.json and today's collection value
+  in data/value-history.json, for the trend chart and price badges on the site.
 
 Usage: python3 scripts/update_prices.py [--dry-run]
 """
@@ -13,7 +15,11 @@ import time
 import urllib.request
 from datetime import datetime, timezone
 
-from common import DATA, card_row, classify, dump_rows, read_json, set_file, write_json, write_text
+from datetime import timedelta
+
+from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round,
+                    read_json, read_price_history, read_value_history, set_file, write_json,
+                    write_price_history, write_text, write_value_history)
 
 BASE = "https://tcgcsv.com/tcgplayer/68"
 UA = {"User-Agent": "reidsord-optcg-inventory/1.0 (+https://github.com/reidsord/optcg)"}
@@ -144,6 +150,7 @@ def main(dry_run=False):
         print("Every group failed; leaving data unchanged.")
         return 1
 
+    record_history(cards, today)
     for s in sets:
         write_text(f"{DATA}/cards/{s['file']}", dump_rows(cards[s["code"]]))
     write_json(f"{DATA}/sets.json", sets)
@@ -151,6 +158,21 @@ def main(dry_run=False):
     meta["priceSource"] = "TCGplayer lowest listed price (English)"
     write_json(f"{DATA}/meta.json", meta)
     return 0
+
+
+def record_history(cards, today):
+    history = read_price_history()
+    for rows in cards.values():
+        for c in rows:
+            add_price_point(history.setdefault(c["productId"], []), today, c.get("price"))
+    cutoff = (datetime.fromisoformat(today) - timedelta(days=HISTORY_DAYS)).date().isoformat()
+    write_price_history(history, cutoff)
+
+    owned = [c for rows in cards.values() for c in rows if (c.get("qty") or 0) > 0]
+    value = money_round(sum(c["qty"] * (c.get("price") or 0) for c in owned))
+    days = [r for r in read_value_history() if r["date"] != today]
+    days.append({"date": today, "value": value, "copies": sum(c["qty"] for c in owned)})
+    write_value_history(days)
 
 
 if __name__ == "__main__":

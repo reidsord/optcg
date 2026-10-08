@@ -1,0 +1,50 @@
+name: Backfill price history
+
+# Run once by hand to fill the trend chart with past prices from tcgcsv.com's archives.
+on:
+  workflow_dispatch:
+    inputs:
+      weeks:
+        description: Weeks of history to add (one price snapshot per week)
+        default: "52"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prices
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install py7zr
+
+      - name: Add past prices
+        env:
+          WEEKS: ${{ inputs.weeks }}
+        run: python3 scripts/backfill_history.py --weeks "$WEEKS"
+
+      - name: Commit changes
+        run: |
+          git config user.name "optcg-price-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/price-history.json data/value-history.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "Backfill price history"
+          for i in 1 2 3 4; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep $((i * 5))
+          done
+          exit 1

@@ -65,3 +65,57 @@ def write_json(path, value):
 
 def card_row(card):
     return {k: card[k] for k in CARD_FIELDS if card.get(k) is not None or k in ("qty", "price", "alt")}
+
+
+# ---------- Price and value history ----------
+# price-history.json: one line per product, {"p": productId, "h": [[date, price], ...]}.
+# A point is stored only when the price moves enough to matter, which keeps the
+# file small while the daily job runs for years.
+PRICE_HISTORY = os.path.join(DATA, "price-history.json")
+VALUE_HISTORY = os.path.join(DATA, "value-history.json")
+HISTORY_DAYS = 400
+MIN_MOVE, MIN_MOVE_PCT = 0.10, 0.05
+
+
+def read_price_history():
+    return {r["p"]: r["h"] for r in read_json(PRICE_HISTORY, [])}
+
+
+def write_price_history(history, cutoff=None):
+    rows = []
+    for p in sorted(history):
+        points = history[p]
+        if cutoff:
+            # Keep the last point before the cutoff so the price at the cutoff is still known.
+            old = [pt for pt in points if pt[0] < cutoff]
+            points = old[-1:] + [pt for pt in points if pt[0] >= cutoff]
+        if points:
+            rows.append({"p": p, "h": points})
+    return write_text(PRICE_HISTORY, dump_rows(rows))
+
+
+def add_price_point(points, date, price):
+    """Append (date, price) to one product's points if it moved enough. Points must arrive in date order."""
+    if price is None:
+        return
+    if points and points[-1][0] >= date:
+        return
+    if points:
+        last = points[-1][1]
+        if abs(price - last) < max(MIN_MOVE, MIN_MOVE_PCT * last):
+            return
+    points.append([date, price])
+
+
+def read_value_history():
+    return read_json(VALUE_HISTORY, [])
+
+
+def write_value_history(rows):
+    rows = sorted(rows, key=lambda r: r["date"])
+    return write_text(VALUE_HISTORY, dump_rows(rows))
+
+
+def money_round(x):
+    x = round(x, 2)
+    return int(x) if x == int(x) else x
