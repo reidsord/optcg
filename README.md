@@ -26,7 +26,6 @@ JSON files in this repo.
 | `data/value-history.json` | Collection value on each day the price job ran. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
 | `scripts/import_backup.py` | One-time import of a backup from the old ChatGPT-hosted app. |
-| `scripts/backfill_history.py` | One-time backfill of weekly past prices from tcgcsv.com's price archives. |
 
 Anyone with the link can view the site. Saving needs a GitHub fine-grained
 token with **Contents: Read and write** on this repository only; the site walks
@@ -48,8 +47,6 @@ good, delete its line and add its `productId` to `excludedProducts`.
 2. Run the **Deploy site** workflow once (later changes under `site/` deploy on their own).
 3. Optionally run **Update prices and new cards** to switch from the imported
    market prices to lowest listed prices right away.
-4. Optionally run **Backfill price history** once to fill the trend chart with
-   a year of weekly prices.
 
 ## Local preview
 
