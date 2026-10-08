@@ -58,9 +58,16 @@ const series = (code) => { const i = SERIES.indexOf(code.match(/^[A-Z]+/)?.[0]);
 const setOrder = (a, b) =>
   GROUP_ORDER.indexOf(setGroup(a.code)) - GROUP_ORDER.indexOf(setGroup(b.code)) ||
   series(b.code) - series(a.code) || a.code.localeCompare(b.code, 'en', { numeric: true });
+// Pre-release and release event sets (OP14-PR) belong to their main set (OP14) in the set picker.
+const parentSet = (code) => { const m = /^(.+)-PR$/.exec(code); return m && S.setByCode.has(m[1]) ? m[1] : null; };
+const eventSets = (code) => S.sets.filter((s) => parentSet(s.code) === code).map((s) => s.code);
+const eventLabel = (code) => {
+  const name = S.setByCode.get(code)?.name || '';
+  return /pre-?release/i.test(name) ? 'Pre-release cards' : /tournament/i.test(name) ? 'Tournament cards' : 'Release event cards';
+};
 // Set picker options, grouped like Home with the newest set first.
 const setOptions = (selected) => GROUP_ORDER.map((g) => {
-  const sets = S.sets.filter((s) => setGroup(s.code) === g).reverse();
+  const sets = S.sets.filter((s) => setGroup(s.code) === g && !parentSet(s.code)).reverse();
   return sets.length ? `<optgroup label="${esc(g)}">${options(sets.map((s) => [s.code, `${s.code} · ${s.name}`]), selected)}</optgroup>` : '';
 }).join('');
 
@@ -735,8 +742,11 @@ const SORTS = [['set', 'Set order'], ['price-desc', 'Price: high to low'], ['pri
 
 function readQuery() {
   const q = new URLSearchParams(location.hash.split('?')[1] || '');
+  // ed: '' for the whole set, 'main' for the main set only, 'event' for its release event cards only.
+  let set = q.get('set') || '', ed = q.get('ed') || '';
+  if (parentSet(set)) { ed = 'event'; set = parentSet(set); } // links from Home tiles like OP14-PR
   return {
-    q: q.get('q') || '', preset: q.get('preset') || 'all', set: q.get('set') || '', own: q.get('own') || '',
+    q: q.get('q') || '', preset: q.get('preset') || 'all', set, ed, own: q.get('own') || '',
     variant: q.get('variant') || '', rarity: q.get('rarity') || '', sort: q.get('sort') || '',
     view: q.get('view') || store.get('cards-view') || 'grid',
   };
@@ -750,8 +760,9 @@ function writeQuery(f) {
 
 function filterCards(f) {
   const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const sets = f.set && new Set(f.ed === 'main' ? [f.set] : f.ed === 'event' ? eventSets(f.set) : [f.set, ...eventSets(f.set)]);
   let list = S.cards.filter((c) => {
-    if (f.set && c.set !== f.set) return false;
+    if (sets && !sets.has(c.set)) return false;
     if (f.own === 'owned' && !(c.qty > 0)) return false;
     if (f.own === 'none' && c.qty > 0) return false;
     if (f.own === 'short' && !(c.qty < c.target)) return false;
@@ -848,8 +859,14 @@ function renderCards(main) {
       <div class="chips" role="group" aria-label="Shortcuts">
         ${PRESETS.map(([v, l]) => `<button type="button" class="chip" data-preset="${v}" aria-pressed="${f.preset === v}">${l}</button>`).join('')}
       </div>
+      <div class="set-row">
+        <select class="select set-pick${f.set ? ' on' : ''}" id="f-set" aria-label="Set"><option value="">All sets</option>${setOptions(f.set)}</select>
+        ${f.set && eventSets(f.set).length ? `<div class="seg" role="group" aria-label="Which cards in ${esc(f.set)}">
+          ${[['', 'Whole set'], ['main', 'Main set'], ['event', eventLabel(eventSets(f.set)[0])]].map(([v, l]) =>
+            `<button type="button" data-ed="${v}" aria-pressed="${f.ed === v}">${esc(l)}</button>`).join('')}
+        </div>` : ''}
+      </div>
       <div class="filters">
-        <select class="select" id="f-set" aria-label="Set"><option value="">All sets</option>${setOptions(f.set)}</select>
         <select class="select" id="f-own" aria-label="Ownership">${options([['', 'Any ownership'], ['owned', 'Owned'], ['none', 'Not owned'], ['short', 'Below target'], ['extra', 'Extras over target']], f.own)}</select>
         <select class="select" id="f-variant" aria-label="Variant">${options([['', 'All variants'], ['base', 'Base'], ['alt', 'Alternate art'], ['sealed', 'Sealed product'], ['other', 'Other']], f.variant)}</select>
         <select class="select" id="f-rarity" aria-label="Rarity"><option value="">All rarities</option>${options(rarities.map((r) => [r, r]), f.rarity)}</select>
@@ -898,7 +915,8 @@ function renderCards(main) {
   let typing;
   $('#q', main).addEventListener('input', (e) => { clearTimeout(typing); typing = setTimeout(() => { writeQuery({ ...f, q: e.target.value }); renderCardsKeepFocus(); }, 150); });
   main.querySelectorAll('[data-preset]').forEach((b) => (b.onclick = () => update({ preset: b.dataset.preset, sort: '' })));
-  $('#f-set', main).onchange = (e) => update({ set: e.target.value });
+  $('#f-set', main).onchange = (e) => update({ set: e.target.value, ed: '' });
+  main.querySelectorAll('[data-ed]').forEach((b) => (b.onclick = () => update({ ed: b.dataset.ed })));
   $('#f-own', main).onchange = (e) => update({ own: e.target.value });
   $('#f-variant', main).onchange = (e) => update({ variant: e.target.value });
   $('#f-rarity', main).onchange = (e) => update({ rarity: e.target.value });
