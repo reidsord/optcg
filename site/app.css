@@ -255,6 +255,17 @@ dialog.card-dialog { width: min(820px, calc(100vw - 32px)); padding: 0; overflow
 }
 :root[data-theme="dark"] .tile[style*="--set-c"] { background: linear-gradient(180deg, color-mix(in srgb, var(--set-c) 22%, var(--surface)) 0, var(--surface) 75%); }
 :root[data-theme="dark"] .tile[style*="--set-c"] .code { color: hsl(var(--set-hue) var(--set-sat) 72%); }
+.tile[style*="--set-pale"] { border-top-color: #dde3e7; background: linear-gradient(180deg, #f7f9fa 0, var(--surface) 75%); }
+.tile[style*="--set-pale"] .code { color: #66727b; }
+.tile[style*="--set-pale"] .bar > i { background: linear-gradient(90deg, #c9d1d7, #aab4bb); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tile[style*="--set-pale"] { border-top-color: #f4f6f8; background: linear-gradient(180deg, color-mix(in srgb, #fff 9%, var(--surface)) 0, var(--surface) 75%); }
+  :root:not([data-theme="light"]) .tile[style*="--set-pale"] .code { color: #f4f6f8; }
+  :root:not([data-theme="light"]) .tile[style*="--set-pale"] .bar > i { background: #eef1f3; }
+}
+:root[data-theme="dark"] .tile[style*="--set-pale"] { border-top-color: #f4f6f8; background: linear-gradient(180deg, color-mix(in srgb, #fff 9%, var(--surface)) 0, var(--surface) 75%); }
+:root[data-theme="dark"] .tile[style*="--set-pale"] .code { color: #f4f6f8; }
+:root[data-theme="dark"] .tile[style*="--set-pale"] .bar > i { background: #eef1f3; }
 .tile { transition: transform .15s ease, border-color .15s ease; }
 .tile:hover { transform: translateY(-2px); }
 .card .art img { transition: transform .2s ease; }

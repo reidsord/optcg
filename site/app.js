@@ -90,7 +90,8 @@ function setStyle(code) {
   const max = Math.max(r, g, b), d = max - Math.min(r, g, b);
   const h = d === 0 ? 0 : max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
   const l = (max + Math.min(r, g, b)) / 2, sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
-  return `--set-hue:${Math.round((h * 60 + 360) % 360)};--set-sat:${Math.round(Math.min(sat, 0.75) * 100)}%;--set-c:${hex}`;
+  // White and near-white boxes (OP05) get a silver edge so the tile still shows on a light page.
+  return `--set-hue:${Math.round((h * 60 + 360) % 360)};--set-sat:${Math.round(Math.min(sat, 0.75) * 100)}%;--set-c:${hex}${l > 0.85 ? ';--set-pale:1' : ''}`;
 }
 
 // ---------- Price trends ----------

@@ -46,14 +46,14 @@
     "name": "Awakening of the New Era",
     "groupId": 23213,
     "file": "OP05.json",
-    "color": "#cba97e"
+    "color": "#ffffff"
   },
   {
     "code": "OP05-PR",
     "name": "Awakening of the New Era Pre-Release Cards",
     "groupId": 23368,
     "file": "OP05-PR.json",
-    "color": "#cba97e"
+    "color": "#ffffff"
   },
   {
     "code": "OP06",
