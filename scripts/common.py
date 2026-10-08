@@ -16,9 +16,21 @@ ALT_PATTERN = re.compile(
 )
 
 
+def set_code(abbreviation):
+    """Tidy TCGplayer's set abbreviation: pre-release and release event sets all end in -PR
+    ('OP18 RE', 'ST02 PRE', 'OP04 - Prerelease' -> 'OP18-PR', 'ST02-PR', 'OP04-PR')."""
+    code = abbreviation.strip()
+    return re.sub(r"[\s-]*\b(Pre-?release|PRE|RE)$", "-PR", code, flags=re.I)
+
+
 def set_file(code):
-    """File name for a set code, e.g. 'OP04 - Prerelease' -> 'OP04-Prerelease.json'."""
+    """File name for a set code, e.g. 'OP04-PR' -> 'OP04-PR.json'."""
     return re.sub(r"[^A-Za-z0-9]+", "-", code).strip("-") + ".json"
+
+
+def set_groups(s):
+    """TCGplayer groups a set's cards come from. Usually one; a set split out of others lists several."""
+    return s.get("groupIds") or [s["groupId"]]
 
 
 def classify(name, card_number, set_code):

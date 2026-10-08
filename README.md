@@ -19,7 +19,7 @@ JSON files in this repo.
 | Path | What it holds |
 | --- | --- |
 | `site/` | The website (plain HTML, CSS and JavaScript, no build step). |
-| `data/sets.json` | Tracked sets, in display order, with their TCGplayer group ids. |
+| `data/sets.json` | Tracked sets with their TCGplayer group ids (the site sorts them by group and number). Pre-release and release event sets use a `-PR` code. A set split out of others (EB04, printed inside OP14 and OP15) lists every source group in `groupIds` and claims new cards by `cardPrefix`. |
 | `data/cards/*.json` | One file per set, one card per line. |
 | `data/orders.json`, `data/notes.json` | Orders and the notes box. |
 | `data/history.json` | The latest 1,000 quantity changes. |

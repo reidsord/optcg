@@ -47,11 +47,36 @@ const tcgLink = (c) => `https://www.tcgplayer.com/product/${c.productId}`;
 function setGroup(code) {
   if (/^OP\d+$/.test(code)) return 'Booster sets';
   if (/^(EB|PRB)\d+$/.test(code)) return 'Extra and premium boosters';
-  if (/^(ST|SD)/.test(code)) return 'Starter decks';
   if (/PR\b|PRE|Prerelease/i.test(code)) return 'Pre-release and event cards';
+  if (/^(ST|SD)/.test(code)) return 'Starter decks';
   return 'Promos and other';
 }
 const GROUP_ORDER = ['Booster sets', 'Extra and premium boosters', 'Starter decks', 'Pre-release and event cards', 'Promos and other'];
+// Sets in display order: by group, then by number (OP02 before OP10), whatever order sets.json lists them in.
+const SERIES = ['OP', 'EB', 'PRB', 'ST', 'SD'];
+const series = (code) => { const i = SERIES.indexOf(code.match(/^[A-Z]+/)?.[0]); return i < 0 ? SERIES.length : i; };
+const setOrder = (a, b) =>
+  GROUP_ORDER.indexOf(setGroup(a.code)) - GROUP_ORDER.indexOf(setGroup(b.code)) ||
+  series(b.code) - series(a.code) || a.code.localeCompare(b.code, 'en', { numeric: true });
+// Small sets the set picker shows as one item.
+const BUNDLES = [{ code: 'ST-SPR', name: 'Super Pre-Release Starter Decks (ST-01 to ST-04)', group: 'Starter decks', test: (code) => /^ST-\d+-PR$/.test(code) }];
+const bundleOf = (code) => BUNDLES.find((b) => b.test(code));
+const bundleSets = (code) => { const b = BUNDLES.find((x) => x.code === code); return b ? S.sets.filter((s) => b.test(s.code)).map((s) => s.code) : null; };
+// Pre-release and release event sets (OP14-PR) belong to their main set (OP14) in the set picker.
+const parentSet = (code) => { const m = !bundleOf(code) && /^(.+)-PR$/.exec(code); return m && S.setByCode.has(m[1]) ? m[1] : null; };
+const eventSets = (code) => S.sets.filter((s) => parentSet(s.code) === code).map((s) => s.code);
+const eventLabel = (code) => {
+  const name = S.setByCode.get(code)?.name || '';
+  return /pre-?release/i.test(name) ? 'Pre-release cards' : /tournament/i.test(name) ? 'Tournament cards' : 'Release event cards';
+};
+// Set picker options, grouped like Home with the newest set first.
+const setOptions = (selected) => GROUP_ORDER.map((g) => {
+  const items = [
+    ...BUNDLES.filter((b) => b.group === g && bundleSets(b.code).length).map((b) => [b.code, b.name]),
+    ...S.sets.filter((s) => setGroup(s.code) === g && !parentSet(s.code) && !bundleOf(s.code)).reverse().map((s) => [s.code, `${s.code} · ${s.name}`]),
+  ];
+  return items.length ? `<optgroup label="${esc(g)}">${options(items, selected)}</optgroup>` : '';
+}).join('');
 
 // Each set gets its own color on Home; the golden angle keeps neighbouring sets far apart.
 const setHue = (code) => Math.round(((S.setByCode.get(code)?.index || 0) * 137.5 + 150) % 360);
@@ -233,6 +258,7 @@ async function load() {
   S.decks = decks;
   S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
   S.valueHist = valueHist;
+  sets.sort(setOrder);
   const files = await Promise.all(sets.map((s) => getJson(`data/cards/${s.file}`, sha)));
   S.sets = sets;
   S.setByCode = new Map(sets.map((s, i) => [s.code, { ...s, index: i }]));
@@ -561,7 +587,6 @@ function renderHome(main) {
 
   const groups = new Map(GROUP_ORDER.map((g) => [g, []]));
   for (const s of S.sets) groups.get(setGroup(s.code)).push(s);
-  const naturalSort = (a, b) => a.code.localeCompare(b.code, 'en', { numeric: true });
 
   main.innerHTML = `
     <div class="home-search">
@@ -613,7 +638,7 @@ function renderHome(main) {
     ${[...groups].filter(([, sets]) => sets.length).map(([name, sets]) => `
       <div class="section-head"><h2>${esc(name)}</h2><span class="hint">${name === 'Booster sets' ? 'Base cards: four copies. DON!! cards: ten. Alternate arts, promos and sealed: one each.' : ''}</span></div>
       <div class="tiles">
-        ${sets.slice().sort(naturalSort).reverse().map((s) => {
+        ${sets.slice().reverse().map((s) => {
           const p = setProgress(s.code);
           return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}" style="--set-hue:${setHue(s.code)}">
             <div class="code">${esc(s.code)}</div>
@@ -724,8 +749,12 @@ const SORTS = [['set', 'Set order'], ['price-desc', 'Price: high to low'], ['pri
 
 function readQuery() {
   const q = new URLSearchParams(location.hash.split('?')[1] || '');
+  // ed: '' for the main set, 'event' for its pre-release or release event cards.
+  let set = q.get('set') || '', ed = q.get('ed') || '';
+  if (bundleOf(set)) set = bundleOf(set).code; // links from Home tiles like ST-01-PR
+  else if (parentSet(set)) { ed = 'event'; set = parentSet(set); } // and like OP14-PR
   return {
-    q: q.get('q') || '', preset: q.get('preset') || 'all', set: q.get('set') || '', own: q.get('own') || '',
+    q: q.get('q') || '', preset: q.get('preset') || 'all', set, ed, own: q.get('own') || '',
     variant: q.get('variant') || '', rarity: q.get('rarity') || '', sort: q.get('sort') || '',
     view: q.get('view') || store.get('cards-view') || 'grid',
   };
@@ -739,8 +768,9 @@ function writeQuery(f) {
 
 function filterCards(f) {
   const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const sets = f.set && new Set(bundleSets(f.set) || (f.ed === 'event' && eventSets(f.set).length ? eventSets(f.set) : [f.set]));
   let list = S.cards.filter((c) => {
-    if (f.set && c.set !== f.set) return false;
+    if (sets && !sets.has(c.set)) return false;
     if (f.own === 'owned' && !(c.qty > 0)) return false;
     if (f.own === 'none' && c.qty > 0) return false;
     if (f.own === 'short' && !(c.qty < c.target)) return false;
@@ -837,8 +867,14 @@ function renderCards(main) {
       <div class="chips" role="group" aria-label="Shortcuts">
         ${PRESETS.map(([v, l]) => `<button type="button" class="chip" data-preset="${v}" aria-pressed="${f.preset === v}">${l}</button>`).join('')}
       </div>
+      <div class="set-row">
+        <select class="select set-pick${f.set ? ' on' : ''}" id="f-set" aria-label="Set"><option value="">All sets</option>${setOptions(f.set)}</select>
+        ${f.set && eventSets(f.set).length ? `<div class="seg" role="group" aria-label="Which cards in ${esc(f.set)}">
+          ${[['', 'Main set'], ['event', eventLabel(eventSets(f.set)[0])]].map(([v, l]) =>
+            `<button type="button" data-ed="${v}" aria-pressed="${f.ed === v}">${esc(l)}</button>`).join('')}
+        </div>` : ''}
+      </div>
       <div class="filters">
-        <select class="select" id="f-set" aria-label="Set"><option value="">All sets</option>${options(S.sets.map((s) => [s.code, `${s.code} · ${s.name}`]), f.set)}</select>
         <select class="select" id="f-own" aria-label="Ownership">${options([['', 'Any ownership'], ['owned', 'Owned'], ['none', 'Not owned'], ['short', 'Below target'], ['extra', 'Extras over target']], f.own)}</select>
         <select class="select" id="f-variant" aria-label="Variant">${options([['', 'All variants'], ['base', 'Base'], ['alt', 'Alternate art'], ['sealed', 'Sealed product'], ['other', 'Other']], f.variant)}</select>
         <select class="select" id="f-rarity" aria-label="Rarity"><option value="">All rarities</option>${options(rarities.map((r) => [r, r]), f.rarity)}</select>
@@ -887,7 +923,8 @@ function renderCards(main) {
   let typing;
   $('#q', main).addEventListener('input', (e) => { clearTimeout(typing); typing = setTimeout(() => { writeQuery({ ...f, q: e.target.value }); renderCardsKeepFocus(); }, 150); });
   main.querySelectorAll('[data-preset]').forEach((b) => (b.onclick = () => update({ preset: b.dataset.preset, sort: '' })));
-  $('#f-set', main).onchange = (e) => update({ set: e.target.value });
+  $('#f-set', main).onchange = (e) => update({ set: e.target.value, ed: '' });
+  main.querySelectorAll('[data-ed]').forEach((b) => (b.onclick = () => update({ ed: b.dataset.ed })));
   $('#f-own', main).onchange = (e) => update({ own: e.target.value });
   $('#f-variant', main).onchange = (e) => update({ variant: e.target.value });
   $('#f-rarity', main).onchange = (e) => update({ rarity: e.target.value });
@@ -1331,6 +1368,21 @@ $('#theme-toggle').onclick = () => {
   document.documentElement.dataset.theme = next;
   store.set('theme', next);
 };
+
+// Jump buttons: shown once the page is long and you've scrolled; each hides at its own end.
+function updateJump() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const y = scrollY;
+  $('#jump').hidden = max < innerHeight * 1.5 || (y < 300 && max - y < 300);
+  $('#jump-top').disabled = y < 300;
+  $('#jump-bottom').disabled = max - y < 300;
+}
+addEventListener('scroll', updateJump, { passive: true });
+addEventListener('resize', updateJump);
+new ResizeObserver(updateJump).observe(document.body);
+const smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+$('#jump-top').onclick = () => scrollTo({ top: 0, behavior: smooth });
+$('#jump-bottom').onclick = () => scrollTo({ top: document.documentElement.scrollHeight, behavior: smooth });
 
 // Installable app: the service worker keeps the site and the last loaded data for offline use.
 if ('serviceWorker' in navigator && !LOCAL) navigator.serviceWorker.register('sw.js').catch(() => {});
