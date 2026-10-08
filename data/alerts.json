@@ -1,7 +1,22 @@
 {
-  "home": {"zip": null, "lat": null, "lng": null, "label": null},
+  "home": {
+    "zip": "46237",
+    "lat": 39.6134,
+    "lng": -86.1047,
+    "label": "46237 (Greenwood, IN)"
+  },
   "radiusMiles": 50,
-  "countries": ["US"],
-  "notifyKinds": ["Store Championship", "Treasure Cup", "Prerelease", "Regionals", "Release Event"],
-  "mention": ["reidsord"]
+  "countries": [
+    "US"
+  ],
+  "notifyKinds": [
+    "Store Championship",
+    "Treasure Cup",
+    "Prerelease",
+    "Regionals",
+    "Release Event"
+  ],
+  "mention": [
+    "reidsord"
+  ]
 }

@@ -29,7 +29,7 @@ jobs:
 
       - name: Check sources (pull requests only)
         if: github.event_name == 'pull_request'
-        run: python3 scripts/update_events.py --dry-run --test-home 32.7767,-96.7970
+        run: python3 scripts/update_events.py --dry-run --test-home 39.6134,-86.1047
 
       - name: Look for new events and drops
         if: github.event_name != 'pull_request'
