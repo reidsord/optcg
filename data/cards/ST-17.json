@@ -1,15 +1,15 @@
 [
-{"id":"Starter Decks:354","productId":545039,"cardId":"","name":"Starter Deck 17: BLUE Donquixote Doflamingo","rarity":"","alt":false,"target":4,"qty":0,"price":81.07},
-{"id":"Starter Decks:355","productId":545040,"cardId":"","name":"Starter Deck 17: BLUE Donquixote Doflamingo Display","rarity":"","alt":false,"target":4,"qty":0,"price":0},
+{"id":"Starter Decks:354","productId":545039,"cardId":"","name":"Starter Deck 17: BLUE Donquixote Doflamingo","rarity":"","alt":false,"target":4,"qty":0,"price":93},
+{"id":"Starter Decks:355","productId":545040,"cardId":"","name":"Starter Deck 17: BLUE Donquixote Doflamingo Display","rarity":"","alt":false,"target":4,"qty":0,"price":999.95},
 {"id":"Starter Decks:356","productId":545041,"cardId":"","name":"Starter Deck 17: BLUE Donquixote Doflamingo Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
-{"id":"Starter Decks:357","productId":581006,"cardId":"OP01-060","name":"Donquixote Doflamingo (OP01-060)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.72},
-{"id":"Starter Decks:358","productId":581007,"cardId":"OP01-073","name":"Donquixote Doflamingo (OP01-073)","rarity":"R","alt":false,"target":4,"qty":4,"price":0.14},
-{"id":"Starter Decks:359","productId":581009,"cardId":"OP02-054","name":"Gecko Moria (OP02-054)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.06},
-{"id":"Starter Decks:360","productId":581010,"cardId":"OP02-057","name":"Bartholomew Kuma","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.07},
-{"id":"Starter Decks:361","productId":581011,"cardId":"P-030","name":"Jinbe","rarity":"PR","alt":false,"target":4,"qty":4,"price":0.4},
-{"id":"Starter Decks:362","productId":581016,"cardId":"ST17-001","name":"Crocodile","rarity":"C","alt":false,"target":4,"qty":8,"price":0.14},
-{"id":"Starter Decks:363","productId":581017,"cardId":"ST17-002","name":"Trafalgar Law (ST17-002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.38},
-{"id":"Starter Decks:364","productId":581018,"cardId":"ST17-003","name":"Buggy","rarity":"C","alt":false,"target":4,"qty":8,"price":0.41},
-{"id":"Starter Decks:365","productId":581019,"cardId":"ST17-004","name":"Boa Hancock","rarity":"SR","alt":false,"target":4,"qty":4,"price":6.74},
-{"id":"Starter Decks:366","productId":581020,"cardId":"ST17-005","name":"Marshall.D.Teach","rarity":"C","alt":false,"target":4,"qty":8,"price":0.26}
+{"id":"Starter Decks:357","productId":581006,"cardId":"OP01-060","name":"Donquixote Doflamingo (OP01-060)","rarity":"L","alt":false,"target":4,"qty":2,"price":1},
+{"id":"Starter Decks:358","productId":581007,"cardId":"OP01-073","name":"Donquixote Doflamingo (OP01-073)","rarity":"R","alt":false,"target":4,"qty":4,"price":0.02},
+{"id":"Starter Decks:359","productId":581009,"cardId":"OP02-054","name":"Gecko Moria (OP02-054)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
+{"id":"Starter Decks:360","productId":581010,"cardId":"OP02-057","name":"Bartholomew Kuma","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.01},
+{"id":"Starter Decks:361","productId":581011,"cardId":"P-030","name":"Jinbe","rarity":"PR","alt":false,"target":4,"qty":4,"price":0.15},
+{"id":"Starter Decks:362","productId":581016,"cardId":"ST17-001","name":"Crocodile","rarity":"C","alt":false,"target":4,"qty":8,"price":0.03},
+{"id":"Starter Decks:363","productId":581017,"cardId":"ST17-002","name":"Trafalgar Law (ST17-002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.1},
+{"id":"Starter Decks:364","productId":581018,"cardId":"ST17-003","name":"Buggy","rarity":"C","alt":false,"target":4,"qty":8,"price":0.19},
+{"id":"Starter Decks:365","productId":581019,"cardId":"ST17-004","name":"Boa Hancock","rarity":"SR","alt":false,"target":4,"qty":4,"price":6.53},
+{"id":"Starter Decks:366","productId":581020,"cardId":"ST17-005","name":"Marshall.D.Teach","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07}
 ]

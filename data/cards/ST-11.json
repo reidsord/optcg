@@ -1,10 +1,10 @@
 [
-{"id":"Starter Decks:233","productId":515294,"cardId":"","name":"Starter Deck 11: Uta","rarity":"","alt":false,"target":4,"qty":0,"price":19.51},
-{"id":"Starter Decks:234","productId":515296,"cardId":"","name":"Starter Deck 11: Uta Display","rarity":"","alt":false,"target":4,"qty":0,"price":108.07},
+{"id":"Starter Decks:233","productId":515294,"cardId":"","name":"Starter Deck 11: Uta","rarity":"","alt":false,"target":4,"qty":0,"price":12},
+{"id":"Starter Decks:234","productId":515296,"cardId":"","name":"Starter Deck 11: Uta Display","rarity":"","alt":false,"target":4,"qty":0,"price":119.15},
 {"id":"Starter Decks:235","productId":515297,"cardId":"","name":"Starter Deck 11: Uta Display Case","rarity":"","alt":false,"target":4,"qty":0,"price":0},
-{"id":"Starter Decks:236","productId":533879,"cardId":"ST11-001","name":"Uta (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":3.19},
-{"id":"Starter Decks:237","productId":533880,"cardId":"ST11-002","name":"Uta (002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.76},
-{"id":"Starter Decks:238","productId":533881,"cardId":"ST11-003","name":"Backlight","rarity":"C","alt":false,"target":4,"qty":8,"price":0.17},
-{"id":"Starter Decks:239","productId":533882,"cardId":"ST11-004","name":"New Genesis","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.36},
-{"id":"Starter Decks:240","productId":533883,"cardId":"ST11-005","name":"I'm invincible","rarity":"C","alt":false,"target":4,"qty":8,"price":0.16}
+{"id":"Starter Decks:236","productId":533879,"cardId":"ST11-001","name":"Uta (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":2},
+{"id":"Starter Decks:237","productId":533880,"cardId":"ST11-002","name":"Uta (002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.29},
+{"id":"Starter Decks:238","productId":533881,"cardId":"ST11-003","name":"Backlight","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},
+{"id":"Starter Decks:239","productId":533882,"cardId":"ST11-004","name":"New Genesis","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.23},
+{"id":"Starter Decks:240","productId":533883,"cardId":"ST11-005","name":"I'm invincible","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09}
 ]

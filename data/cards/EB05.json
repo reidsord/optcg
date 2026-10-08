@@ -58,5 +58,9 @@
 {"id":"tcg:24820:722773","productId":722773,"cardId":"ST17-004","name":"Boa Hancock (ST17-004) (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null},
 {"id":"tcg:24820:722774","productId":722774,"cardId":"EB05-052","name":"Gloriosa (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null},
 {"id":"tcg:24820:722775","productId":722775,"cardId":"OP17-109","name":"Charlotte Pudding (OP17-109) (SP)","rarity":"R","alt":true,"target":1,"qty":0,"price":null},
-{"id":"tcg:24820:722776","productId":722776,"cardId":"EB05-008","name":"Luffy, Now's Your Chance","rarity":"C","alt":false,"target":4,"qty":0,"price":null}
+{"id":"tcg:24820:722776","productId":722776,"cardId":"EB05-008","name":"Luffy, Now's Your Chance","rarity":"C","alt":false,"target":4,"qty":0,"price":null},
+{"id":"p711385","productId":711385,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":351.81,"added":"2026-10-08"},
+{"id":"p711386","productId":711386,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3999.99,"added":"2026-10-08"},
+{"id":"p711383","productId":711383,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"},
+{"id":"p711384","productId":711384,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"}
 ]

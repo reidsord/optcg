@@ -508,5 +508,12 @@
     "name": "Super Pre-Release Starter Deck 4: Animal Kingdom Pirates",
     "groupId": 17661,
     "file": "ST04-PRE.json"
+  },
+  {
+    "code": "OP18 RE",
+    "name": "The Dominance of God Release Event Cards",
+    "groupId": 24834,
+    "file": "OP18-RE.json",
+    "added": "2026-10-08"
   }
 ]

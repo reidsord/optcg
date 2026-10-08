@@ -1,13 +1,13 @@
 [
-{"id":"Starter Decks:672","productId":704889,"cardId":"","name":"Starter Deck 32: GREEN Roronoa Zoro","rarity":"","alt":false,"target":4,"qty":0,"price":30.73},
-{"id":"Starter Decks:673","productId":704888,"cardId":"","name":"Starter Deck 32: GREEN Roronoa Zoro Display","rarity":"","alt":false,"target":4,"qty":0,"price":177.25},
-{"id":"Starter Decks:674","productId":706319,"cardId":"OP12-020","name":"Roronoa Zoro (OP12-020)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.99},
-{"id":"Starter Decks:675","productId":706320,"cardId":"OP12-028","name":"Kouzuki Hiyori","rarity":"R","alt":false,"target":4,"qty":4,"price":0.1},
-{"id":"Starter Decks:676","productId":706321,"cardId":"OP12-031","name":"Tashigi","rarity":"R","alt":false,"target":4,"qty":4,"price":0.11},
-{"id":"Starter Decks:677","productId":706322,"cardId":"OP12-039","name":"Luffy Is the Man Who Will Become the King of Pirates!!!","rarity":"R","alt":false,"target":4,"qty":4,"price":0.07},
-{"id":"Starter Decks:678","productId":706323,"cardId":"ST32-001","name":"Kin'emon","rarity":"C","alt":false,"target":4,"qty":8,"price":1.38},
-{"id":"Starter Decks:679","productId":706324,"cardId":"ST32-002","name":"Kouzuki Oden","rarity":"SR","alt":false,"target":4,"qty":4,"price":11.24},
-{"id":"Starter Decks:680","productId":706325,"cardId":"ST32-003","name":"Dracule Mihawk","rarity":"SR","alt":false,"target":4,"qty":4,"price":1.83},
-{"id":"Starter Decks:681","productId":706326,"cardId":"ST32-004","name":"Silvers Rayleigh","rarity":"C","alt":false,"target":4,"qty":8,"price":0.14},
-{"id":"Starter Decks:682","productId":706327,"cardId":"ST32-005","name":"Roronoa Zoro (ST32-005)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.96}
+{"id":"Starter Decks:672","productId":704889,"cardId":"","name":"Starter Deck 32: GREEN Roronoa Zoro","rarity":"","alt":false,"target":4,"qty":0,"price":25},
+{"id":"Starter Decks:673","productId":704888,"cardId":"","name":"Starter Deck 32: GREEN Roronoa Zoro Display","rarity":"","alt":false,"target":4,"qty":0,"price":150},
+{"id":"Starter Decks:674","productId":706319,"cardId":"OP12-020","name":"Roronoa Zoro (OP12-020)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.7},
+{"id":"Starter Decks:675","productId":706320,"cardId":"OP12-028","name":"Kouzuki Hiyori","rarity":"R","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"Starter Decks:676","productId":706321,"cardId":"OP12-031","name":"Tashigi","rarity":"R","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"Starter Decks:677","productId":706322,"cardId":"OP12-039","name":"Luffy Is the Man Who Will Become the King of Pirates!!!","rarity":"R","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"Starter Decks:678","productId":706323,"cardId":"ST32-001","name":"Kin'emon","rarity":"C","alt":false,"target":4,"qty":8,"price":0.5},
+{"id":"Starter Decks:679","productId":706324,"cardId":"ST32-002","name":"Kouzuki Oden","rarity":"SR","alt":false,"target":4,"qty":4,"price":8},
+{"id":"Starter Decks:680","productId":706325,"cardId":"ST32-003","name":"Dracule Mihawk","rarity":"SR","alt":false,"target":4,"qty":4,"price":1.5},
+{"id":"Starter Decks:681","productId":706326,"cardId":"ST32-004","name":"Silvers Rayleigh","rarity":"C","alt":false,"target":4,"qty":8,"price":0.02},
+{"id":"Starter Decks:682","productId":706327,"cardId":"ST32-005","name":"Roronoa Zoro (ST32-005)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.5}
 ]

@@ -1,8 +1,8 @@
 {
-  "pricesUpdatedAt": "2026-10-08T18:03:27.342Z",
-  "priceSource": "TCGplayer market price (imported from the old app)",
+  "pricesUpdatedAt": "2026-10-08T19:50:55+00:00",
+  "priceSource": "TCGplayer lowest listed price (English)",
   "importedAt": "2026-10-08T18:48:24+00:00",
-  "groupWatermark": 24833,
+  "groupWatermark": 24834,
   "excludedGroups": [
     24306
   ]
