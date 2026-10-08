@@ -80,6 +80,16 @@ const setOptions = (selected) => GROUP_ORDER.map((g) => {
 
 // Each set gets its own color on Home; the golden angle keeps neighbouring sets far apart.
 const setHue = (code) => Math.round(((S.setByCode.get(code)?.index || 0) * 137.5 + 150) % 360);
+// Tile colors: the set's booster box color from sets.json (scripts/set_colors.py), else the spread-out hue.
+function setStyle(code) {
+  const hex = S.setByCode.get(code)?.color;
+  if (!/^#[0-9a-f]{6}$/i.test(hex || '')) return `--set-hue:${setHue(code)};--set-sat:55%;--set-c:hsl(${setHue(code)} 55% 52%)`;
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const max = Math.max(r, g, b), d = max - Math.min(r, g, b);
+  const h = d === 0 ? 0 : max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  const l = (max + Math.min(r, g, b)) / 2, sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  return `--set-hue:${Math.round((h * 60 + 360) % 360)};--set-sat:${Math.round(Math.min(sat, 0.75) * 100)}%;--set-c:${hex}`;
+}
 
 // ---------- Price trends ----------
 // price-history.json keeps a point only when a price moves, so a card's price on a
@@ -640,7 +650,7 @@ function renderHome(main) {
       <div class="tiles">
         ${sets.slice().reverse().map((s) => {
           const p = setProgress(s.code);
-          return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}" style="--set-hue:${setHue(s.code)}">
+          return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}" style="${setStyle(s.code)}">
             <div class="code">${esc(s.code)}</div>
             <div class="name">${esc(s.name)}</div>
             <div class="value">${money(p.value)}</div>
