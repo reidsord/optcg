@@ -332,7 +332,7 @@ def probe_registration(cfg):
     home, now = cfg["home"], datetime.now(timezone.utc).isoformat()
     for flg in ("0", "1", "2", None):
         params = [("game_title_id", ONE_PIECE), ("limit", PAGE), ("start_date", now[:10]), ("current_lat", home["lat"]),
-                  ("current_lng", home["lng"]), ("distance", cfg.get("radiusMiles", 50)), ("favorite", 0), ("order", 1), ("country_code[]", "US")]
+                  ("current_lng", home["lng"]), ("distance", cfg.get("radiusMiles", 50)), ("favorite", 0), ("order", 1), ("country_code[]", "US"), ("offset", 0)]
         if flg is not None:
             params.append(("application_open_flg", flg))
         try:
