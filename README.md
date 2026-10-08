@@ -11,6 +11,8 @@ JSON files in this repo.
 - **Packs**: type card numbers as you open packs; each one adds a copy.
 - **Decks**: paste a decklist to see what you own, what's missing and what it
   costs; missing cards copy straight into TCGplayer Mass Entry.
+- **Events**: upcoming tournaments near home from Bandai TCG+, official event
+  announcements, and new products (Premium Bandai exclusives marked).
 - **Orders**: orders and preorders with paid and remaining totals.
 - **History**: recent quantity changes, with undo.
 
@@ -28,6 +30,9 @@ JSON files in this repo.
 | `data/value-history.json` | Collection value on each day the price job ran. |
 | `data/decks.json` | Decks saved on the Decks tab. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
+| `data/alerts.json` | Settings for event alerts: home location, radius, which event kinds notify, who to mention. |
+| `data/events.json`, `data/drops.json` | Tournaments, announcements and products found by the events job. |
+| `scripts/update_events.py` | Events job: Bandai TCG+ tournaments, official announcements and new products. |
 | `scripts/import_backup.py` | One-time import of a backup from the old ChatGPT-hosted app. |
 
 Anyone with the link can view the site. Saving needs a GitHub fine-grained
@@ -44,6 +49,18 @@ promo and sealed product.
 To leave a new set out, add its group id to `excludedGroups` in `data/meta.json`
 and remove it from `data/sets.json` and `data/cards/`. To drop a single card for
 good, delete its line and add its `productId` to `excludedProducts`.
+
+The **Check events and drops** workflow runs every three hours. It reads
+[Bandai TCG+](https://www.bandai-tcg-plus.com/)'s public event search for One
+Piece events within `radiusMiles` of `home` in `data/alerts.json`, the event and
+product pages on [the official card game site](https://en.onepiece-cardgame.com/),
+and the featured items on Premium Bandai's One Piece page. When it finds a new
+event of a kind listed in `notifyKinds`, a new announcement or a new product, it
+opens a GitHub issue labeled `alert` that mentions the people in `mention`, so
+GitHub's app or email sends a notification. Premium Bandai's item pages block
+automated visits, so its card game drops are picked up from the official site,
+which marks them **Premium Bandai**. Changing `home` or `radiusMiles` refreshes
+the list without sending alerts for everything already there.
 
 ## Setup
 

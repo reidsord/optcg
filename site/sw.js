@@ -1,7 +1,7 @@
 // Keeps the site and the last data it loaded, so it opens offline and from the home screen.
-const SHELL = 'optcg-shell-v1';
+const SHELL = 'optcg-shell-v2';
 const DATA = 'optcg-data-v1';
-const FILES = ['./', 'index.html', 'app.css', 'app.js', 'icon.svg', 'icon-192.png', 'manifest.webmanifest'];
+const FILES = ['./', 'index.html', 'app.css', 'app.js', 'events.js', 'icon.svg', 'icon-192.png', 'manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));

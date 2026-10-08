@@ -1,0 +1,7 @@
+{
+  "home": {"zip": null, "lat": null, "lng": null, "label": null},
+  "radiusMiles": 50,
+  "countries": ["US"],
+  "notifyKinds": ["Store Championship", "Treasure Cup", "Prerelease", "Regionals", "Release Event"],
+  "mention": ["reidsord"]
+}
