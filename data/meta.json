@@ -5,5 +5,8 @@
   "groupWatermark": 24834,
   "excludedGroups": [
     24306
+  ],
+  "excludedProducts": [
+    710740
   ]
 }
