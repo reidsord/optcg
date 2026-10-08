@@ -101,7 +101,7 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 /* Tabs */
 .tabs { position: sticky; top: 0; z-index: 5; display: flex; gap: 4px; background: var(--bg); border-bottom: 1px solid var(--line); margin: 16px 0 18px; overflow-x: auto; }
 .tabs a { padding: 12px 14px; color: var(--muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; font-weight: 500; }
-@media (max-width: 420px) { .tabs a { padding: 12px 9px; } }
+@media (max-width: 480px) { .tabs { gap: 0; } .tabs a { padding: 12px 7px; font-size: 14px; } }
 .tabs a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); }
 
 .loading, .empty { color: var(--muted); padding: 32px 0; text-align: center; }
@@ -208,6 +208,75 @@ dialog.card-dialog { width: min(820px, calc(100vw - 32px)); padding: 0; overflow
   .pack-row { grid-template-columns: 40px 1fr auto; }
   .pack-row .price { grid-column: 2; grid-row: 2; text-align: left; font-size: 13px; }
   .pack-row .pack-add, .pack-row .link-btn { grid-column: 3; grid-row: 1 / span 2; }
+}
+
+/* Rarity tags: each rarity keeps one color across the site, with the letters always shown. */
+.rar { --rc: #5c6b64; display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; line-height: 1; padding: 3px 5px; border-radius: 4px; color: var(--rc); background: color-mix(in srgb, var(--rc) 14%, transparent); vertical-align: 1px; }
+.rar[data-r="UC"] { --rc: #24756b; }
+.rar[data-r="R"] { --rc: #2f5fc0; }
+.rar[data-r="SR"] { --rc: #8a6300; }
+.rar[data-r="SEC"] { --rc: #c0392b; }
+.rar[data-r="L"] { --rc: #a8480a; }
+.rar[data-r="SP"] { --rc: #b03c8c; }
+.rar[data-r="TR"] { --rc: #7d4cc4; }
+.rar[data-r="P"] { --rc: #1a7555; }
+.rar[data-r="DON!!"] { --rc: #745a12; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .rar { --rc: #9fb0a8; }
+  :root:not([data-theme="light"]) .rar[data-r="UC"] { --rc: #5fc9ba; }
+  :root:not([data-theme="light"]) .rar[data-r="R"] { --rc: #86a9ff; }
+  :root:not([data-theme="light"]) .rar[data-r="SR"] { --rc: #e6be4f; }
+  :root:not([data-theme="light"]) .rar[data-r="SEC"] { --rc: #ff7b6b; }
+  :root:not([data-theme="light"]) .rar[data-r="L"] { --rc: #f59a55; }
+  :root:not([data-theme="light"]) .rar[data-r="SP"] { --rc: #f27fcb; }
+  :root:not([data-theme="light"]) .rar[data-r="TR"] { --rc: #b993ff; }
+  :root:not([data-theme="light"]) .rar[data-r="P"] { --rc: #5fd3a8; }
+  :root:not([data-theme="light"]) .rar[data-r="DON!!"] { --rc: #d9b44a; }
+}
+:root[data-theme="dark"] .rar { --rc: #9fb0a8; }
+:root[data-theme="dark"] .rar[data-r="UC"] { --rc: #5fc9ba; }
+:root[data-theme="dark"] .rar[data-r="R"] { --rc: #86a9ff; }
+:root[data-theme="dark"] .rar[data-r="SR"] { --rc: #e6be4f; }
+:root[data-theme="dark"] .rar[data-r="SEC"] { --rc: #ff7b6b; }
+:root[data-theme="dark"] .rar[data-r="L"] { --rc: #f59a55; }
+:root[data-theme="dark"] .rar[data-r="SP"] { --rc: #f27fcb; }
+:root[data-theme="dark"] .rar[data-r="TR"] { --rc: #b993ff; }
+:root[data-theme="dark"] .rar[data-r="P"] { --rc: #5fd3a8; }
+:root[data-theme="dark"] .rar[data-r="DON!!"] { --rc: #d9b44a; }
+
+/* Set colors and card hover */
+.tile[style*="--set-hue"] { border-top: 4px solid hsl(var(--set-hue) 55% 52%); }
+.tile[style*="--set-hue"] .code { color: hsl(var(--set-hue) 50% 42%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tile[style*="--set-hue"] .code { color: hsl(var(--set-hue) 60% 68%); } }
+:root[data-theme="dark"] .tile[style*="--set-hue"] .code { color: hsl(var(--set-hue) 60% 68%); }
+.tile { transition: transform .15s ease, border-color .15s ease; }
+.tile:hover { transform: translateY(-2px); }
+.card .art img { transition: transform .2s ease; }
+@media (hover: hover) { .card:hover .art img { transform: scale(1.07); } }
+@media (prefers-reduced-motion: reduce) { .tile, .card .art img { transition: none; } .tile:hover { transform: none; } }
+.confetti { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 60; }
+
+/* Deck checker */
+.deck-picker { margin-bottom: 12px; }
+.deck-grid { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .deck-grid { grid-template-columns: minmax(0, 1fr); } }
+.field-label { display: block; font-size: 13px; color: var(--muted); margin: 0 0 4px; }
+.field-label + .text-input + .field-label, .text-input + .field-label { margin-top: 12px; }
+.text-input { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); padding: 8px 10px; min-height: 40px; }
+textarea.text-input { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical; }
+.deck-actions { display: flex; gap: 8px; margin-top: 12px; align-items: center; flex-wrap: wrap; }
+.deck-summary { display: flex; gap: 12px 24px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.deck-summary .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.deck-summary .btn { margin-left: auto; }
+.done-tag { margin-left: auto; color: var(--accent); background: var(--accent-soft); padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 14px; }
+.deck-row.short { background: color-mix(in srgb, var(--warn) 6%, transparent); }
+.deck-row .price { font-size: 14px; }
+.deck-row.short .price { color: var(--warn); }
+.deck-cost { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+@media (max-width: 520px) {
+  .deck-row { grid-template-columns: 40px 1fr auto; }
+  .row.deck-row .price { grid-column: 3; grid-row: 1; text-align: right; font-size: 14px; }
+  .row.deck-row .deck-cost { grid-column: 3; grid-row: 2; }
 }
 
 /* Cards toolbar */

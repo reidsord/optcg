@@ -26,7 +26,8 @@ const S = {
   priceHist: new Map(), valueHist: [], range: store.get('range') || '365', chartCleanup: null,
   packLog: (() => { try { return JSON.parse(store.get('pack-log') || '[]'); } catch { return []; } })(),
   homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
-  pendingCards: {}, pendingOrders: false, pendingNotes: false,
+  decks: [], deckSel: 0,
+  pendingCards: {}, pendingOrders: false, pendingNotes: false, pendingDecks: false,
   saving: false, saveTimer: null, error: null,
 };
 
@@ -51,6 +52,9 @@ function setGroup(code) {
   return 'Promos and other';
 }
 const GROUP_ORDER = ['Booster sets', 'Extra and premium boosters', 'Starter decks', 'Pre-release and event cards', 'Promos and other'];
+
+// Each set gets its own color on Home; the golden angle keeps neighbouring sets far apart.
+const setHue = (code) => Math.round(((S.setByCode.get(code)?.index || 0) * 137.5 + 150) % 360);
 
 // ---------- Price trends ----------
 // price-history.json keeps a point only when a price moves, so a card's price on a
@@ -225,7 +229,8 @@ async function load() {
     getJson('data/history.json', sha), getJson('data/meta.json', sha),
   ]);
   const optional = (path) => getJson(path, sha).catch(() => []);
-  const [priceHist, valueHist] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json')]);
+  const [priceHist, valueHist, decks] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json'), optional('data/decks.json')]);
+  S.decks = decks;
   S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
   S.valueHist = valueHist;
   const files = await Promise.all(sets.map((s) => getJson(`data/cards/${s.file}`, sha)));
@@ -254,6 +259,7 @@ function restorePending() {
       c.qty = p.qty;
     }
     if (saved.orders) { S.orders = saved.orders; S.pendingOrders = true; }
+    if (saved.decks) { S.decks = saved.decks; S.pendingDecks = true; }
     if (saved.notes != null) { S.notes = saved.notes; S.pendingNotes = true; }
   } catch {}
 }
@@ -263,21 +269,52 @@ function persistPending() {
   store.set('pending', has ? JSON.stringify({
     cards: Object.fromEntries(Object.entries(S.pendingCards).map(([id, p]) => [id, { qty: p.qty, t: p.t }])),
     orders: S.pendingOrders ? S.orders : null,
+    decks: S.pendingDecks ? S.decks : null,
     notes: S.pendingNotes ? S.notes : null,
   }) : null);
 }
 
-const hasPending = () => Object.keys(S.pendingCards).length > 0 || S.pendingOrders || S.pendingNotes;
+const hasPending = () => Object.keys(S.pendingCards).length > 0 || S.pendingOrders || S.pendingNotes || S.pendingDecks;
 
 function setQty(c, qty) {
   qty = Math.max(0, Math.min(999, qty | 0));
   if (qty === c.qty) return;
+  const rising = qty > c.qty, wasComplete = rising && setProgress(c.set).pct >= 100;
   const p = S.pendingCards[c.id];
   const before = p ? p.before : c.qty;
   c.qty = qty;
   if (qty === before) delete S.pendingCards[c.id];
   else S.pendingCards[c.id] = { before, qty, t: new Date().toISOString() };
   changed();
+  if (rising && !wasComplete && setProgress(c.set).pct >= 100) {
+    confetti();
+    toast(`${c.set} complete! Every card is at its target.`);
+  }
+}
+
+function confetti() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = document.createElement('canvas');
+  cv.className = 'confetti';
+  cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio;
+  document.body.append(cv);
+  const ctx = cv.getContext('2d');
+  ctx.scale(devicePixelRatio, devicePixelRatio);
+  const colors = ['#5fd3a8', '#d9b44a', '#f08a5d', '#7aa7ff', '#e86fa8'];
+  const bits = Array.from({ length: 140 }, () => ({
+    x: innerWidth / 2, y: innerHeight / 3, vx: (Math.random() - 0.5) * 14, vy: Math.random() * -12 - 4,
+    r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3, w: 6 + Math.random() * 6, c: colors[Math.floor(Math.random() * colors.length)],
+  }));
+  const start = performance.now();
+  const frame = (now) => {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (const b of bits) {
+      b.vy += 0.35; b.x += b.vx; b.y += b.vy; b.r += b.vr; b.vx *= 0.99;
+      ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r); ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.w / 4, b.w, b.w / 2); ctx.restore();
+    }
+    if (now - start < 2600) requestAnimationFrame(frame); else cv.remove();
+  };
+  requestAnimationFrame(frame);
 }
 
 function changed() {
@@ -294,7 +331,8 @@ async function save() {
   S.error = null;
   renderSaveStatus();
   const cards = S.pendingCards, orders = S.pendingOrders ? S.orders.slice() : null, notes = S.pendingNotes ? S.notes : null;
-  S.pendingCards = {}; S.pendingOrders = false; S.pendingNotes = false;
+  const decks = S.pendingDecks ? S.decks.slice() : null;
+  S.pendingCards = {}; S.pendingOrders = false; S.pendingNotes = false; S.pendingDecks = false;
 
   const updaters = {};
   const byFile = {};
@@ -315,11 +353,13 @@ async function save() {
   }
   if (orders) updaters['data/orders.json'] = () => dumpJson(orders);
   if (notes != null) updaters['data/notes.json'] = () => dumpJson({ text: notes });
+  if (decks) updaters['data/decks.json'] = () => dumpJson(decks);
 
   const parts = [];
   if (entries.length) parts.push(entries.length === 1 ? `${entries[0].name} ${entries[0].before}→${entries[0].after}` : `${entries.length} quantities`);
   if (orders) parts.push('orders');
   if (notes != null) parts.push('notes');
+  if (decks) parts.push('decks');
 
   try {
     await commitFiles(updaters, `Update ${parts.join(', ')}`);
@@ -333,6 +373,7 @@ async function save() {
     }
     if (orders && !S.pendingOrders) S.pendingOrders = true;
     if (notes != null && !S.pendingNotes) S.pendingNotes = true;
+    if (decks && !S.pendingDecks) S.pendingDecks = true;
     S.error = e.message;
     if (e.status === 401 || e.status === 403) S.canEdit = false;
   }
@@ -574,7 +615,7 @@ function renderHome(main) {
       <div class="tiles">
         ${sets.slice().sort(naturalSort).reverse().map((s) => {
           const p = setProgress(s.code);
-          return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}">
+          return `<a class="tile${p.pct >= 100 ? ' complete' : ''}" href="#cards?set=${encodeURIComponent(s.code)}" style="--set-hue:${setHue(s.code)}">
             <div class="code">${esc(s.code)}</div>
             <div class="name">${esc(s.name)}</div>
             <div class="value">${money(p.value)}</div>
@@ -738,8 +779,11 @@ function qtyControl(c) {
   return `<span class="stepper"><button type="button" data-step="-1" aria-label="Remove one ${esc(c.name)}">−</button><output>${c.qty}</output><button type="button" data-step="1" aria-label="Add one ${esc(c.name)}">+</button></span>`;
 }
 
+const RARITIES = ['C', 'UC', 'R', 'SR', 'SEC', 'L', 'SP', 'TR', 'P', 'DON!!'];
+const rarityTag = (c) => (c.rarity ? `<span class="rar" data-r="${esc(RARITIES.includes(c.rarity) ? c.rarity : 'other')}">${esc(c.rarity)}</span>` : '');
+
 function cardInfo(c, f) {
-  const bits = [c.rarity || (isSealed(c) ? 'Sealed' : '')];
+  const bits = [isSealed(c) && !c.rarity ? 'Sealed' : ''];
   if (f.preset === 'buy') bits.push(`Need ${buyNeed(c)}`);
   else if (c.qty < c.target && c.qty > 0) bits.push(`${c.qty}/${c.target}`);
   if (kind(c) === 'alt') bits.push('Alt');
@@ -751,7 +795,7 @@ function cardHtml(c, f, view) {
   if (view === 'list') {
     return `<div class="row" data-id="${esc(c.id)}">
       <a href="${tcgLink(c)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(c.name)}">${img}</a>
-      <div><div class="title" data-open>${esc(c.name)}</div><div class="info">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${esc(cardInfo(c, f))}</div></div>
+      <div><div class="title" data-open>${esc(c.name)}</div><div class="info">${rarityTag(c)} ${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}${cardInfo(c, f) ? ' · ' + esc(cardInfo(c, f)) : ''}</div></div>
       <span class="price">${c.price != null ? money(c.price) : '–'}${changeBadge(c)}</span>
       ${qtyControl(c)}
     </div>`;
@@ -765,7 +809,7 @@ function cardHtml(c, f, view) {
     <div class="body">
       <div class="meta">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}</div>
       <div class="title" data-open>${esc(c.name)}</div>
-      <div class="info">${esc(cardInfo(c, f))}</div>
+      <div class="info">${rarityTag(c)} ${esc(cardInfo(c, f))}</div>
       <div class="foot-row"><span class="price">${c.price != null ? money(c.price) : '–'}${changeBadge(c)}</span>${qtyControl(c)}</div>
     </div>
   </article>`;
@@ -811,7 +855,8 @@ function renderCards(main) {
   if (f.preset === 'buy') {
     const need = list.reduce((n, c) => n + buyNeed(c), 0);
     const cost = list.reduce((n, c) => n + buyNeed(c) * (c.price || 0), 0);
-    sum.innerHTML = `<span>${count(list.length)} cards</span><span>${count(need)} copies needed · ${money(cost)} estimated</span>`;
+    sum.innerHTML = `<span>${count(list.length)} cards</span><span>${count(need)} copies needed · ${money(cost)} estimated · <button class="link-btn" id="buy-copy" type="button">Copy for TCGplayer</button></span>`;
+    $('#buy-copy', sum).onclick = () => copyForTcgplayer(list.map((c) => massEntryLine(buyNeed(c), c)), `${list.length} buy list ${list.length === 1 ? 'card' : 'cards'}`);
   } else {
     const t = totals(list);
     sum.innerHTML = `<span>${count(list.length)} ${list.length === 1 ? 'card' : 'cards'}${f.preset === 'top' ? ' · ranked by single-card price' : ''}</span><span>${count(t.copies)} copies · ${money(t.value)} owned</span>`;
@@ -1062,6 +1107,123 @@ function renderPacks(main) {
   if (matchMedia('(pointer: fine)').matches) input.focus();
 }
 
+// ---------- TCGplayer Mass Entry ----------
+// Lines like "2 Nami (OP15-108) [OP15] OP15-108", pasted at tcgplayer.com/massentry.
+
+const MASS_ENTRY = 'https://www.tcgplayer.com/massentry';
+const massEntryLine = (n, c) => `${n} ${c.name} [${c.set}]${c.cardId ? ' ' + c.cardId : ''}`;
+
+async function copyForTcgplayer(lines, what) {
+  const text = lines.join('\n');
+  try { await navigator.clipboard.writeText(text); }
+  catch { download('tcgplayer-mass-entry.txt', text + '\n', 'text/plain'); }
+  toast(`Copied ${what}. Paste it into TCGplayer Mass Entry.`, { label: 'Open TCGplayer', run: () => window.open(MASS_ENTRY, '_blank', 'noopener') });
+}
+
+// ---------- Deck checker ----------
+
+const DECK_ID = /\b([A-Z]{1,4}\d{0,2}-\d{3})\b/;
+
+// Accepts "4xOP01-016", "4 OP01-016", "4 Nami (OP01-016)" and similar, one card per line.
+function parseDeck(text) {
+  const wanted = new Map();
+  for (const line of text.split('\n')) {
+    const m = line.match(/^\s*(\d+)\s*x?\s*(.+)$/i);
+    const id = m && (m[2].toUpperCase().match(DECK_ID) || [])[1];
+    if (id) wanted.set(id, (wanted.get(id) || 0) + Number(m[1]));
+  }
+  return wanted;
+}
+
+function checkDeck(text) {
+  const rows = [];
+  for (const [id, need] of parseDeck(text)) {
+    const printings = S.cards.filter((c) => c.cardId.toUpperCase() === id && !isSealed(c));
+    const priced = printings.filter((c) => c.price != null).sort((a, b) => a.price - b.price);
+    const base = printings.find((c) => kind(c) === 'base') || printings[0];
+    const own = printings.reduce((n, c) => n + c.qty, 0);
+    const cheapest = priced[0] || null;
+    const missing = Math.max(0, need - own);
+    rows.push({ id, need, own, missing, base, cheapest, cost: missing * (cheapest?.price || 0) });
+  }
+  return rows;
+}
+
+const baseName = (c) => c.name.replace(/\s*\([^)]*\)\s*$/, '').replace(/\s*\([^)]*\)\s*$/, '') || c.name;
+
+function renderDecks(main) {
+  if (S.deckSel >= S.decks.length) S.deckSel = S.decks.length ? 0 : -1;
+  const deck = S.decks[S.deckSel] || { name: '', list: '' };
+  main.innerHTML = `<div class="decks">
+    <div class="deck-picker">
+      <div class="chips" role="group" aria-label="Saved decks">
+        ${S.decks.map((d, i) => `<button type="button" class="chip" data-deck="${i}" aria-pressed="${i === S.deckSel}">${esc(d.name || 'Untitled deck')}</button>`).join('')}
+        <button type="button" class="chip" data-deck="-1" aria-pressed="${S.deckSel === -1}">+ New deck</button>
+      </div>
+    </div>
+    <div class="deck-grid">
+      <div class="deck-input callout">
+        <label class="field-label" for="deck-name">Deck name</label>
+        <input id="deck-name" class="text-input" value="${esc(deck.name)}" placeholder="e.g. Red Zoro" autocomplete="off">
+        <label class="field-label" for="deck-list">Decklist</label>
+        <textarea id="deck-list" class="text-input" rows="14" spellcheck="false" placeholder="Paste a decklist, one card per line:&#10;1xOP01-001&#10;4xOP01-016&#10;4 Nami (OP15-108)">${esc(deck.list)}</textarea>
+        <div class="deck-actions">
+          ${S.canEdit ? `<button class="btn primary" id="deck-save" type="button">${S.deckSel === -1 ? 'Save deck' : 'Save changes'}</button>` : '<span class="muted small">Sign in to save decks.</span>'}
+          ${S.canEdit && S.deckSel !== -1 ? '<button class="btn danger" id="deck-delete" type="button">Delete</button>' : ''}
+        </div>
+      </div>
+      <div class="deck-result" id="deck-result"></div>
+    </div></div>`;
+
+  const list = $('#deck-list', main), name = $('#deck-name', main);
+  const show = () => {
+    const rows = checkDeck(list.value);
+    const box = $('#deck-result', main);
+    if (!rows.length) { box.innerHTML = '<p class="empty small">Paste a decklist to see what you own and what is missing.</p>'; return; }
+    const total = rows.reduce((n, r) => n + r.need, 0);
+    const owned = rows.reduce((n, r) => n + Math.min(r.need, r.own), 0);
+    const missing = rows.filter((r) => r.missing && r.base);
+    const unknown = rows.filter((r) => !r.base);
+    const cost = missing.reduce((n, r) => n + r.cost, 0);
+    box.innerHTML = `
+      <div class="deck-summary callout">
+        <div><div class="big">${count(owned)} / ${count(total)}</div><div class="muted small">cards owned</div></div>
+        <div><div class="big">${count(missing.reduce((n, r) => n + r.missing, 0))}</div><div class="muted small">copies missing</div></div>
+        <div><div class="big">${money(cost)}</div><div class="muted small">to finish, at the cheapest printing</div></div>
+        ${missing.length ? '<button class="btn" id="deck-copy" type="button">Copy missing for TCGplayer</button>' : '<span class="done-tag">Ready to play</span>'}
+      </div>
+      ${unknown.length ? `<p class="muted small">Not found: ${unknown.map((r) => esc(r.id)).join(', ')}</p>` : ''}
+      <div class="list">${rows.filter((r) => r.base).sort((a, b) => (b.missing > 0) - (a.missing > 0)).map((r) => `
+        <div class="row deck-row${r.missing ? ' short' : ''}" data-id="${esc(r.base.id)}">
+          <a href="${tcgLink(r.base)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(r.base.name)}"><img src="${image(r.base)}" alt="" loading="lazy" data-fallback="${esc(r.base.name)}"></a>
+          <div><div class="title" data-open>${esc(baseName(r.base))}</div><div class="info">${rarityTag(r.base)} ${esc(r.id)} · own ${r.own} of ${r.need}</div></div>
+          <span class="price">${r.missing ? `Need ${r.missing}` : '✓'}</span>
+          <span class="deck-cost">${r.missing ? money(r.cost) : ''}</span>
+        </div>`).join('')}</div>`;
+    const copy = $('#deck-copy', box);
+    if (copy) copy.onclick = () => copyForTcgplayer(missing.filter((r) => r.cheapest).map((r) => massEntryLine(r.missing, r.cheapest)), `${missing.length} missing ${missing.length === 1 ? 'card' : 'cards'}`);
+  };
+  let typing;
+  list.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(show, 200); });
+  main.querySelectorAll('[data-deck]').forEach((b) => (b.onclick = () => { S.deckSel = +b.dataset.deck; renderDecks(main); }));
+  const saveBtn = $('#deck-save', main);
+  if (saveBtn) saveBtn.onclick = () => {
+    const d = { name: name.value.trim() || 'Untitled deck', list: list.value.trim(), updated: isoDay() };
+    if (S.deckSel === -1) { S.decks.push(d); S.deckSel = S.decks.length - 1; } else S.decks[S.deckSel] = d;
+    S.pendingDecks = true; changed(); renderDecks(main);
+    toast(`Saved ${d.name}.`);
+  };
+  const del = $('#deck-delete', main);
+  if (del) del.onclick = () => {
+    const [removed] = S.decks.splice(S.deckSel, 1);
+    const at = S.deckSel;
+    S.deckSel = S.decks.length ? 0 : -1;
+    S.pendingDecks = true; changed(); renderDecks(main);
+    toast(`Deleted ${removed.name}.`, { label: 'Undo', run: () => { S.decks.splice(at, 0, removed); S.deckSel = at; S.pendingDecks = true; changed(); render(); } });
+  };
+  show();
+}
+
 function renderOrders(main) {
   const paid = S.orders.reduce((n, o) => n + (Number.isFinite(o.paid) ? o.paid : 0), 0);
   const remaining = S.orders.reduce((n, o) => n + (Number.isFinite(o.remaining) ? o.remaining : 0), 0);
@@ -1155,10 +1317,10 @@ function render() {
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, orders: renderOrders, history: renderHistory })[S.view](main);
 }
 
 window.addEventListener('hashchange', () => { render(); window.scrollTo({ top: 0 }); });
@@ -1169,6 +1331,9 @@ $('#theme-toggle').onclick = () => {
   document.documentElement.dataset.theme = next;
   store.set('theme', next);
 };
+
+// Installable app: the service worker keeps the site and the last loaded data for offline use.
+if ('serviceWorker' in navigator && !LOCAL) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 (async function start() {
   try {
