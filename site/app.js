@@ -781,7 +781,7 @@ function readQuery() {
 function writeQuery(f) {
   const q = new URLSearchParams();
   for (const [k, v] of Object.entries(f)) if (v && !(k === 'preset' && v === 'all') && k !== 'view') q.set(k, v);
-  history.replaceState(null, '', '#cards' + (q.toString() ? '?' + q : ''));
+  window.history.replaceState(null, '', '#cards' + (q.toString() ? '?' + q : ''));
 }
 
 function filterCards(f) {
@@ -947,7 +947,7 @@ function renderCards(main) {
   $('#f-variant', main).onchange = (e) => update({ variant: e.target.value });
   $('#f-rarity', main).onchange = (e) => update({ rarity: e.target.value });
   $('#f-sort', main).onchange = (e) => update({ sort: e.target.value });
-  $('#clear', main).onclick = () => { history.replaceState(null, '', '#cards'); render(); };
+  $('#clear', main).onclick = () => { window.history.replaceState(null, '', '#cards'); render(); };
   $('#view-toggle', main).onclick = () => { store.set('cards-view', f.view === 'list' ? 'grid' : 'list'); render(); };
   $('#export', main).onclick = () => exportCsv(list);
 }
@@ -1109,7 +1109,13 @@ $('#card-dialog').addEventListener('click', (e) => {
   const d = $('#card-dialog');
   if (e.target === d || e.target.closest('[data-close]')) d.close();
 });
-$('#card-dialog').addEventListener('close', () => { S.sheetCleanup?.(); S.sheetCleanup = null; });
+$('#card-dialog').addEventListener('close', () => {
+  S.sheetCleanup?.(); S.sheetCleanup = null;
+  // Drop a Discord link's card= so a reload doesn't reopen the sheet.
+  const [view, query] = location.hash.split('?');
+  const q = new URLSearchParams(query || '');
+  if (q.has('card')) { q.delete('card'); window.history.replaceState(null, '', `${view}${q.size ? '?' + q : ''}`); }
+});
 
 // ---------- Pack opening ----------
 
@@ -1434,6 +1440,9 @@ function render() {
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
   ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
+  // Links from Discord alerts open one card: #cards?q=OP01-001&card=OP01:5
+  const cardLink = new URLSearchParams(location.hash.split('?')[1] || '').get('card');
+  if (cardLink && S.byId.has(cardLink)) openCard(cardLink);
 }
 
 window.addEventListener('hashchange', () => { render(); window.scrollTo({ top: 0 }); });
