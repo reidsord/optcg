@@ -84,7 +84,7 @@ def pattern_text(pattern, kind):
 PRERELEASE_BEFORE_RELEASE = 7
 DEFAULT_LEAD_DAYS = 14
 DEFAULT_HOUR_ET = 10
-SET_CODE = re.compile(r"\[((?:OP|EB|PRB)-?\d{2})\]", re.I)
+SET_CODE = re.compile(r"\[(OP-?\d{2})\]", re.I)  # only main OP sets have prereleases (EB and PRB sets don't)
 RELEASE = re.compile(r"Release Date\s*[:\uff1a]?\s*([A-Za-z]{3,9}\.?\s*\d{1,2}\s*,\s*\d{4})|AVAILABLE\s+([A-Za-z]{3,9}\.?\s*\d{1,2}\s*,\s*\d{4})", re.I)
 
 

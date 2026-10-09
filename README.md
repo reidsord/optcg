@@ -92,7 +92,7 @@ looks for early signs and posts them as **Sign-up news**: registration lines on 
 official event pages, and new prerelease mentions on the websites of stores near
 `home` (Facebook, Instagram and Discord pages can't be read). It also records when
 each series went live in `data/watch.json`, so alerts can say when drops usually
-happen. For each upcoming booster set it reads the release date from the
+happen. For each upcoming main booster set (OP-xx; EB and PRB sets have no prerelease) it reads the release date from the
 official product page and predicts when prerelease sign-ups go live: the prerelease
 is assumed to be a week before release, and sign-ups two weeks before that at
 10 AM ET, until real drops seen near `home` replace those numbers. A heads-up posts
