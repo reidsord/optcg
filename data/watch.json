@@ -1,0 +1,46 @@
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Extra Battle": {"series": 1, "hourET": 15.0, "leadDays": 39}, "Pirates Party": {"series": 2, "hourET": 15.0, "leadDays": 56}, "Store Championship": {"series": 1, "hourET": 20.0, "leadDays": 43}},
+"sets":[
+{"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false},
+{"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
+],
+"series":[
+{"id":"[Oct-Dec 2026]Store Tournament Event OP","kind":"Store Tournament","seen":"2026-10-09","drop":"2026-09-17T14:00:00+00:00","firstEvent":"2026-10-08T18:00:00"},
+{"id":"CS26-27 Store Championship October (Season 2) [NA]","kind":"Store Championship","seen":"2026-10-09","drop":"2026-09-05T00:00:00+00:00","firstEvent":"2026-10-17T18:30:00"},
+{"id":"ONE PIECE CARD GAME Extra Grand Battle for Stores 2026 September-October","kind":"Extra Battle","seen":"2026-10-09","drop":"2026-09-01T19:00:00+00:00","firstEvent":"2026-10-10T12:00:00"},
+{"id":"Pirates Party 2026 Vol.3","kind":"Pirates Party","seen":"2026-10-09","drop":"2026-08-17T19:00:00+00:00","firstEvent":"2026-10-08T19:00:00"},
+{"id":"Pirates Party 2026 Vol.3 2-on-2 Battle format","kind":"Pirates Party","seen":"2026-10-09","drop":"2026-08-17T19:00:00+00:00","firstEvent":"2026-10-17T13:00:00"}
+],
+"official":[
+{"id":"https://en.onepiece-cardgame.com/events/02_361.html","name":"Pirates League: ONE PIECE CARD GAME Official Shop Edition 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/02_452.html","name":"Store Tournament 2026 Vol. 4","lines":["Store Registration: August 1-31, 2026","Player Registration: September 17, 2026 onwards","Store Registration: September 1-30, 2026","Player Registration: October 17, 2026 onwards","Store Registration: October 1-31, 2026","Player Registration: November 17, 2026 onwards"]},
+{"id":"https://en.onepiece-cardgame.com/events/02_483.html","name":"tabletop.me 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/02_512.html","name":"Spiel Essen 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/02_514.html","name":"Paris Games Week","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/02_523.html","name":"LUCCA COMICS & GAMES 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/bcgfest25-26-orlando.html","name":"BANDAI CARD GAMES Fest 26-27 in ORLANDO","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/bcgfest26-27-london.html","name":"BANDAI CARD GAMES Fest 26-27 in LONDON","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/bcgfest26-27.html","name":"BANDAI CARD GAMES Fest 26-27","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/extra-battle-sep-2026.html","name":"Extra Grand Battle for Stores 2026 September-October","lines":["Event Period September 25 - October 11, 2026 Store Application Period – August 2, 2026 *Exclusive for Silver Member and Gold Member stores.","Player Application Period -September 1 at 12:00pm (PDT) ～ -September 1 at 3:00pm (EDT) ～ -September 1 at 8:00pm (BST) ～"]},
+{"id":"https://en.onepiece-cardgame.com/events/extra-grand-battle-l-2026.html","name":"Large Scale Extra Grand Battle 2026","lines":["Date: November 8, 20260 Venue: Pomona Fairplex, 1101 W McKinley Ave, Pomona, CA 91768, USA Link: Registration"]},
+{"id":"https://en.onepiece-cardgame.com/events/malltour2026.html","name":"ONE PIECE CARD GAME MALL TOUR 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/pirates-party-vol3-2026.html","name":"Pirates Party 2026 Vol. 3","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/treasure-cup-august-2026.html","name":"Treasure Cup August 2026","lines":[]},
+{"id":"https://en.onepiece-cardgame.com/events/treasure-cup-dec-2026.html","name":"Treasure Cup December 2026","lines":[]}
+],
+"stores":[
+{"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
+{"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
+{"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
+{"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
+{"id":"nanigaming.com","store":"Prideland Collectibles","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
+{"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[]},
+{"id":"laughtail.com","store":"Laughtail","url":"https://www.laughtail.com/","miles":20.1,"snippets":[]},
+{"id":"bulldogcommunitygaming.com","store":"Bulldog Community Gaming","url":"https://www.bulldogcommunitygaming.com","miles":21.2,"snippets":[]},
+{"id":"shop.family-time-games.com","store":"Family Time Games","url":"https://shop.family-time-games.com/","miles":21.7,"snippets":[]},
+{"id":"booksnbrews.com","store":"Books & Brews","url":"http://www.booksnbrews.com","miles":21.8,"snippets":[]},
+{"id":"hotspotcollectiblesandtoys.com","store":"Hot Spot Collectibles and Toys","url":"https://www.hotspotcollectiblesandtoys.com/","miles":22.2,"snippets":[]},
+{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[]},
+{"id":"nextlevelgamesmuncie.com","store":"NLG Carmel","url":"https://www.nextlevelgamesmuncie.com/carmel-events","miles":26.9,"snippets":[]},
+{"id":"indycollectorsemporium.com","store":"Collectors Emporium","url":"https://indycollectorsemporium.com/","miles":30.4,"snippets":[]}
+]}
