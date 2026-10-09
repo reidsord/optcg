@@ -2,8 +2,13 @@ name: Check events and drops
 
 on:
   schedule:
-    - cron: "41 */3 * * *" # every three hours
+    - cron: "41 * * * *" # hourly, so registration reminders land 1 to 2 hours ahead
   workflow_dispatch:
+    inputs:
+      test:
+        description: "Send a Discord test for events matching these words (e.g. EB05 prerelease). Leave empty for a normal check."
+        required: false
+        default: ""
   pull_request:
     paths:
       - "scripts/update_events.py"
@@ -32,11 +37,17 @@ jobs:
         run: python3 scripts/update_events.py --dry-run --test-home 39.6134,-86.1047
 
       - name: Look for new events and drops
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md" --discord "$RUNNER_TEMP/discord.jsonl"
 
+      - name: Build a Discord test message
+        if: inputs.test
+        env:
+          TEST_QUERY: ${{ inputs.test }}
+        run: python3 scripts/update_events.py --test-discord "$TEST_QUERY" --discord "$RUNNER_TEMP/discord.jsonl"
+
       - name: Commit changes
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         run: |
           git config user.name "optcg-alerts-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -53,7 +64,7 @@ jobs:
           exit 1
 
       - name: Open an issue for anything new
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -68,7 +79,11 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           f="$RUNNER_TEMP/discord.jsonl"
-          if [ -z "$DISCORD_WEBHOOK_URL" ] || [ ! -s "$f" ]; then exit 0; fi
+          [ -s "$f" ] || exit 0
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "::warning::No DISCORD_WEBHOOK_URL repository secret, so nothing was posted to Discord."
+            exit 0
+          fi
           while IFS= read -r payload; do
             curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
             sleep 1
