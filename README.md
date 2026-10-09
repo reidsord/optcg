@@ -30,6 +30,9 @@ JSON files in this repo.
 | `data/value-history.json` | Collection value on each day the price job ran. |
 | `data/decks.json` | Decks saved on the Decks tab. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
+| `data/price-alerts.json` | Settings for Discord price alerts (`movePct`, `minPrice`) and the price targets set on card details (`targets`, productId → price). |
+| `data/price-alert-state.json` | Where each owned card's price stood at its last alert, and which targets are already hit. Written by the price job. |
+| `scripts/price_alerts.py` | Runs after the price update: posts big moves on cards you own and price-target hits to Discord. |
 | `data/alerts.json` | Settings for event alerts: home location, radius, which event kinds notify, who to mention. |
 | `data/events.json`, `data/drops.json` | Tournaments, announcements and products found by the events job. |
 | `scripts/update_events.py` | Events job: Bandai TCG+ tournaments, official announcements and new products. |
@@ -49,6 +52,19 @@ promo and sealed product.
 To leave a new set out, add its group id to `excludedGroups` in `data/meta.json`
 and remove it from `data/sets.json` and `data/cards/`. To drop a single card for
 good, delete its line and add its `productId` to `excludedProducts`.
+
+After the prices update, the same workflow checks for price alerts and posts them
+to Discord through the repository secret `DISCORD_PRICE_WEBHOOK_URL` (a webhook
+for your prices channel, made the same way as the events one below). It posts:
+
+- any card you own whose price has moved 15% or more (`movePct`) since it last
+  alerted, skipping cards under $5 (`minPrice`) both before and after;
+- any card that falls to or under a price target. Set a target on a card's
+  details (signed in): **Discord alert when the price is at or under**.
+
+To check the webhook, run **Update prices and new cards** from the Actions tab
+with **Only send a sample price alert** ticked; it posts a sample built from your
+most valuable cards without changing any prices.
 
 The **Check events and drops** workflow runs every hour. It reads
 [Bandai TCG+](https://www.bandai-tcg-plus.com/)'s public event search for One

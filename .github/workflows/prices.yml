@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "17 11 * * *" # daily, after tcgcsv.com publishes TCGplayer's overnight data
   workflow_dispatch:
+    inputs:
+      test_alert:
+        description: "Only send a sample price alert to Discord (no price update)"
+        type: boolean
+        default: false
   pull_request:
     paths:
       - "scripts/**"
@@ -33,15 +38,25 @@ jobs:
         run: |
           python3 scripts/update_prices.py --dry-run
           python3 scripts/set_colors.py --all --dry-run
+          python3 scripts/price_alerts.py --dry-run
+          python3 scripts/price_alerts.py --test
 
       - name: Update prices and add new cards
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test_alert
         run: |
           python3 scripts/update_prices.py
           python3 scripts/set_colors.py
 
+      - name: Check price alerts
+        if: github.event_name != 'pull_request' && !inputs.test_alert
+        run: python3 scripts/price_alerts.py --discord "$RUNNER_TEMP/discord.jsonl"
+
+      - name: Build a sample price alert
+        if: inputs.test_alert
+        run: python3 scripts/price_alerts.py --test --discord "$RUNNER_TEMP/discord.jsonl"
+
       - name: Commit changes
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !inputs.test_alert
         run: |
           git config user.name "optcg-price-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -58,3 +73,19 @@ jobs:
             sleep $((i * 5))
           done
           exit 1
+
+      - name: Post price alerts to Discord
+        if: github.event_name != 'pull_request'
+        env:
+          DISCORD_PRICE_WEBHOOK_URL: ${{ secrets.DISCORD_PRICE_WEBHOOK_URL }}
+        run: |
+          f="$RUNNER_TEMP/discord.jsonl"
+          [ -s "$f" ] || exit 0
+          if [ -z "$DISCORD_PRICE_WEBHOOK_URL" ]; then
+            echo "::warning::No DISCORD_PRICE_WEBHOOK_URL repository secret, so no price alerts were posted to Discord."
+            exit 0
+          fi
+          while IFS= read -r payload; do
+            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_PRICE_WEBHOOK_URL"
+            sleep 1
+          done < "$f"

@@ -28,7 +28,7 @@ const S = {
   priceHist: new Map(), valueHist: [], range: store.get('range') || '365', chartCleanup: null,
   packLog: (() => { try { return JSON.parse(store.get('pack-log') || '[]'); } catch { return []; } })(),
   homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
-  decks: [], deckSel: 0,
+  decks: [], deckSel: 0, priceAlerts: { targets: {} },
   pendingCards: {}, pendingOrders: false, pendingNotes: false, pendingDecks: false,
   saving: false, saveTimer: null, error: null,
 };
@@ -271,8 +271,9 @@ async function load() {
     getJson('data/history.json', sha), getJson('data/meta.json', sha),
   ]);
   const optional = (path) => getJson(path, sha).catch(() => []);
-  const [priceHist, valueHist, decks] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json'), optional('data/decks.json')]);
+  const [priceHist, valueHist, decks, priceAlerts] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json'), optional('data/decks.json'), getJson('data/price-alerts.json', sha).catch(() => ({}))]);
   S.decks = decks;
+  S.priceAlerts = { ...priceAlerts, targets: priceAlerts.targets || {} };
   S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
   S.valueHist = valueHist;
   sets.sort(setOrder);
@@ -1025,6 +1026,7 @@ function openCard(id) {
             <span class="muted small">${ch ? `${money(ch.was)} a week ago · ` : ''}lowest listed on TCGplayer</span>
           </div>
           <div class="sheet-qty">${qtyControl(c)}<span class="muted small" data-worth>${esc(worthText(c))}</span></div>
+          ${alertControl(c)}
           <h3>Price history</h3>
           <div class="chart small-chart" id="card-chart"></div>
           <div class="sheet-actions">
@@ -1045,6 +1047,63 @@ function openCard(id) {
     ? lineChart(chart, series, { height: 180, step: true })
     : (chart.innerHTML = '<p class="chart-empty">Price history starts with the next price changes.</p>', null);
 }
+
+// ---------- Price target alerts ----------
+// data/price-alerts.json `targets` maps productId -> price. The daily price job posts
+// to Discord when a card falls to or under its target (scripts/price_alerts.py).
+
+function alertControl(c) {
+  const t = S.priceAlerts.targets[c.productId];
+  if (!S.canEdit) return t != null ? `<p class="muted small alert-note">Discord alert at or under ${money(t)}.</p>` : '';
+  return `<form class="price-alert" data-alert="${c.productId}">
+      <label class="field-label" for="alert-price">Discord alert when the price is at or under</label>
+      <div class="price-alert-row">
+        <input id="alert-price" class="text-input" type="number" inputmode="decimal" min="0" step="0.01" value="${t ?? ''}" placeholder="e.g. ${c.price ? (Math.floor(c.price * 0.85 * 100) / 100).toFixed(2) : '5.00'}">
+        <button class="btn primary" type="submit">${t != null ? 'Update' : 'Set alert'}</button>
+        ${t != null ? '<button class="btn" type="button" data-clear-alert>Remove</button>' : ''}
+      </div>
+    </form>`;
+}
+
+async function setPriceTarget(c, price) {
+  const p = String(c.productId);
+  const apply = (cfg) => {
+    cfg.targets ||= {};
+    if (price == null) delete cfg.targets[p]; else cfg.targets[p] = price;
+    return cfg;
+  };
+  const verb = price == null ? 'Remove' : 'Set';
+  await commitFiles({
+    'data/price-alerts.json': (text) => dumpJson(apply(text ? JSON.parse(text) : { movePct: 0.15, minPrice: 5 })),
+  }, `${verb} price alert for ${c.name}${price == null ? '' : ` at ${money(price)}`}`);
+  apply(S.priceAlerts);
+}
+
+$('#card-dialog').addEventListener('submit', async (e) => {
+  const form = e.target.closest('[data-alert]');
+  if (!form) return;
+  e.preventDefault();
+  const c = S.byId.get(form.closest('[data-id]').dataset.id);
+  const value = parseFloat($('#alert-price', form).value);
+  await saveAlert(c, Number.isFinite(value) && value > 0 ? Math.round(value * 100) / 100 : null, form);
+});
+
+async function saveAlert(c, price, form) {
+  form.querySelectorAll('button').forEach((b) => { b.disabled = true; });
+  try {
+    await setPriceTarget(c, price);
+    toast(price == null ? 'Price alert removed.' : `You'll get a Discord alert when it's ${money(price)} or less.`);
+  } catch (e) {
+    toast(`Couldn't save the alert: ${e.message}`);
+  }
+  const d = $('#card-dialog'), top = d.scrollTop;
+  if (d.open) { openCard(c.id); d.scrollTop = top; }
+}
+
+$('#card-dialog').addEventListener('click', (e) => {
+  const clear = e.target.closest('[data-clear-alert]');
+  if (clear) saveAlert(S.byId.get(clear.closest('[data-id]').dataset.id), null, clear.closest('form'));
+});
 
 $('#card-dialog').addEventListener('click', (e) => {
   const d = $('#card-dialog');
