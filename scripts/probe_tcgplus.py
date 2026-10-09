@@ -1,44 +1,59 @@
-"""Temporary probe: can events be seen (by id) before they are released in the app?"""
-import json, re, sys, urllib.parse
+"""Temporary probe: find the newest event ids and look for events not yet released."""
+import json, sys, time
 from datetime import datetime, timezone
 sys.path.insert(0, "scripts")
-from update_events import fetch, TCG_API, ONE_PIECE
+from update_events import fetch
 
 now = datetime.now(timezone.utc).isoformat()
 API = "https://api.bandai-tcg-plus.com/api/user"
-def get(url):
+def ev(eid):
     try:
-        return json.loads(fetch(url, tries=1, timeout=30))
+        return (json.loads(fetch(f"{API}/event/{eid}", tries=1, timeout=20)).get("success") or {}).get("event")
     except Exception as e:
-        return {"ERR": str(e)}
+        return None if "404" in str(e) else {"ERR": str(e)}
 
-print(fetch("https://www.bandai-tcg-plus.com/js/api_url.js", tries=1)[:600])
-html = fetch("https://www.bandai-tcg-plus.com/event", tries=1)
-print(html[:2400])
+def exists_near(eid, span=40):
+    for i in range(0, span, 4):
+        e = ev(eid + i)
+        if e and "ERR" not in e:
+            return e
+    return None
 
-ids = []
-for order in ("1", "2", "3", "4", "5"):
-    params = [("game_title_id", ONE_PIECE), ("limit", 100), ("offset", 0), ("country_code[]", "US"), ("order", order), ("start_date", now[:10])]
-    s = get(TCG_API + "?" + urllib.parse.urlencode(params)).get("success") or {}
-    page = s.get("event_list") or []
-    mx = max((e["id"] for e in page), default=0)
-    print("order", order, "max id", mx, "newest created", max((e.get("event_created_at") or "" for e in page), default=""))
-    ids.append(mx)
-top = max(ids)
-print("TOP", top)
-found = 0
-for eid in range(top + 1, top + 400):
-    d = get(f"{API}/event/{eid}")
-    ev = (d.get("success") or {}).get("event")
-    if not ev:
-        if eid < top + 6: print(eid, json.dumps(d)[:200])
+t0 = time.time()
+lo, hi = 8621386, 8621386 + 50000
+while exists_near(hi):
+    lo, hi = hi, hi + 50000
+while hi - lo > 40:
+    mid = (lo + hi) // 2
+    if exists_near(mid):
+        lo = mid
+    else:
+        hi = mid
+print("frontier about", lo, "in", round(time.time() - t0), "s")
+e = exists_near(lo)
+print("near frontier:", e and {k: e.get(k) for k in ("id", "event_series_title", "apply_start_datetime", "webReleaseStartDate", "pref_code", "game_title_id")})
+for k in (2000, 6000):
+    x = exists_near(lo - k)
+    print(f"{k} ids back:", x and {kk: x.get(kk) for kk in ("id", "apply_start_datetime", "webReleaseStartDate")})
+
+stats = {"seen": 0, "op": 0, "future_release": 0, "future_apply": 0}
+series = {}
+for eid in range(lo + 60, lo - 3000, -1):
+    e = ev(eid)
+    if not e or "ERR" in e:
         continue
-    found += 1
-    if found <= 3:
-        print("DETAIL KEYS", sorted(ev.keys()))
-    rel = ev.get("webReleaseStartDate") or ""
-    print(eid, ev.get("game_title_id"), ev.get("pref_code"), ev.get("start_datetime"), "release", rel, "future" if rel > now else "", "|", ev.get("event_series_title"), "|", ev.get("organizer_name"),
-          {k: ev.get(k) for k in ev if re.search(r"appl|entry|release|status|open|publish", k, re.I)})
-print("found", found)
-for path in ["event_series/8033", "event-series/8033", "event_series/detail/8033", "event_series/list?game_title_id=4", "event/series/8033", "event_series?game_title_id=4"]:
-    print(path, json.dumps(get(f"{API}/{path}"))[:600])
+    stats["seen"] += 1
+    rel, app = e.get("webReleaseStartDate") or "", e.get("apply_start_datetime") or ""
+    if rel > now: stats["future_release"] += 1
+    if app > now: stats["future_apply"] += 1
+    if str(e.get("game_title_id")) != "4":
+        continue
+    stats["op"] += 1
+    key = e.get("event_series_title")
+    s = series.setdefault(key, {"n": 0, "release": rel, "apply": set(), "countries": set(), "example": eid})
+    s["n"] += 1; s["apply"].add(app[:16]); s["countries"].add(e.get("country_code") or e.get("pref_code"))
+    if rel > now or app > now:
+        print("PRE-RELEASE", eid, e.get("pref_code"), e.get("start_datetime"), "release", rel, "apply", app, "|", key, "|", e.get("organizer_name"), "status", e.get("status_id"), "approval", e.get("approval_status"))
+print(stats, round(time.time() - t0), "s")
+for k, s in sorted(series.items(), key=lambda kv: -kv[1]["n"]):
+    print(f"{s['n']:4} {k} | release {s['release']} | apply {sorted(s['apply'])[-3:]} | {sorted(map(str, s['countries']))[:6]} | e.g. {s['example']}")
