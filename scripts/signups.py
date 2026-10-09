@@ -23,6 +23,9 @@ PRERELEASE = re.compile(r"[^.!?\n]{0,160}\bpre-?release\b[^.!?\n]{0,200}", re.I)
 # Social sites need a login or block automated visits, so their pages can't be read.
 UNREADABLE = ("facebook.com", "fb.com", "instagram.com", "x.com", "twitter.com", "discord.gg", "discord.com", "tiktok.com", "youtube.com")
 MAX_SNIPPETS = 12
+# Store search pages mix in other games and search boilerplate; skip those lines.
+OTHER_GAMES = re.compile(r"pok[eé]mon|swsh|\bsv\d|magic|mtg|lorcana|yu-?gi-?oh|digimon|flesh and blood|star wars|gundam|dragon ball|weiss|union arena|sorcery|altered|riftbound", re.I)
+BOILERPLATE = re.compile(r"results? (found )?for|search results|^search:", re.I)
 
 
 def page_text(html):
@@ -214,7 +217,7 @@ def read_store(store, fetch):
     for text in texts:
         for m in PRERELEASE.finditer(text):
             s = re.sub(r"\s+", " ", m.group(0)).strip()
-            if len(s) > 15:
+            if len(s) > 15 and not OTHER_GAMES.search(s) and not BOILERPLATE.search(s):
                 snippets.append(s[:300])
     return list(dict.fromkeys(snippets))[:MAX_SNIPPETS]
 
