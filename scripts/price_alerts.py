@@ -16,6 +16,7 @@ Usage: python3 scripts/price_alerts.py [--dry-run] [--discord PATH] [--test]
 """
 import json
 import sys
+import urllib.parse
 from datetime import datetime, timezone
 
 from common import DATA, dump_rows, money_round, read_json, write_text
@@ -44,9 +45,16 @@ def tcg(c):
     return f"https://www.tcgplayer.com/product/{c['productId']}"
 
 
+def inventory(c):
+    """The card's details sheet on the site."""
+    q = urllib.parse.urlencode({"q": c.get("cardId") or c["name"], "card": c["id"]})
+    return f"{SITE}#cards?{q}"
+
+
 def label(c):
     bits = [b for b in (c.get("cardId"), c["set"]) if b]
-    return f"[{c['name']}]({tcg(c)})" + (f" · {' · '.join(dict.fromkeys(bits))}" if bits else "")
+    return (f"[{c['name']}]({tcg(c)})" + (f" · {' · '.join(dict.fromkeys(bits))}" if bits else "")
+            + f" · [Inventory]({inventory(c)})")
 
 
 def check(cards, settings, state):
