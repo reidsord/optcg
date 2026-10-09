@@ -3,10 +3,10 @@
 {"id":"OP11-PR:6","productId":634448,"cardId":"OP11-003","name":"Usopp","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.99},
 {"id":"OP11-PR:7","productId":634449,"cardId":"OP11-005","name":"Smoker","rarity":"C","alt":false,"target":4,"qty":0,"price":0.3},
 {"id":"OP11-PR:8","productId":634450,"cardId":"OP11-006","name":"Zephyr","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"OP11-PR:9","productId":634451,"cardId":"OP11-007","name":"Tashigi","rarity":"C","alt":false,"target":4,"qty":0,"price":1},
+{"id":"OP11-PR:9","productId":634451,"cardId":"OP11-007","name":"Tashigi","rarity":"C","alt":false,"target":4,"qty":0,"price":1.5},
 {"id":"OP11-PR:10","productId":634452,"cardId":"OP11-009","name":"Nico Robin","rarity":"C","alt":false,"target":4,"qty":0,"price":18},
 {"id":"OP11-PR:11","productId":634453,"cardId":"OP11-011","name":"Bins","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
-{"id":"OP11-PR:12","productId":634454,"cardId":"OP11-012","name":"Franky","rarity":"UC","alt":false,"target":4,"qty":1,"price":11.47},
+{"id":"OP11-PR:12","productId":634454,"cardId":"OP11-012","name":"Franky","rarity":"UC","alt":false,"target":4,"qty":1,"price":11.64},
 {"id":"OP11-PR:13","productId":634455,"cardId":"OP11-015","name":"Mocha","rarity":"C","alt":false,"target":4,"qty":0,"price":0.14},
 {"id":"OP11-PR:14","productId":634456,"cardId":"OP11-016","name":"Roronoa Zoro","rarity":"UC","alt":false,"target":4,"qty":0,"price":24},
 {"id":"OP11-PR:15","productId":634457,"cardId":"OP11-017","name":"X.Drake","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.99},
@@ -31,7 +31,7 @@
 {"id":"OP11-PR:34","productId":634476,"cardId":"OP11-046","name":"Vinsmoke Yonji","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"OP11-PR:35","productId":634477,"cardId":"OP11-050","name":"Gotti","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"OP11-PR:36","productId":634478,"cardId":"OP11-052","name":"Charlotte Lola","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
-{"id":"OP11-PR:37","productId":634479,"cardId":"OP11-053","name":"Tony Tony.Chopper","rarity":"UC","alt":false,"target":4,"qty":0,"price":27},
+{"id":"OP11-PR:37","productId":634479,"cardId":"OP11-053","name":"Tony Tony.Chopper","rarity":"UC","alt":false,"target":4,"qty":0,"price":15.2},
 {"id":"OP11-PR:38","productId":634480,"cardId":"OP11-055","name":"Bartolomeo","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.6},
 {"id":"OP11-PR:39","productId":634481,"cardId":"OP11-057","name":"Pedro","rarity":"C","alt":false,"target":4,"qty":1,"price":0.14},
 {"id":"OP11-PR:40","productId":634482,"cardId":"OP11-058","name":"Monkey.D.Luffy (058)","rarity":"UC","alt":false,"target":4,"qty":0,"price":39.99},
@@ -61,7 +61,7 @@
 {"id":"OP11-PR:64","productId":634506,"cardId":"OP11-096","name":"Ripper","rarity":"UC","alt":false,"target":4,"qty":1,"price":8},
 {"id":"OP11-PR:65","productId":634507,"cardId":"OP11-097","name":"After All These Years I'm Losing My Edge!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":11.49},
 {"id":"OP11-PR:66","productId":634508,"cardId":"OP11-098","name":"Blue Hole","rarity":"C","alt":false,"target":4,"qty":0,"price":0.18},
-{"id":"OP11-PR:67","productId":634509,"cardId":"OP11-100","name":"Otohime","rarity":"C","alt":false,"target":4,"qty":0,"price":0.55},
+{"id":"OP11-PR:67","productId":634509,"cardId":"OP11-100","name":"Otohime","rarity":"C","alt":false,"target":4,"qty":0,"price":1.99},
 {"id":"OP11-PR:68","productId":634510,"cardId":"OP11-102","name":"Camie","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.43},
 {"id":"OP11-PR:69","productId":634511,"cardId":"OP11-103","name":"Long-Jaw Neptunian","rarity":"C","alt":false,"target":4,"qty":1,"price":0.2},
 {"id":"OP11-PR:70","productId":634512,"cardId":"OP11-105","name":"Charlotte Chiffon","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.4},
@@ -74,5 +74,5 @@
 {"id":"OP11-PR:77","productId":634520,"cardId":"OP11-115","name":"You're Just Not My Type!","rarity":"UC","alt":false,"target":4,"qty":1,"price":4.99},
 {"id":"OP11-PR:78","productId":634521,"cardId":"OP11-116","name":"Merman Combat Ultramarine","rarity":"C","alt":false,"target":4,"qty":0,"price":0.45},
 {"id":"OP11-PR:79","productId":634522,"cardId":"OP11-117","name":"Fish-Man Island","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
-{"id":"OP11-PR:80","productId":634527,"cardId":"","name":"A Fist of Divine Speed - Release Event Pack","rarity":"","alt":true,"target":1,"qty":0,"price":6}
+{"id":"OP11-PR:80","productId":634527,"cardId":"","name":"A Fist of Divine Speed - Release Event Pack","rarity":"","alt":true,"target":1,"qty":0,"price":5.99}
 ]

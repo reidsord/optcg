@@ -1,6 +1,6 @@
 [
 {"id":"Starter Decks:319","productId":545033,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate","rarity":"","alt":false,"target":1,"qty":0,"price":51.98},
-{"id":"Starter Decks:320","productId":545034,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display","rarity":"","alt":false,"target":1,"qty":0,"price":500},
+{"id":"Starter Decks:320","productId":545034,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display","rarity":"","alt":false,"target":1,"qty":0,"price":400},
 {"id":"Starter Decks:321","productId":545035,"cardId":"","name":"Starter Deck 15: RED Edward.Newgate Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:322","productId":594381,"cardId":"","name":"Starter Decks 15-20 [Set of 6]","rarity":"","alt":false,"target":1,"qty":0,"price":700},
 {"id":"Starter Decks:323","productId":580976,"cardId":"OP02-001","name":"Edward.Newgate (OP02-001)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.1},
@@ -14,6 +14,6 @@
 {"id":"Starter Decks:331","productId":580986,"cardId":"ST15-001","name":"Atmos","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:332","productId":580987,"cardId":"ST15-002","name":"Edward.Newgate (ST15-002)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.55},
 {"id":"Starter Decks:333","productId":580988,"cardId":"ST15-003","name":"Kingdew","rarity":"C","alt":false,"target":4,"qty":8,"price":0.03},
-{"id":"Starter Decks:334","productId":580989,"cardId":"ST15-004","name":"Thatch","rarity":"C","alt":false,"target":4,"qty":8,"price":0.94},
+{"id":"Starter Decks:334","productId":580989,"cardId":"ST15-004","name":"Thatch","rarity":"C","alt":false,"target":4,"qty":8,"price":0.83},
 {"id":"Starter Decks:335","productId":580990,"cardId":"ST15-005","name":"Portgas.D.Ace","rarity":"SR","alt":false,"target":4,"qty":4,"price":1}
 ]

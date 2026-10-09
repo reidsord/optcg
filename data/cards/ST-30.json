@@ -3,7 +3,7 @@
 {"id":"Starter Decks:623","productId":692140,"cardId":"","name":"Starter Deck EX: Luffy & Ace Bonus Pack","rarity":"","alt":false,"target":1,"qty":0,"price":24.99},
 {"id":"Starter Decks:624","productId":692139,"cardId":"","name":"Starter Deck EX: Luffy & Ace Display","rarity":"","alt":false,"target":1,"qty":0,"price":170},
 {"id":"Starter Decks:625","productId":693256,"cardId":"ST30-001","name":"Luffy & Ace","rarity":"L","alt":false,"target":4,"qty":2,"price":2},
-{"id":"Starter Decks:626","productId":693257,"cardId":"ST30-001","name":"Luffy & Ace (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":53.21},
+{"id":"Starter Decks:626","productId":693257,"cardId":"ST30-001","name":"Luffy & Ace (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":49},
 {"id":"Starter Decks:627","productId":695418,"cardId":"ST30-002","name":"Inazuma","rarity":"C","alt":false,"target":4,"qty":8,"price":0.16},
 {"id":"Starter Decks:628","productId":695419,"cardId":"ST30-002","name":"Inazuma (Full Art)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.5},
 {"id":"Starter Decks:629","productId":695420,"cardId":"ST30-003","name":"Edward.Newgate","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07},
@@ -33,7 +33,7 @@
 {"id":"Starter Decks:653","productId":695442,"cardId":"ST30-015","name":"The Name of This Era Is \"Whitebeard\"!!","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:654","productId":695443,"cardId":"ST30-015","name":"The Name of This Era Is \"Whitebeard\"!! (Parallel)","rarity":"C","alt":true,"target":1,"qty":8,"price":0.15},
 {"id":"Starter Decks:655","productId":695444,"cardId":"ST30-016","name":"Can You Still Fight, Luffy?! Of Course!!","rarity":"C","alt":false,"target":4,"qty":8,"price":0.15},
-{"id":"Starter Decks:656","productId":695445,"cardId":"ST30-016","name":"Can You Still Fight, Luffy?! Of Course!! (Parallel)","rarity":"C","alt":true,"target":1,"qty":8,"price":0.7},
+{"id":"Starter Decks:656","productId":695445,"cardId":"ST30-016","name":"Can You Still Fight, Luffy?! Of Course!! (Parallel)","rarity":"C","alt":true,"target":1,"qty":8,"price":1.17},
 {"id":"Starter Decks:657","productId":695446,"cardId":"ST30-017","name":"And You Get Yourself in Big Trouble!!","rarity":"C","alt":false,"target":4,"qty":8,"price":0.05},
 {"id":"Starter Decks:658","productId":695447,"cardId":"ST30-017","name":"And You Get Yourself in Big Trouble!! (Parallel)","rarity":"C","alt":true,"target":1,"qty":8,"price":0.25}
 ]

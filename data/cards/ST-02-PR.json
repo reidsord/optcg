@@ -1,6 +1,6 @@
 [
-{"id":"tcg:17658:415183","productId":415183,"cardId":"ST02-001","name":"Eustass\"Captain\"Kid (001)","rarity":"L","alt":false,"target":4,"qty":0,"price":43.23},
-{"id":"tcg:17658:415523","productId":415523,"cardId":"ST02-013","name":"Eustass\"Captain\"Kid (013)","rarity":"SR","alt":false,"target":4,"qty":0,"price":9.49},
+{"id":"tcg:17658:415183","productId":415183,"cardId":"ST02-001","name":"Eustass\"Captain\"Kid (001)","rarity":"L","alt":false,"target":4,"qty":0,"price":43},
+{"id":"tcg:17658:415523","productId":415523,"cardId":"ST02-013","name":"Eustass\"Captain\"Kid (013)","rarity":"SR","alt":false,"target":4,"qty":0,"price":9.48},
 {"id":"tcg:17658:415805","productId":415805,"cardId":"ST02-009","name":"Trafalgar Law","rarity":"SR","alt":false,"target":4,"qty":0,"price":15.28},
 {"id":"tcg:17658:416054","productId":416054,"cardId":"ST02-014","name":"X.Drake","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"tcg:17658:416218","productId":416218,"cardId":"ST02-002","name":"Vito","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
@@ -9,12 +9,12 @@
 {"id":"tcg:17658:417462","productId":417462,"cardId":"ST02-008","name":"Scratchmen Apoo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.48},
 {"id":"tcg:17658:418012","productId":418012,"cardId":"ST02-015","name":"Scalpel","rarity":"C","alt":false,"target":4,"qty":0,"price":0.75},
 {"id":"tcg:17658:418167","productId":418167,"cardId":"ST02-016","name":"Repel","rarity":"C","alt":false,"target":4,"qty":0,"price":0.38},
-{"id":"tcg:17658:418354","productId":418354,"cardId":"ST02-006","name":"Koby","rarity":"C","alt":false,"target":4,"qty":0,"price":2.04},
+{"id":"tcg:17658:418354","productId":418354,"cardId":"ST02-006","name":"Koby","rarity":"C","alt":false,"target":4,"qty":0,"price":2.03},
 {"id":"tcg:17658:418558","productId":418558,"cardId":"ST02-005","name":"Killer","rarity":"C","alt":false,"target":4,"qty":0,"price":1.25},
 {"id":"tcg:17658:418677","productId":418677,"cardId":"ST02-007","name":"Jewelry Bonney","rarity":"C","alt":false,"target":4,"qty":0,"price":2},
 {"id":"tcg:17658:418831","productId":418831,"cardId":"ST02-011","name":"Heat","rarity":"C","alt":false,"target":4,"qty":0,"price":0.48},
 {"id":"tcg:17658:419043","productId":419043,"cardId":"ST02-004","name":"Capone\"Gang\"Bege","rarity":"C","alt":false,"target":4,"qty":0,"price":0.4},
-{"id":"tcg:17658:419257","productId":419257,"cardId":"ST02-012","name":"Bepo","rarity":"C","alt":false,"target":4,"qty":0,"price":1.82},
+{"id":"tcg:17658:419257","productId":419257,"cardId":"ST02-012","name":"Bepo","rarity":"C","alt":false,"target":4,"qty":0,"price":1.81},
 {"id":"tcg:17658:419415","productId":419415,"cardId":"ST02-010","name":"Basil Hawkins","rarity":"C","alt":false,"target":4,"qty":0,"price":0.67},
 {"id":"p408197","productId":408197,"cardId":"","name":"Super Pre-Release Starter Deck 2: Worst Generation","rarity":"","alt":null,"target":1,"qty":0,"price":674.95,"added":"2026-10-08"},
 {"id":"p408957","productId":408957,"cardId":"","name":"Super Pre-Release Starter Deck 2: Worst Generation Display","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"}
