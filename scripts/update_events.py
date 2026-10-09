@@ -418,7 +418,7 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         news = fetch_announcements()
         new_news = merge_seen(news, old_news, today)
         new_news = new_news if old_news else []  # first run: fill the list without alerts
-        official, official_alerts = signups.watch_official(news, old_official, quick)
+        official, official_alerts = signups.watch_official(news, old_official, quick, now)
     except Exception as e:
         print(f"Official events page failed: {e}")
         news, new_news = old_news, []

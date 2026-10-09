@@ -30,7 +30,7 @@ BOILERPLATE = re.compile(r"results? (found )?for|search results|^search:", re.I)
 
 def page_text(html):
     html = re.sub(r"(?is)<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", html or "")
-    html = re.sub(r"(?i)<br\s*/?>|</(p|div|li|h\d|tr|td)>", "\n", html)
+    html = re.sub(r"(?i)<br\s*/?>|</(p|div|li|h\d|tr|td|th|dt|dd)>", "\n", html)
     text = unescape(re.sub(r"<[^>]+>", " ", html))
     return "\n".join(re.sub(r"[ \t ​]+", " ", line).strip() for line in text.splitlines() if line.strip())
 
@@ -158,8 +158,15 @@ def predict_text(s, lead, learned):
 # ---------- Official event pages ----------
 
 def signup_lines(text):
+    """Lines about registration or entry that carry a date. A label on its own line
+    ("Player Application Period") is joined to the date on the next line."""
+    raw = [l.strip() for l in text.split("\n") if l.strip()]
     lines = []
-    for line in text.split("\n"):
+    for i, line in enumerate(raw):
+        if len(line) < 80 and SIGNUP_WORDS.search(line) and not re.search(MONTHS, line, re.I) \
+                and i + 1 < len(raw) and len(raw[i + 1]) < 200 and re.search(MONTHS, raw[i + 1], re.I):
+            lines.append(f"{line.rstrip(':')}: {raw[i + 1]}")
+            continue
         parts = [line] if len(line) < 300 else [line[max(0, m.start() - 120):m.end() + 160] for m in SIGNUP_WORDS.finditer(line)]
         for part in parts:
             part = part.strip()
@@ -168,9 +175,52 @@ def signup_lines(text):
     return list(dict.fromkeys(lines))[:8]
 
 
-def watch_official(news, old, fetch):
-    """Registration and entry lines on each official event page. Returns (rows, new alerts)."""
+ZONES = {"PDT": "America/Los_Angeles", "PST": "America/Los_Angeles", "PT": "America/Los_Angeles",
+         "EDT": "America/New_York", "EST": "America/New_York", "ET": "America/New_York",
+         "CDT": "America/Chicago", "CST": "America/Chicago", "CT": "America/Chicago"}
+OPEN_AT = re.compile(r"(?P<month>[A-Za-z]{3,9})\.?\s+(?P<day>\d{1,2})(?:\s*,\s*(?P<year>\d{4}))?"
+                     r"(?:\s*(?:at|,)?\s*(?P<time>\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?)\s*\(?(?P<zone>[A-Z]{2,3})?\)?)?", re.I)
+
+
+def player_opens(lines, now):
+    """When player sign-ups next open, from lines like "Player Application Period: October 23, 2026 onwards"
+    or "Player Registration: September 1 at 12:00pm (PDT)". Pages listing several months give several
+    dates; the next one to come wins. Returns (iso datetime, has_time) or (None, False)."""
+    found = []
+    for line in lines:
+        if not re.search(r"appl|regist|entry|sign", line, re.I):
+            continue
+        if re.search(r"\bstore", line, re.I) and not re.search(r"player", line, re.I):
+            continue  # store-side deadlines aren't player sign-ups
+        for m in OPEN_AT.finditer(line):
+            day = parse_date(f"{m['month']} {m['day']}, {m['year'] or now.year}")
+            if not day:
+                continue
+            if m["time"]:
+                clock = re.sub(r"[.\s]", "", m["time"]).upper()
+                t = datetime.strptime(clock, "%I:%M%p" if ":" in clock else "%I%p").time()
+                tz = ZoneInfo(ZONES.get((m["zone"] or "ET").upper(), "America/New_York"))
+                found.append((datetime.combine(day, t, tz), True))
+            else:
+                found.append((datetime.combine(day, time(0, 0), ET), False))
+            break  # the first date on a line is when it opens
+    if not found:
+        return None, False
+    upcoming = [f for f in found if f[0] >= now - timedelta(days=1)]
+    at, has_time = min(upcoming) if upcoming else max(found)
+    return at.isoformat(), has_time
+
+
+def opens_text(iso, has_time):
+    at = datetime.fromisoformat(iso).astimezone(ET)
+    return f"{at:%a %b %-d}, {at:%-I:%M %p} ET" if has_time else f"{at:%a %b %-d} (time not given)"
+
+
+def watch_official(news, old, fetch, now):
+    """Registration lines and the player sign-up time on each official event page. Returns (rows, alerts).
+    New pages and new lines alert; reminders go out the day before and on the day sign-ups open."""
     rows, alerts = {}, []
+    first_run = not old
     for a in news.values():
         prev = old.get(a["url"]) or {}
         try:
@@ -179,11 +229,35 @@ def watch_official(news, old, fetch):
             print(f"Official page {a['url']} failed: {e}")
             rows[a["url"]] = prev or {"id": a["url"], "name": a["name"], "lines": []}
             continue
-        rows[a["url"]] = {"id": a["url"], "name": a["name"], "lines": lines}
+        opens, has_time = player_opens(lines, now)
+        row = {"id": a["url"], "name": a["name"], "lines": lines}
+        if opens:
+            row.update({"opens": opens, "hasTime": has_time})
+            if prev.get("opens") == opens:
+                row["reminded"] = prev.get("reminded") or []
+        rows[a["url"]] = row
         fresh = [l for l in lines if l not in (prev.get("lines") or [])]
-        if prev and fresh:  # a page seen for the first time fills in quietly
-            alerts.append({"source": "Official site", "title": a["name"], "url": a["url"], "lines": fresh})
-    print(f"Official pages: {sum(len(r['lines']) for r in rows.values())} sign-up lines on {len(rows)} pages")
+        current = not opens or datetime.fromisoformat(opens) >= now - timedelta(days=1)
+        if fresh and current and not first_run:
+            title = a["name"] + (f": sign-ups open {opens_text(opens, has_time)}" if opens else "")
+            alerts.append({"source": "Official site", "title": title, "url": a["url"], "lines": fresh, "opens": opens, "hasTime": has_time})
+        if opens and not first_run:
+            at = datetime.fromisoformat(opens)
+            hours = (at - now).total_seconds() / 3600
+            days = (at.astimezone(ET).date() - now.astimezone(ET).date()).days
+            morning = now.astimezone(ET).hour >= 7
+            if has_time:
+                stage = "now" if 0 < hours <= 2 else "tomorrow" if 12 < hours <= 36 else None
+            else:
+                stage = "today" if days == 0 and morning else "tomorrow" if days == 1 and morning else None
+            if stage and stage not in row.get("reminded", []):
+                row["reminded"] = row.get("reminded", []) + [stage]
+                word = {"now": "in under 2 hours", "today": "today", "tomorrow": "tomorrow"}[stage]
+                alerts.append({"source": "Official site", "title": f"{a['name']}: sign-ups open {word}", "url": a["url"],
+                               "lines": [f"Player sign-ups open {opens_text(opens, has_time)}. Be ready in the Bandai TCG+ app."],
+                               "opens": opens, "hasTime": has_time})
+    print(f"Official pages: {sum(len(r['lines']) for r in rows.values())} sign-up lines on {len(rows)} pages, "
+          f"{sum(1 for r in rows.values() if r.get('opens'))} with a player sign-up date")
     return rows, alerts
 
 
@@ -271,8 +345,13 @@ def alert_embeds(alerts, pattern):
     embeds = []
     for a in alerts:
         text = "\n".join(f"> {l}" for l in a["lines"])
-        if hint:
+        if hint and a["source"] != "Official site":
             text += f"\n\n{hint}"
-        embeds.append({"title": f"Sign-up news: {a['title']}"[:256], "url": a["url"], "description": text[:4000], "color": 0x8E44AD,
-                       "footer": {"text": a["source"] + (f" · {a['miles']} mi" if a.get("miles") is not None else "")}})
+        embed = {"title": f"Sign-up news: {a['title']}"[:256], "url": a["url"], "description": text[:4000], "color": 0x8E44AD,
+                 "footer": {"text": a["source"] + (f" · {a['miles']} mi" if a.get("miles") is not None else "")}}
+        if a.get("opens"):
+            t = int(datetime.fromisoformat(a["opens"]).timestamp())
+            embed["fields"] = [{"name": "Player sign-ups open", "inline": False,
+                                "value": f"<t:{t}:F> (<t:{t}:R>)" if a.get("hasTime") else f"<t:{t}:D> (time not given)"}]
+        embeds.append(embed)
     return embeds

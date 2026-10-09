@@ -89,7 +89,8 @@ registration opens for an event in `notifyKinds`, a reminder posts too, so you
 can be in the Bandai TCG+ app when sign-ups go live. Bandai TCG+ itself shows nothing before
 that moment (every store's events in a series go live together), so the job also
 looks for early signs and posts them as **Sign-up news**: registration lines on the
-official event pages, and new prerelease mentions on the websites of stores near
+official event pages (including when player sign-ups open, with reminders the day
+before and the day of), and new prerelease mentions on the websites of stores near
 `home` (Facebook, Instagram and Discord pages can't be read). It also records when
 each series went live in `data/watch.json`, so alerts can say when drops usually
 happen. For each upcoming main booster set (OP-xx; EB and PRB sets have no prerelease) it reads the release date from the
