@@ -69,7 +69,9 @@ function signupWatch(watch) {
   const kinds = BIG.filter((k) => pattern[k]);
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = (watch.sets || []).filter((r) => r.expected && r.release >= today && !r.live);
-  const official = (watch.official || []).filter((r) => r.lines && r.lines.length);
+  const soon = (r) => r.opens && Date.parse(r.opens) > Date.now() - 864e5;
+  const official = (watch.official || []).filter((r) => r.lines && r.lines.length)
+    .sort((a, b) => (soon(b) - soon(a)) || String(a.opens || '9').localeCompare(String(b.opens || '9')));
   const stores = watch.stores || [];
   const news = stores.filter((r) => r.snippets && r.snippets.length);
   const readable = stores.filter((r) => !r.error).length;
@@ -86,7 +88,8 @@ function signupWatch(watch) {
         <div class="ev-title">Usually goes live around ${clock(pattern[k].hourET)}, about ${pattern[k].leadDays} days before the first event</div>
         <div class="muted small">From ${pattern[k].series} series seen near you</div></div></div>`).join('')}</div>` : ''}
       ${official.map((r) => `<a class="ev-row" href="${esc(r.id)}" target="_blank" rel="noopener"><div class="ev-main">
-        <div class="ev-head"><span class="muted small">Official site</span></div><div class="ev-title">${esc(r.name)}</div>
+        <div class="ev-head"><span class="muted small">Official site</span>${soon(r) ? '<span class="ev-new">Sign-ups ahead</span>' : ''}</div><div class="ev-title">${esc(r.name)}</div>
+        ${soon(r) ? `<div class="small"><strong>Player sign-ups open ${esc(new Date(r.opens).toLocaleString('en-US', r.hasTime ? { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' } : { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/New_York' }))}</strong></div>` : ''}
         ${r.lines.map((l) => `<div class="muted small">${esc(l)}</div>`).join('')}</div></a>`).join('')}
       ${news.map((r) => `<a class="ev-row" href="${esc(r.url)}" target="_blank" rel="noopener"><div class="ev-main">
         <div class="ev-head"><span class="muted small">${esc(r.store || r.id)}${r.miles != null ? ` · ${r.miles} mi` : ''}</span></div>
