@@ -57,14 +57,51 @@ function productCard(d) {
   </a>`;
 }
 
+function clock(hour) {
+  const h = Math.floor(hour);
+  return `${h % 12 || 12}:${hour % 1 ? '30' : '00'} ${h < 12 ? 'AM' : 'PM'} ET`;
+}
+
+// Bandai TCG+ shows nothing before a series goes live, so this lists the early signs:
+// when past series dropped, sign-up lines on official pages, and prerelease news on store sites.
+function signupWatch(watch) {
+  const pattern = watch.pattern || {};
+  const kinds = BIG.filter((k) => pattern[k]);
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = (watch.sets || []).filter((r) => r.expected && r.release >= today && !r.live);
+  const official = (watch.official || []).filter((r) => r.lines && r.lines.length);
+  const stores = watch.stores || [];
+  const news = stores.filter((r) => r.snippets && r.snippets.length);
+  const readable = stores.filter((r) => !r.error).length;
+  if (!kinds.length && !official.length && !stores.length && !upcoming.length) return '';
+  return `
+      <div class="section-head"><h2>Sign-up watch</h2>
+        <span class="hint">Bandai TCG+ hides events until the moment sign-ups open, so these are the early signs</span></div>
+      ${upcoming.length ? `<div class="list">${upcoming.map((r) => `<a class="ev-row" href="${esc(r.url)}" target="_blank" rel="noopener" style="--kind-hue:${KIND_HUE.Prerelease}"><div class="ev-main">
+        <div class="ev-head"><span class="ev-kind">${esc(r.id)} prerelease</span>${r.learned ? '' : '<span class="muted small">estimate</span>'}</div>
+        <div class="ev-title">Sign-ups expected ${esc(new Date(r.expected).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}</div>
+        <div class="muted small">Releases ${esc(fmt(r.release + 'T12:00:00', { month: 'short', day: 'numeric' }))}, prerelease likely around ${esc(fmt(r.prerelease + 'T12:00:00', { month: 'short', day: 'numeric' }))}</div></div></a>`).join('')}</div>` : ''}
+      ${kinds.length ? `<div class="list">${kinds.map((k) => `<div class="ev-row" style="--kind-hue:${KIND_HUE[k] ?? 220}"><div class="ev-main">
+        <div class="ev-head"><span class="ev-kind">${esc(k)}</span></div>
+        <div class="ev-title">Usually goes live around ${clock(pattern[k].hourET)}, about ${pattern[k].leadDays} days before the first event</div>
+        <div class="muted small">From ${pattern[k].series} series seen near you</div></div></div>`).join('')}</div>` : ''}
+      ${official.map((r) => `<a class="ev-row" href="${esc(r.id)}" target="_blank" rel="noopener"><div class="ev-main">
+        <div class="ev-head"><span class="muted small">Official site</span></div><div class="ev-title">${esc(r.name)}</div>
+        ${r.lines.map((l) => `<div class="muted small">${esc(l)}</div>`).join('')}</div></a>`).join('')}
+      ${news.map((r) => `<a class="ev-row" href="${esc(r.url)}" target="_blank" rel="noopener"><div class="ev-main">
+        <div class="ev-head"><span class="muted small">${esc(r.store || r.id)}${r.miles != null ? ` · ${r.miles} mi` : ''}</span></div>
+        ${r.snippets.slice(0, 4).map((l) => `<div class="small">${esc(l)}</div>`).join('')}</div></a>`).join('')}
+      <p class="muted small">Watching ${readable} store website${readable === 1 ? '' : 's'} near you for prerelease news. Facebook, Instagram and Discord pages can't be read automatically.</p>`;
+}
+
 export async function renderEvents(main, { getJson, ref }) {
   if (!cache) {
     main.innerHTML = '<p class="loading">Loading events…</p>';
     const optional = (path) => getJson(path, ref).catch(() => null);
-    const [events, drops, cfg] = await Promise.all([optional('data/events.json'), optional('data/drops.json'), optional('data/alerts.json')]);
-    cache = { events: events || {}, drops: drops || {}, cfg: cfg || {} };
+    const [events, drops, cfg, watch] = await Promise.all([optional('data/events.json'), optional('data/drops.json'), optional('data/alerts.json'), optional('data/watch.json')]);
+    cache = { events: events || {}, drops: drops || {}, cfg: cfg || {}, watch: watch || {} };
   }
-  const { events, drops, cfg } = cache;
+  const { events, drops, cfg, watch } = cache;
   const list = (events.events || []).filter((e) => e.start && dayKey(e.start) >= new Date(Date.now() - 864e5).toISOString().slice(0, 10));
   const kinds = [...new Set(list.map((e) => e.kind))].sort((a, b) => (BIG.indexOf(a) + 1 || 99) - (BIG.indexOf(b) + 1 || 99));
   let filter = store.get('events-filter') || 'big';
@@ -98,6 +135,8 @@ export async function renderEvents(main, { getJson, ref }) {
         <h3 class="ev-day">${esc(fmt(day + 'T12:00:00', { weekday: 'long', month: 'long', day: 'numeric' }))}</h3>
         <div class="list">${rows.map(eventRow).join('')}</div>`).join('')
         : `<p class="empty">No ${filter === 'big' ? 'big events' : 'events'} coming up nearby right now.${filter === 'big' && list.length ? ' Try All to see weekly store tournaments.' : ''}</p>`}`}
+
+      ${signupWatch(watch)}
 
       <div class="section-head"><h2>Official announcements</h2><span class="hint">Treasure Cups, Store Championships, Regionals and more from the official site</span></div>
       ${news.length ? `<div class="list">${news.map((a) => `<a class="ev-row" href="${esc(a.url)}" target="_blank" rel="noopener">
