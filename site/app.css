@@ -441,3 +441,7 @@ dialog input, dialog textarea { width: 100%; min-height: 40px; border: 1px solid
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ev-kind { color: hsl(var(--kind-hue, 220) 60% 70%); } }
 :root[data-theme="dark"] .ev-kind { color: hsl(var(--kind-hue, 220) 60% 70%); }
+.price-alert { margin-top: 14px; }
+.price-alert-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.price-alert-row .text-input { width: 9em; flex: 0 0 auto; }
+.alert-note { margin: 10px 0 0; }
