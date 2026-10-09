@@ -76,15 +76,15 @@ jobs:
       - name: Post to Discord
         if: github.event_name != 'pull_request'
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_EVENT_WEBHOOK_URL: ${{ secrets.DISCORD_EVENT_WEBHOOK_URL }}
         run: |
           f="$RUNNER_TEMP/discord.jsonl"
           [ -s "$f" ] || exit 0
-          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "::warning::No DISCORD_WEBHOOK_URL repository secret, so nothing was posted to Discord."
+          if [ -z "$DISCORD_EVENT_WEBHOOK_URL" ]; then
+            echo "::warning::No DISCORD_EVENT_WEBHOOK_URL repository secret, so nothing was posted to Discord."
             exit 0
           fi
           while IFS= read -r payload; do
-            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
+            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_EVENT_WEBHOOK_URL"
             sleep 1
           done < "$f"
