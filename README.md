@@ -92,7 +92,11 @@ looks for early signs and posts them as **Sign-up news**: registration lines on 
 official event pages, and new prerelease mentions on the websites of stores near
 `home` (Facebook, Instagram and Discord pages can't be read). It also records when
 each series went live in `data/watch.json`, so alerts can say when drops usually
-happen. To check the webhook, run
+happen. For each upcoming booster set it reads the release date from the
+official product page and predicts when prerelease sign-ups go live: the prerelease
+is assumed to be a week before release, and sign-ups two weeks before that at
+10 AM ET, until real drops seen near `home` replace those numbers. A heads-up posts
+when the predicted time is close. To check the webhook, run
 **Check events and drops** from the Actions tab with a test search such as
 `EB05 prerelease`; it posts the matching events (or the matching product) to Discord.
 

@@ -11,7 +11,7 @@ and records when each series went live, so alerts can say when drops usually hap
 import re
 import statistics
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, time, timedelta
 from html import unescape
 from urllib.parse import urljoin, urlparse
 from zoneinfo import ZoneInfo
@@ -71,6 +71,85 @@ def pattern_text(pattern, kind):
     clock = f"{h % 12 or 12}:{'30' if p['hourET'] % 1 else '00'} {'AM' if h < 12 else 'PM'} ET"
     return (f"{kind} series near you have gone live around {clock}, about {p['leadDays']} days before the first event "
             f"({p['series']} series seen).")
+
+
+# ---------- Predicted prerelease drops ----------
+# Reid's rule of thumb: prerelease sign-ups go live on Bandai TCG+ about two weeks before the
+# prerelease. Prereleases usually run the week before a set's release, so the guess is
+# release date - 7 days - 14 days, at 10 AM Eastern. Drops seen near home replace these numbers.
+
+PRERELEASE_BEFORE_RELEASE = 7
+DEFAULT_LEAD_DAYS = 14
+DEFAULT_HOUR_ET = 10
+SET_CODE = re.compile(r"\[((?:OP|EB|PRB)-?\d{2})\]", re.I)
+RELEASE = re.compile(r"Release Date\s*[:\uff1a]?\s*([A-Za-z]{3,9}\.?\s*\d{1,2}\s*,\s*\d{4})|AVAILABLE\s+([A-Za-z]{3,9}\.?\s*\d{1,2}\s*,\s*\d{4})", re.I)
+
+
+def parse_date(text):
+    text = re.sub(r"\s*,\s*", ", ", text.replace(".", "")).strip()
+    for fmt in ("%B %d, %Y", "%b %d, %Y"):
+        try:
+            return datetime.strptime(text.title(), fmt).date()
+        except ValueError:
+            pass
+    return None
+
+
+def release_dates(drops, old, fetch, today):
+    """Release dates of booster sets from their official product pages (cached once known and past)."""
+    sets = {k: dict(v) for k, v in old.items()}
+    for d in drops.values():
+        m = SET_CODE.search(d.get("name") or "")
+        if not m or d.get("category") != "Boosters":
+            continue
+        code = m.group(1).upper().replace("-", "")
+        prev = sets.get(code) or {}
+        if prev.get("release") and prev["release"] < today:
+            continue
+        try:
+            found = RELEASE.search(page_text(fetch(d["url"])))
+        except Exception as e:
+            print(f"Product page {d['url']} failed: {e}")
+            continue
+        date = parse_date(next(g for g in found.groups() if g)) if found else None
+        if date:
+            sets[code] = {**prev, "id": code, "name": d["name"], "url": d["url"], "release": date.isoformat()}
+    return sets
+
+
+def predict_drops(sets, series, pattern, now):
+    """Expected sign-up time for each upcoming set's prerelease, and alerts as it gets close."""
+    p = pattern.get("Prerelease") or {}
+    lead, hour = p.get("leadDays", DEFAULT_LEAD_DAYS), p.get("hourET", DEFAULT_HOUR_ET)
+    learned = bool(p)
+    alerts = []
+    for code, s in sets.items():
+        release = datetime.fromisoformat(s["release"]).date()
+        if release < now.date():
+            continue
+        prerelease = release - timedelta(days=PRERELEASE_BEFORE_RELEASE)
+        at = datetime.combine(prerelease - timedelta(days=lead), time(int(hour), 30 if hour % 1 else 0), ET)
+        s.update({"prerelease": prerelease.isoformat(), "expected": at.isoformat(), "learned": learned})
+        live = [x for x in series.values() if x.get("kind") == "Prerelease" and code in re.sub(r"[^A-Z0-9]", "", x["id"].upper())]
+        if live:
+            s["live"] = min(x["drop"] for x in live)
+            continue
+        hours = (at - now).total_seconds() / 3600
+        stage = "today" if -48 <= hours <= 18 else "soon" if 0 < hours <= 72 else None
+        if stage and stage not in (s.get("alerted") or []):
+            s["alerted"] = (s.get("alerted") or []) + [stage]
+            alerts.append({"source": "Prediction", "title": f"{code} prerelease sign-ups expected {'now' if hours <= 0 else 'soon'}",
+                           "url": s["url"], "lines": [predict_text(s, lead, learned)]})
+    return alerts
+
+
+def predict_text(s, lead, learned):
+    at = datetime.fromisoformat(s["expected"]).astimezone(ET)
+    basis = (f"prerelease series near you have gone live about {lead} days ahead" if learned
+             else "sign-ups usually go live about two weeks before the prerelease")
+    return (f"{s['name']} releases {datetime.fromisoformat(s['release']):%b %-d}, so the prerelease is likely around "
+            f"{datetime.fromisoformat(s['prerelease']):%b %-d}. Based on that, {basis}: watch Bandai TCG+ from "
+            f"{at:%a %b %-d}, {at:%-I:%M %p} ET.")
 
 
 # ---------- Official event pages ----------

@@ -434,6 +434,8 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         new_drops = new_drops if old_drops else []
         for pid, prev in old_drops.items():  # products fall off the first pages; keep them as history
             drops.setdefault(pid, prev)
+    sets = signups.release_dates(drops, {r["id"]: r for r in old_watch.get("sets", [])}, quick, today)
+    signup_alerts += signups.predict_drops(sets, series, pattern, now)
 
     if not dry_run:
         ev_rows = sorted(events.values(), key=lambda e: (e.get("start") or "", e["id"]))
@@ -447,6 +449,7 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         if write_text(f"{DATA}/drops.json", '{"items":' + dump_rows(drop_rows).rstrip("\n") + "}\n"):
             print(f"Wrote {len(drop_rows)} products.")
         watch = ('{"pattern":' + json.dumps(pattern, ensure_ascii=False)
+                 + ',\n"sets":' + dump_rows(sorted(sets.values(), key=lambda r: r.get("release") or "", reverse=True)).rstrip("\n")
                  + ',\n"series":' + dump_rows(sorted(series.values(), key=lambda r: r.get("drop") or "", reverse=True)).rstrip("\n")
                  + ',\n"official":' + dump_rows(sorted(official.values(), key=lambda r: r["id"])).rstrip("\n")
                  + ',\n"stores":' + dump_rows(sorted(stores.values(), key=lambda r: (r.get("miles") or 999, r["id"]))).rstrip("\n") + "}\n")
@@ -481,6 +484,8 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         for e in events.values():
             kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
         print("Event kinds:", kinds)
+        print("Sets:", sets)
+        print("Prediction alerts:", [a for a in signup_alerts if a["source"] == "Prediction"])
         print("Drop pattern:", pattern, signups.pattern_text(pattern, "Prerelease"))
         print("Series:", sorted((r.get("drop"), r["id"]) for r in series.values())[-15:])
         print("Official sign-up lines:", {r["name"]: r["lines"] for r in official.values() if r["lines"]})

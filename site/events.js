@@ -67,14 +67,20 @@ function clock(hour) {
 function signupWatch(watch) {
   const pattern = watch.pattern || {};
   const kinds = BIG.filter((k) => pattern[k]);
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = (watch.sets || []).filter((r) => r.expected && r.release >= today && !r.live);
   const official = (watch.official || []).filter((r) => r.lines && r.lines.length);
   const stores = watch.stores || [];
   const news = stores.filter((r) => r.snippets && r.snippets.length);
   const readable = stores.filter((r) => !r.error).length;
-  if (!kinds.length && !official.length && !stores.length) return '';
+  if (!kinds.length && !official.length && !stores.length && !upcoming.length) return '';
   return `
       <div class="section-head"><h2>Sign-up watch</h2>
         <span class="hint">Bandai TCG+ hides events until the moment sign-ups open, so these are the early signs</span></div>
+      ${upcoming.length ? `<div class="list">${upcoming.map((r) => `<a class="ev-row" href="${esc(r.url)}" target="_blank" rel="noopener" style="--kind-hue:${KIND_HUE.Prerelease}"><div class="ev-main">
+        <div class="ev-head"><span class="ev-kind">${esc(r.id)} prerelease</span>${r.learned ? '' : '<span class="muted small">estimate</span>'}</div>
+        <div class="ev-title">Sign-ups expected ${esc(new Date(r.expected).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }))}</div>
+        <div class="muted small">Releases ${esc(fmt(r.release + 'T12:00:00', { month: 'short', day: 'numeric' }))}, prerelease likely around ${esc(fmt(r.prerelease + 'T12:00:00', { month: 'short', day: 'numeric' }))}</div></div></a>`).join('')}</div>` : ''}
       ${kinds.length ? `<div class="list">${kinds.map((k) => `<div class="ev-row" style="--kind-hue:${KIND_HUE[k] ?? 220}"><div class="ev-main">
         <div class="ev-head"><span class="ev-kind">${esc(k)}</span></div>
         <div class="ev-title">Usually goes live around ${clock(pattern[k].hourET)}, about ${pattern[k].leadDays} days before the first event</div>
