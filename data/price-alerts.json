@@ -1,5 +1,7 @@
 {
   "movePct": 0.15,
   "minPrice": 5,
-  "targets": {}
+  "targets": {
+    "717555": 3
+  }
 }
