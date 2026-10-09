@@ -22,6 +22,7 @@ from html import unescape
 from urllib.parse import urljoin
 
 from common import DATA, dump_rows, read_json, write_text
+import signups
 
 TCG_API = "https://api.bandai-tcg-plus.com/api/user/event/list"
 TCG_EVENT = "https://www.bandai-tcg-plus.com/event/{}"
@@ -98,6 +99,9 @@ def event_row(e, home):
     }
     if home and lat is not None and lng is not None:
         row["miles"] = miles(home["lat"], home["lng"], lat, lng)
+    for key, field in (("storeUrl", "organizer_url"), ("storeSns", "organizer_sns_url")):
+        if (e.get(field) or "").startswith("http"):
+            row[key] = e[field].strip()
     if e.get("is_canceled"):
         row["canceled"] = True
     if e.get("is_over_max_join_count"):
@@ -291,9 +295,9 @@ def notification(new_events, new_news, new_drops, cfg):
     return "\n".join(lines) + "\n"
 
 
-def discord_payloads(new_events, new_news, new_drops, reminders=()):
+def discord_payloads(new_events, new_news, new_drops, reminders=(), signup_embeds=()):
     """Discord webhook messages: one embed per item, at most 10 embeds per message."""
-    embeds = []
+    embeds = list(signup_embeds)
     for e in sorted(reminders, key=lambda e: e["opens"]):
         t = int(datetime.fromisoformat(e["opens"]).timestamp())
         embeds.append({"title": f"Registration opening soon: {e['kind']} at {e['store']}"[:256], "url": TCG_EVENT.format(e["id"]),
@@ -318,7 +322,8 @@ def discord_payloads(new_events, new_news, new_drops, reminders=()):
         if d.get("image"):
             embed["thumbnail"] = {"url": d["image"]}
         embeds.append(embed)
-    content = "Registration opens soon" if reminders and not (new_events or new_news or new_drops) else "New on the [Events tab](https://reidsord.github.io/optcg/#events)"
+    content = "Sign-up news" if signup_embeds and not (new_events or new_news or new_drops or reminders) else \
+        "Registration opens soon" if reminders and not (new_events or new_news or new_drops) else "New on the [Events tab](https://reidsord.github.io/optcg/#events)"
     return [{"username": "OPTCG alerts", "content": content if i == 0 else None,
              "embeds": embeds[i:i + 10], "allowed_mentions": {"parse": []}} for i in range(0, len(embeds), 10)]
 
@@ -374,6 +379,8 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
     old_news = {a["id"]: a for a in old.get("announcements", [])}
     old_search = old.get("search") or {}
     old_drops = {d["id"]: d for d in read_json(f"{DATA}/drops.json", {}).get("items", [])}
+    old_watch = read_json(f"{DATA}/watch.json", {})
+    quick = lambda url: fetch(url, tries=1, timeout=25)
 
     # Local tournaments. A changed home or radius means a fresh list, not a flood of alerts.
     try:
@@ -400,13 +407,23 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
             e["reminded"] = True
     reminders = due_reminders(events, notify_kinds, now) if search == old_search else []
 
+    # Sign-up early warning: when series went live, official event pages, store websites.
+    old_official = {r["id"]: r for r in old_watch.get("official", [])}
+    old_stores = {r["id"]: r for r in old_watch.get("stores", [])}
+    series = signups.update_series(events, {r["id"]: r for r in old_watch.get("series", [])}, today)
+    pattern = signups.drop_pattern(series, list(dict.fromkeys(e["kind"] for e in events.values())))
+    official, official_alerts = old_official, []
+
     try:
         news = fetch_announcements()
         new_news = merge_seen(news, old_news, today)
         new_news = new_news if old_news else []  # first run: fill the list without alerts
+        official, official_alerts = signups.watch_official(news, old_official, quick)
     except Exception as e:
         print(f"Official events page failed: {e}")
         news, new_news = old_news, []
+    stores, store_alerts = signups.watch_stores(events, old_stores, quick)
+    signup_alerts = official_alerts + store_alerts
 
     drops = fetch_drops()
     new_drops = []
@@ -429,11 +446,19 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         drop_rows = sorted(drops.values(), key=lambda d: (d["seen"], d["id"]), reverse=True)
         if write_text(f"{DATA}/drops.json", '{"items":' + dump_rows(drop_rows).rstrip("\n") + "}\n"):
             print(f"Wrote {len(drop_rows)} products.")
+        watch = ('{"pattern":' + json.dumps(pattern, ensure_ascii=False)
+                 + ',\n"series":' + dump_rows(sorted(series.values(), key=lambda r: r.get("drop") or "", reverse=True)).rstrip("\n")
+                 + ',\n"official":' + dump_rows(sorted(official.values(), key=lambda r: r["id"])).rstrip("\n")
+                 + ',\n"stores":' + dump_rows(sorted(stores.values(), key=lambda r: (r.get("miles") or 999, r["id"]))).rstrip("\n") + "}\n")
+        if write_text(f"{DATA}/watch.json", watch):
+            print(f"Wrote {len(series)} series, {len(official)} official pages, {len(stores)} store sites.")
 
     print(f"New worth a notification: {len(new_events)} events, {len(new_news)} announcements, {len(new_drops)} products, "
-          f"{len(reminders)} registration reminders.")
-    if notify_path and (new_events or new_news or new_drops):
+          f"{len(reminders)} registration reminders, {len(signup_alerts)} sign-up news.")
+    if notify_path and (new_events or new_news or new_drops or signup_alerts):
         parts = []
+        if signup_alerts:
+            parts.append("Sign-up news")
         if new_events:
             parts.append(f"{len(new_events)} new tournament{'s' if len(new_events) > 1 else ''} nearby")
         if new_news:
@@ -442,10 +467,11 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
             parts.append(f"{len(new_drops)} new product{'s' if len(new_drops) > 1 else ''}")
         with open(notify_path, "w", encoding="utf-8") as f:
             f.write(", ".join(parts) + "\n")
+            f.write(signups.alert_markdown(signup_alerts, pattern))
             f.write(notification(new_events, new_news, new_drops, cfg))
-    if discord_path and (new_events or new_news or new_drops or reminders):
+    if discord_path and (new_events or new_news or new_drops or reminders or signup_alerts):
         with open(discord_path, "w", encoding="utf-8") as f:
-            for payload in discord_payloads(new_events, new_news, new_drops, reminders):
+            for payload in discord_payloads(new_events, new_news, new_drops, reminders, signups.alert_embeds(signup_alerts, pattern)):
                 f.write(json.dumps({k: v for k, v in payload.items() if v is not None}, ensure_ascii=False) + "\n")
     if dry_run:
         print("Discord sample:", json.dumps(discord_payloads(sorted(events.values(), key=lambda e: e.get("start") or "")[:2], list(news.values())[:1], list(drops.values())[:1]))[:1500])
@@ -455,6 +481,12 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
         for e in events.values():
             kinds[e["kind"]] = kinds.get(e["kind"], 0) + 1
         print("Event kinds:", kinds)
+        print("Drop pattern:", pattern, signups.pattern_text(pattern, "Prerelease"))
+        print("Series:", sorted((r.get("drop"), r["id"]) for r in series.values())[-15:])
+        print("Official sign-up lines:", {r["name"]: r["lines"] for r in official.values() if r["lines"]})
+        print("Store sites:", [(r["id"], r.get("error") or len(r["snippets"])) for r in stores.values()])
+        print("Store prerelease mentions:", {r["id"]: r["snippets"][:3] for r in stores.values() if r["snippets"]})
+        print("Sample sign-up alert:", json.dumps(signups.alert_embeds([{"source": r["id"], "title": r["id"], "url": r["url"], "lines": r["snippets"][:2]} for r in stores.values() if r["snippets"]][:1], pattern))[:800])
         print("Titles by kind:", sorted({(e["kind"], e["title"]) for e in events.values()})[:80])
 
 

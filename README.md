@@ -35,6 +35,7 @@ JSON files in this repo.
 | `scripts/price_alerts.py` | Runs after the price update: posts big moves on cards you own and price-target hits to Discord. |
 | `data/alerts.json` | Settings for event alerts: home location, radius, which event kinds notify, who to mention. |
 | `data/events.json`, `data/drops.json` | Tournaments, announcements and products found by the events job. |
+| `data/watch.json` | When each event series went live, sign-up lines on official pages and prerelease mentions on store websites. |
 | `scripts/update_events.py` | Events job: Bandai TCG+ tournaments, official announcements and new products. |
 | `scripts/import_backup.py` | One-time import of a backup from the old ChatGPT-hosted app. |
 
@@ -85,7 +86,13 @@ save the URL as a repository secret named `DISCORD_EVENT_WEBHOOK_URL`
 new event, announcement or product then posts there as a card with a link, with
 the registration time shown in your own time zone. One to two hours before
 registration opens for an event in `notifyKinds`, a reminder posts too, so you
-can be in the Bandai TCG+ app when sign-ups go live. To check the webhook, run
+can be in the Bandai TCG+ app when sign-ups go live. Bandai TCG+ itself shows nothing before
+that moment (every store's events in a series go live together), so the job also
+looks for early signs and posts them as **Sign-up news**: registration lines on the
+official event pages, and new prerelease mentions on the websites of stores near
+`home` (Facebook, Instagram and Discord pages can't be read). It also records when
+each series went live in `data/watch.json`, so alerts can say when drops usually
+happen. To check the webhook, run
 **Check events and drops** from the Actions tab with a test search such as
 `EB05 prerelease`; it posts the matching events (or the matching product) to Discord.
 

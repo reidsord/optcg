@@ -51,7 +51,7 @@ jobs:
         run: |
           git config user.name "optcg-alerts-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/events.json data/drops.json
+          git add data/events.json data/drops.json data/watch.json
           if git diff --cached --quiet; then
             echo "No changes."
             exit 0
