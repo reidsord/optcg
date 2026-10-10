@@ -32,7 +32,7 @@
 {"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
-{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Prideland Collectibles","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
 {"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[]},
