@@ -1,7 +1,7 @@
 [
 {"id":"Starter Decks:571","productId":627681,"cardId":"","name":"Starter Deck 28: GREEN/YELLOW Yamato","rarity":"","alt":false,"target":1,"qty":0,"price":36.99},
 {"id":"Starter Decks:572","productId":627680,"cardId":"","name":"Starter Deck 28: GREEN/YELLOW Yamato Display","rarity":"","alt":false,"target":1,"qty":0,"price":293.95},
-{"id":"Starter Decks:573","productId":634623,"cardId":"OP06-022","name":"Yamato (OP06-022)","rarity":"L","alt":false,"target":4,"qty":2,"price":2},
+{"id":"Starter Decks:573","productId":634623,"cardId":"OP06-022","name":"Yamato (OP06-022)","rarity":"L","alt":false,"target":4,"qty":2,"price":2.14},
 {"id":"Starter Decks:574","productId":635303,"cardId":"OP06-100","name":"Inuarashi (Reprint)","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:575","productId":635304,"cardId":"OP06-103","name":"Kawamatsu (Reprint)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:576","productId":635305,"cardId":"OP06-104","name":"Kikunojo (Reprint)","rarity":"R","alt":false,"target":4,"qty":4,"price":0.5},
@@ -15,5 +15,5 @@
 {"id":"Starter Decks:584","productId":635313,"cardId":"ST28-002","name":"Izo","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},
 {"id":"Starter Decks:585","productId":635314,"cardId":"ST28-003","name":"Kin'emon","rarity":"C","alt":false,"target":4,"qty":8,"price":0.16},
 {"id":"Starter Decks:586","productId":635315,"cardId":"ST28-004","name":"Kouzuki Momonosuke","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.25},
-{"id":"Starter Decks:587","productId":635316,"cardId":"ST28-005","name":"Yamato","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.94}
+{"id":"Starter Decks:587","productId":635316,"cardId":"ST28-005","name":"Yamato","rarity":"SR","alt":false,"target":4,"qty":4,"price":1}
 ]

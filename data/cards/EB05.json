@@ -59,8 +59,14 @@
 {"id":"tcg:24820:722774","productId":722774,"cardId":"EB05-052","name":"Gloriosa (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null},
 {"id":"tcg:24820:722775","productId":722775,"cardId":"OP17-109","name":"Charlotte Pudding (OP17-109) (SP)","rarity":"R","alt":true,"target":1,"qty":0,"price":null},
 {"id":"tcg:24820:722776","productId":722776,"cardId":"EB05-008","name":"Luffy, Now's Your Chance","rarity":"C","alt":false,"target":4,"qty":0,"price":null},
-{"id":"p711385","productId":711385,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":351.56,"added":"2026-10-08"},
+{"id":"p711385","productId":711385,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":350.97,"added":"2026-10-08"},
 {"id":"p711386","productId":711386,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3995.01,"added":"2026-10-08"},
 {"id":"p711383","productId":711383,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"},
-{"id":"p711384","productId":711384,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"}
+{"id":"p711384","productId":711384,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"},
+{"id":"p723149","productId":723149,"cardId":"EB05-037","name":"Black Maria (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-10"},
+{"id":"p723150","productId":723150,"cardId":"EB05-057","name":"Nojiko (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-10"},
+{"id":"p723136","productId":723136,"cardId":"EB05-059","name":"Charlotte Pudding!!","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-10"},
+{"id":"p723148","productId":723148,"cardId":"EB05-061","name":"Nami (061) (Alternate Art)","rarity":"SEC","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-10"},
+{"id":"p723138","productId":723138,"cardId":"OP14-033","name":"Perona - OP14-033 (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-10"},
+{"id":"p723146","productId":723146,"cardId":"OP17-081","name":"Gerd - OP17-081","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-10"}
 ]

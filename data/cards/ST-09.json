@@ -1,5 +1,5 @@
 [
-{"id":"Starter Decks:194","productId":502978,"cardId":"","name":"Starter Deck 9: Yamato","rarity":"","alt":false,"target":1,"qty":0,"price":3.69},
+{"id":"Starter Decks:194","productId":502978,"cardId":"","name":"Starter Deck 9: Yamato","rarity":"","alt":false,"target":1,"qty":0,"price":10},
 {"id":"Starter Decks:195","productId":502979,"cardId":"","name":"Starter Deck 9: Yamato Display","rarity":"","alt":false,"target":1,"qty":0,"price":88},
 {"id":"Starter Decks:196","productId":502980,"cardId":"","name":"Starter Deck 9: Yamato Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":5000},
 {"id":"Starter Decks:197","productId":503523,"cardId":"ST09-001","name":"Yamato (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":3.5},
@@ -12,7 +12,7 @@
 {"id":"Starter Decks:204","productId":504455,"cardId":"ST09-008","name":"Shimotsuki Ushimaru","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:205","productId":504460,"cardId":"ST09-009","name":"Fugetsu Omusubi","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:206","productId":503538,"cardId":"ST09-010","name":"Portgas.D.Ace","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.15},
-{"id":"Starter Decks:207","productId":504454,"cardId":"ST09-011","name":"Monkey.D.Luffy","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07},
+{"id":"Starter Decks:207","productId":504454,"cardId":"ST09-011","name":"Monkey.D.Luffy","rarity":"C","alt":false,"target":4,"qty":8,"price":0.1},
 {"id":"Starter Decks:208","productId":504461,"cardId":"ST09-012","name":"Yamato (012)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},
 {"id":"Starter Decks:209","productId":504462,"cardId":"ST09-013","name":"Yamato (013)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07},
 {"id":"Starter Decks:210","productId":504463,"cardId":"ST09-014","name":"Narikabura Arrow","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
