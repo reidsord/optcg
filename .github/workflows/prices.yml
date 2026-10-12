@@ -85,7 +85,9 @@ jobs:
             echo "::warning::No DISCORD_PRICE_WEBHOOK_URL repository secret, so no price alerts were posted to Discord."
             exit 0
           fi
+          failed=0
           while IFS= read -r payload; do
-            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_PRICE_WEBHOOK_URL"
+            curl -sS --fail-with-body -H "Content-Type: application/json" -d "$payload" "$DISCORD_PRICE_WEBHOOK_URL" || failed=1
             sleep 1
           done < "$f"
+          exit $failed
