@@ -6,7 +6,7 @@
 {"id":"Starter Decks:140","productId":485248,"cardId":"ST06-002","name":"Koby","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:141","productId":486320,"cardId":"ST06-003","name":"Jango","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:142","productId":485250,"cardId":"ST06-004","name":"Smoker","rarity":"SR","alt":false,"target":4,"qty":4,"price":1},
-{"id":"Starter Decks:143","productId":486321,"cardId":"ST06-005","name":"Sengoku","rarity":"C","alt":false,"target":4,"qty":8,"price":0.02},
+{"id":"Starter Decks:143","productId":486321,"cardId":"ST06-005","name":"Sengoku","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:144","productId":485252,"cardId":"ST06-006","name":"Tashigi","rarity":"C","alt":false,"target":4,"qty":8,"price":0.31},
 {"id":"Starter Decks:145","productId":486322,"cardId":"ST06-007","name":"Tsuru","rarity":"C","alt":false,"target":4,"qty":8,"price":0.05},
 {"id":"Starter Decks:146","productId":486323,"cardId":"ST06-008","name":"Hina","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07},
@@ -15,7 +15,7 @@
 {"id":"Starter Decks:149","productId":486326,"cardId":"ST06-011","name":"Momonga","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:150","productId":485253,"cardId":"ST06-012","name":"Monkey.D.Garp","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.44},
 {"id":"Starter Decks:151","productId":486328,"cardId":"ST06-013","name":"T-Bone","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
-{"id":"Starter Decks:152","productId":486329,"cardId":"ST06-014","name":"Shockwave","rarity":"C","alt":false,"target":4,"qty":8,"price":0.02},
+{"id":"Starter Decks:152","productId":486329,"cardId":"ST06-014","name":"Shockwave","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:153","productId":485254,"cardId":"ST06-015","name":"Great Eruption","rarity":"C","alt":false,"target":4,"qty":8,"price":2.9},
 {"id":"Starter Decks:154","productId":486330,"cardId":"ST06-016","name":"White Out","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:155","productId":486331,"cardId":"ST06-017","name":"Navy HQ","rarity":"C","alt":false,"target":4,"qty":8,"price":0.25}
