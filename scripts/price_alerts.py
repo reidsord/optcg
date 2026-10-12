@@ -25,7 +25,10 @@ SETTINGS = f"{DATA}/price-alerts.json"
 STATE = f"{DATA}/price-alert-state.json"
 SITE = "https://reidsord.github.io/optcg/"
 DEFAULTS = {"movePct": 0.15, "minPrice": 5, "targets": {}}
-MAX_LINES = 20  # per embed, so a wild day stays readable
+MAX_LINES = 20  # per alert type, so a wild day stays readable
+# Discord rejects an embed description over 4096 characters and a message whose
+# embeds add up to over 6000, so long lists are split across embeds and messages.
+MAX_DESC, MAX_MESSAGE, MAX_EMBEDS = 4000, 5800, 10
 UP, DOWN, TARGET = 0x2EAD6B, 0xD9534F, 0xD9B44A
 
 
@@ -101,12 +104,25 @@ def hit_line(c, target):
     return f"{label(c)}\nNow **{money(c['price'])}**, at or under your {money(target)} target · you own {have}"
 
 
-def embed(title, color, lines, total):
+def embeds_for(title, color, lines, total):
+    """One embed per type, continued in more embeds when the lines don't fit in one."""
     more = total - len(lines)
-    desc = "\n\n".join(lines)
     if more > 0:
-        desc += f"\n\n…and {more} more on [the site]({SITE})."
-    return {"title": title[:256], "color": color, "description": desc[:4096], "url": SITE}
+        lines = lines + [f"…and {more} more on [the site]({SITE})."]
+    chunks, cur = [], []
+    for line in lines:
+        if cur and len("\n\n".join(cur + [line])) > MAX_DESC:
+            chunks.append(cur)
+            cur = []
+        cur.append(line)
+    chunks.append(cur)
+    return [{"title": (title if i == 0 else f"{title} (continued)")[:256], "color": color,
+             "description": "\n\n".join(chunk)[:MAX_DESC], "url": SITE}
+            for i, chunk in enumerate(chunks)]
+
+
+def embed_size(e):
+    return len(e["title"]) + len(e["description"])
 
 
 def discord_payloads(moves, hits, today, test=False):
@@ -114,13 +130,13 @@ def discord_payloads(moves, hits, today, test=False):
     downs = sorted([m for m in moves if m[2] < m[1]], key=lambda m: (m[2] - m[1]) * (m[0].get("qty") or 0))
     embeds = []
     if hits:
-        embeds.append(embed(f"{len(hits)} card{'s' * (len(hits) != 1)} hit your price target", TARGET,
+        embeds.extend(embeds_for(f"{len(hits)} card{'s' * (len(hits) != 1)} hit your price target", TARGET,
                             [hit_line(*h) for h in hits[:MAX_LINES]], len(hits)))
     if ups:
-        embeds.append(embed(f"{len(ups)} card{'s' * (len(ups) != 1)} you own went up", UP,
+        embeds.extend(embeds_for(f"{len(ups)} card{'s' * (len(ups) != 1)} you own went up", UP,
                             [move_line(*m) for m in ups[:MAX_LINES]], len(ups)))
     if downs:
-        embeds.append(embed(f"{len(downs)} card{'s' * (len(downs) != 1)} you own went down", DOWN,
+        embeds.extend(embeds_for(f"{len(downs)} card{'s' * (len(downs) != 1)} you own went down", DOWN,
                             [move_line(*m) for m in downs[:MAX_LINES]], len(downs)))
     if not embeds:
         return []
@@ -128,7 +144,14 @@ def discord_payloads(moves, hits, today, test=False):
     content = f"**{'Test: ' if test else ''}Price alerts for {today}**"
     if moves:
         content += f" · net {'+' if net >= 0 else '−'}{money(abs(net))} on the cards below"
-    return [{"username": "OPTCG prices", "content": content, "embeds": embeds, "allowed_mentions": {"parse": []}}]
+    messages = []
+    for e in embeds:
+        if (not messages or len(messages[-1]) >= MAX_EMBEDS
+                or sum(map(embed_size, messages[-1])) + embed_size(e) > MAX_MESSAGE):
+            messages.append([])
+        messages[-1].append(e)
+    return [{"username": "OPTCG prices", **({"content": content} if i == 0 else {}), "embeds": m,
+             "allowed_mentions": {"parse": []}} for i, m in enumerate(messages)]
 
 
 def write_payloads(path, payloads):
