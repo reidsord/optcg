@@ -600,9 +600,9 @@
     "store": "Bulldog",
     "order": "#002118",
     "date": "2026-05-16",
-    "paid": 211.86,
-    "remaining": 1200.54,
-    "note": ""
+    "paid": 1412.4,
+    "remaining": 0,
+    "note": "paid"
   },
   {
     "id": "order:57",
