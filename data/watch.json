@@ -1,9 +1,10 @@
-{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 2, "hourET": 15.0, "leadDays": 56}, "Store Championship": {"series": 1, "hourET": 20.0, "leadDays": 43}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 2, "hourET": 15.0, "leadDays": 56}, "Store Championship": {"series": 1, "hourET": 20.0, "leadDays": 43}, "Other": {"series": 1, "hourET": 15.5, "leadDays": 0}},
 "sets":[
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
 ],
 "series":[
+{"id":"Instant Event","kind":"Other","seen":"2026-10-14","drop":"2026-10-14T19:28:34+00:00","firstEvent":"2026-10-14T18:30:00"},
 {"id":"[Oct-Dec 2026]Store Tournament Event OP","kind":"Store Tournament","seen":"2026-10-09","drop":"2026-09-17T14:00:00+00:00","firstEvent":"2026-10-08T18:00:00"},
 {"id":"CS26-27 Store Championship October (Season 2) [NA]","kind":"Store Championship","seen":"2026-10-09","drop":"2026-09-05T00:00:00+00:00","firstEvent":"2026-10-17T18:30:00"},
 {"id":"ONE PIECE CARD GAME Extra Grand Battle for Stores 2026 September-October","kind":"Extra Battle","seen":"2026-10-09","drop":"2026-09-01T19:00:00+00:00","firstEvent":"2026-10-10T12:00:00"},
@@ -31,7 +32,7 @@
 {"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
-{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
 {"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[]},
