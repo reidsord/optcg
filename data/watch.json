@@ -32,7 +32,7 @@
 {"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
-{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
 {"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[]},
@@ -42,7 +42,7 @@
 {"id":"shop.family-time-games.com","store":"Family Time Games","url":"https://shop.family-time-games.com/","miles":21.7,"snippets":[]},
 {"id":"booksnbrews.com","store":"Books & Brews","url":"http://www.booksnbrews.com","miles":21.8,"snippets":[]},
 {"id":"hotspotcollectiblesandtoys.com","store":"Hot Spot Collectibles and Toys","url":"https://www.hotspotcollectiblesandtoys.com/","miles":22.2,"snippets":[]},
-{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[],"error":"HTTP Error 403: Forbidden"},
+{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[]},
 {"id":"nextlevelgamesmuncie.com","store":"NLG Carmel","url":"https://www.nextlevelgamesmuncie.com/carmel-events","miles":26.9,"snippets":[]},
 {"id":"indycollectorsemporium.com","store":"Collectors Emporium","url":"https://indycollectorsemporium.com/","miles":30.4,"snippets":[]}
 ]}
