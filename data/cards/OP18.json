@@ -24,10 +24,10 @@
 {"id":"tcg:24833:722651","productId":722651,"cardId":"OP18-106","name":"Doberman","rarity":"C","alt":false,"target":4,"qty":0,"price":3.99},
 {"id":"tcg:24833:722652","productId":722652,"cardId":"OP18-017","name":"Roronoa Zoro","rarity":"C","alt":false,"target":4,"qty":0,"price":3.99},
 {"id":"tcg:24833:722777","productId":722777,"cardId":"OP18-069","name":"Sodomu & Gomora","rarity":"C","alt":false,"target":4,"qty":0,"price":null},
-{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.76,"added":"2026-10-08"},
+{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.74,"added":"2026-10-08"},
 {"id":"p712909","productId":712909,"cardId":"","name":"Double Pack Set Vol. 13 Display","rarity":"","alt":null,"target":1,"qty":0,"price":495.95,"added":"2026-10-08"},
 {"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":343,"added":"2026-10-08"},
-{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":4389.76,"added":"2026-10-08"},
+{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":4383.9,"added":"2026-10-08"},
 {"id":"p712904","productId":712904,"cardId":"","name":"The Dominance of God Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":24.95,"added":"2026-10-08"},
 {"id":"p712903","productId":712903,"cardId":"","name":"The Dominance of God Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":39.99,"added":"2026-10-08"},
 {"id":"p723145","productId":723145,"cardId":"OP18-091","name":"Brogy","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-10"},
@@ -35,5 +35,6 @@
 {"id":"p723255","productId":723255,"cardId":"OP18-010","name":"Tony Tony.Chopper","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-12"},
 {"id":"p723256","productId":723256,"cardId":"OP18-032","name":"Buggy","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-12"},
 {"id":"p723257","productId":723257,"cardId":"OP18-052","name":"Mr. 5 & Miss.Valentine","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-12"},
-{"id":"p723309","productId":723309,"cardId":"OP18-063","name":"Kiwi & Mozu","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-14"}
+{"id":"p723309","productId":723309,"cardId":"OP18-063","name":"Kiwi & Mozu","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-14"},
+{"id":"p723378","productId":723378,"cardId":"OP18-085","name":"Cerberus","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-15"}
 ]

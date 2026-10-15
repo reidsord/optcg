@@ -60,7 +60,7 @@
 {"id":"tcg:24820:722775","productId":722775,"cardId":"OP17-109","name":"Charlotte Pudding (OP17-109) (SP)","rarity":"R","alt":true,"target":1,"qty":0,"price":1999.99},
 {"id":"tcg:24820:722776","productId":722776,"cardId":"EB05-008","name":"Luffy, Now's Your Chance","rarity":"C","alt":false,"target":4,"qty":0,"price":4.99},
 {"id":"p711385","productId":711385,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":347.67,"added":"2026-10-08"},
-{"id":"p711386","productId":711386,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3690.75,"added":"2026-10-08"},
+{"id":"p711386","productId":711386,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3684.83,"added":"2026-10-08"},
 {"id":"p711383","productId":711383,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":19.95,"added":"2026-10-08"},
 {"id":"p711384","productId":711384,"cardId":"","name":"Extra Booster: One Piece Heroines Edition Vol.2 - Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-08"},
 {"id":"p723149","productId":723149,"cardId":"EB05-037","name":"Black Maria (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":129.99,"added":"2026-10-10"},
@@ -74,5 +74,7 @@
 {"id":"p723251","productId":723251,"cardId":"EB05-028","name":"Boa Hancock (028) (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-12"},
 {"id":"p723252","productId":723252,"cardId":"EB05-043","name":"Perona (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-12"},
 {"id":"p723308","productId":723308,"cardId":"EB05-034","name":"Sugar (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-14"},
-{"id":"p723307","productId":723307,"cardId":"EB05-046","name":"Yamato (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-14"}
+{"id":"p723307","productId":723307,"cardId":"EB05-046","name":"Yamato (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-14"},
+{"id":"p723376","productId":723376,"cardId":"EB05-014","name":"Shirahoshi (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-15"},
+{"id":"p723375","productId":723375,"cardId":"EB05-018","name":"Rebecca (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":null,"added":"2026-10-15"}
 ]
