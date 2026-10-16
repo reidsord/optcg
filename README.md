@@ -70,8 +70,9 @@ most valuable cards without changing any prices.
 The **Check events and drops** workflow runs every hour. It reads
 [Bandai TCG+](https://www.bandai-tcg-plus.com/)'s public event search for One
 Piece events within `radiusMiles` of `home` in `data/alerts.json`, the event and
-product pages on [the official card game site](https://en.onepiece-cardgame.com/),
-and the featured items on Premium Bandai's One Piece page. When it finds a new
+product pages on [the official card game site](https://en.onepiece-cardgame.com/).
+Products are limited to cards (boosters, decks and card sets); figures, models,
+sleeves, playmats and storage are skipped. When it finds a new
 event of a kind listed in `notifyKinds`, a new announcement or a new product, it
 opens a GitHub issue labeled `alert` that mentions the people in `mention`, so
 GitHub's app or email sends a notification. Premium Bandai's item pages block
