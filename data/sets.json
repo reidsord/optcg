@@ -539,7 +539,8 @@
     "code": "OP18",
     "name": "The Dominance of God",
     "groupId": 24833,
-    "file": "OP18.json"
+    "file": "OP18.json",
+    "color": "#8c4a53"
   },
   {
     "code": "SD01",
@@ -600,7 +601,8 @@
     "name": "The Dominance of God Release Event Cards",
     "groupId": 24834,
     "file": "OP18-PR.json",
-    "added": "2026-10-08"
+    "added": "2026-10-08",
+    "color": "#8c4a53"
   },
   {
     "code": "EB04",
