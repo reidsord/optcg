@@ -63,8 +63,8 @@
 {"id":"OP07-PR:66","productId":552092,"cardId":"OP07-099","name":"Usopp","rarity":"C","alt":false,"target":4,"qty":0,"price":5.92},
 {"id":"OP07-PR:67","productId":552093,"cardId":"OP07-100","name":"Edison","rarity":"C","alt":false,"target":4,"qty":0,"price":0.77},
 {"id":"OP07-PR:68","productId":552126,"cardId":"OP07-101","name":"Shaka","rarity":"UC","alt":false,"target":4,"qty":0,"price":2},
-{"id":"OP07-PR:69","productId":552094,"cardId":"OP07-102","name":"Jinbe (102)","rarity":"C","alt":false,"target":4,"qty":0,"price":3.44},
-{"id":"OP07-PR:70","productId":552095,"cardId":"OP07-103","name":"Tony Tony.Chopper (103)","rarity":"C","alt":false,"target":4,"qty":0,"price":15.79},
+{"id":"OP07-PR:69","productId":552094,"cardId":"OP07-102","name":"Jinbe (102)","rarity":"C","alt":false,"target":4,"qty":0,"price":3.55},
+{"id":"OP07-PR:70","productId":552095,"cardId":"OP07-103","name":"Tony Tony.Chopper (103)","rarity":"C","alt":false,"target":4,"qty":0,"price":15.99},
 {"id":"OP07-PR:71","productId":552127,"cardId":"OP07-104","name":"Nico Robin","rarity":"UC","alt":false,"target":4,"qty":0,"price":71.5},
 {"id":"OP07-PR:72","productId":552128,"cardId":"OP07-105","name":"Pythagoras","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.51},
 {"id":"OP07-PR:73","productId":552096,"cardId":"OP07-106","name":"Fuza","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
@@ -73,6 +73,6 @@
 {"id":"OP07-PR:76","productId":552129,"cardId":"OP07-113","name":"Roronoa Zoro (113)","rarity":"UC","alt":false,"target":4,"qty":0,"price":15},
 {"id":"OP07-PR:77","productId":552130,"cardId":"OP07-114","name":"He Possesses the World's Most Brilliant Mind","rarity":"UC","alt":false,"target":4,"qty":0,"price":4},
 {"id":"OP07-PR:78","productId":552099,"cardId":"OP07-115","name":"I Re-Quasar Helllp!!","rarity":"C","alt":false,"target":4,"qty":0,"price":4.91},
-{"id":"OP07-PR:79","productId":552100,"cardId":"OP07-117","name":"Egghead","rarity":"C","alt":false,"target":4,"qty":0,"price":0.69},
+{"id":"OP07-PR:79","productId":552100,"cardId":"OP07-117","name":"Egghead","rarity":"C","alt":false,"target":4,"qty":0,"price":0.99},
 {"id":"OP07-PR:80","productId":552054,"cardId":"","name":"500 Years in the Future - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":14.97}
 ]

@@ -29,6 +29,6 @@
 {"id":"tcg:24708:721563","productId":721563,"cardId":"OP16-007","name":"Jozu (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.07},
 {"id":"tcg:24708:721564","productId":721564,"cardId":"OP16-017","name":"LittleOars Jr. (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"tcg:24708:721565","productId":721565,"cardId":"OP16-011","name":"Vista (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.1},
-{"id":"p694893","productId":694893,"cardId":"","name":"Set Sail Deck Set","rarity":"","alt":null,"target":1,"qty":0,"price":19.99,"added":"2026-10-08"},
-{"id":"p694894","productId":694894,"cardId":"","name":"Set Sail Deck Set Display","rarity":"","alt":null,"target":1,"qty":0,"price":99.94,"added":"2026-10-08"}
+{"id":"p694893","productId":694893,"cardId":"","name":"Set Sail Deck Set","rarity":"","alt":null,"target":1,"qty":0,"price":17,"added":"2026-10-08"},
+{"id":"p694894","productId":694894,"cardId":"","name":"Set Sail Deck Set Display","rarity":"","alt":null,"target":1,"qty":0,"price":99.47,"added":"2026-10-08"}
 ]
