@@ -14,7 +14,7 @@
 ],
 "official":[
 {"id":"https://en.onepiece-cardgame.com/events/02_361.html","name":"Pirates League: ONE PIECE CARD GAME Official Shop Edition 2026","lines":[]},
-{"id":"https://en.onepiece-cardgame.com/events/02_452.html","name":"Store Tournament 2026 Vol. 4","lines":["Store Registration: August 1-31, 2026","Player Registration: September 17, 2026 onwards","Store Registration: September 1-30, 2026","Player Registration: October 17, 2026 onwards","Store Registration: October 1-31, 2026","Player Registration: November 17, 2026 onwards"],"opens":"2026-10-17T00:00:00-04:00","hasTime":false,"reminded":["tomorrow","today"]},
+{"id":"https://en.onepiece-cardgame.com/events/02_452.html","name":"Store Tournament 2026 Vol. 4","lines":["Store Registration: August 1-31, 2026","Player Registration: September 17, 2026 onwards","Store Registration: September 1-30, 2026","Player Registration: October 17, 2026 onwards","Store Registration: October 1-31, 2026","Player Registration: November 17, 2026 onwards"],"opens":"2026-11-17T00:00:00-05:00","hasTime":false},
 {"id":"https://en.onepiece-cardgame.com/events/02_483.html","name":"tabletop.me 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/02_512.html","name":"Spiel Essen 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/02_514.html","name":"Paris Games Week","lines":[]},
@@ -34,7 +34,7 @@
 {"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
-{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
 {"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[],"error":"HTTP Error 500: Internal Server Error"},
