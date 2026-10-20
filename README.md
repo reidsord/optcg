@@ -11,6 +11,9 @@ JSON files in this repo.
 - **Packs**: type card numbers as you open packs; each one adds a copy.
 - **Decks**: paste a decklist to see what you own, what's missing and what it
   costs; missing cards copy straight into TCGplayer Mass Entry.
+- **Trade**: search cards into an Out column (cards you own) and an In column
+  (any card) to see each card's value, each side's total and the difference.
+  The trade stays in that browser and never changes quantities.
 - **Events**: upcoming tournaments near home from Bandai TCG+, official event
   announcements, and new products (Premium Bandai exclusives marked).
 - **Orders**: orders and preorders with paid and remaining totals.

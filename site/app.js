@@ -1343,6 +1343,133 @@ function renderDecks(main) {
   show();
 }
 
+// ---------- Trade window ----------
+// Kept in this browser only: a trade never changes quantities.
+
+const TRADE_RESULTS = 8;
+const tradeSides = { out: 'Out', in: 'In' };
+S.trade = (() => { try { const t = JSON.parse(store.get('trade') || '{}'); return { out: t.out || [], in: t.in || [] }; } catch { return { out: [], in: [] }; } })();
+const saveTrade = () => store.set('trade', S.trade.out.length || S.trade.in.length ? JSON.stringify(S.trade) : null);
+const tradeLines = (side) => S.trade[side].map((l) => ({ ...l, c: S.byId.get(l.id) })).filter((l) => l.c);
+const tradeTotal = (side) => tradeLines(side).reduce((n, l) => n + l.n * (l.c.price || 0), 0);
+
+// Out searches the cards you own; In searches every card.
+function tradeMatches(q, side) {
+  q = q.trim();
+  if (!q) return [];
+  const lower = q.toLowerCase();
+  const list = filterCards({ q, preset: side === 'out' ? 'owned' : 'all', set: '', own: '', variant: '', rarity: '', sort: '' });
+  const rank = (c) => (c.cardId.toLowerCase() === lower ? 0 : c.name.toLowerCase().startsWith(lower) ? 1 : 2) * 2 + (c.qty > 0 ? 0 : 1);
+  return list.map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]).slice(0, TRADE_RESULTS);
+}
+
+function tradeRow(c, extra, info = '') {
+  return `<div class="row trade-row" data-id="${esc(c.id)}">
+    <a href="${tcgLink(c)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(c.name)}"><img src="${image(c)}" alt="" loading="lazy" data-fallback="${esc(c.name)}"></a>
+    <div><div class="title" data-open>${esc(c.name)}</div><div class="info">${rarityTag(c)} ${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}${kind(c) === 'alt' ? ' · Alt' : ''}${info ? ' · ' + info : ''}</div></div>
+    ${extra}
+  </div>`;
+}
+
+function renderTrade(main) {
+  main.innerHTML = `<div class="trade">
+    <div class="trade-summary callout" id="trade-summary"></div>
+    <div class="trade-grid">${Object.entries(tradeSides).map(([side, label]) => `
+      <section class="trade-side" data-side="${side}" aria-label="${label}">
+        <div class="section-head"><h2>${label}</h2><span class="hint">${side === 'out' ? 'Cards you give' : 'Cards you get'}</span></div>
+        <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" data-q="${side}" placeholder="${side === 'out' ? 'Search your cards' : 'Search all cards'}" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-label="Search cards to add to ${label}"></label>
+        <div class="trade-matches" data-matches="${side}"></div>
+        <div class="trade-lines" data-lines="${side}"></div>
+      </section>`).join('')}
+    </div></div>`;
+
+  const matches = { out: [], in: [] };
+  const showSummary = () => {
+    const out = tradeTotal('out'), got = tradeTotal('in'), diff = got - out;
+    const n = (side) => tradeLines(side).reduce((k, l) => k + l.n, 0);
+    // Unpriced cards count as $0, so say the totals are incomplete instead of calling it even.
+    const unpriced = [...tradeLines('out'), ...tradeLines('in')].filter((l) => l.c.price == null).length;
+    const verdict = (!n('out') && !n('in') ? 'Add cards to each side'
+      : Math.abs(diff) < 0.005 ? (unpriced ? 'Even on priced cards' : 'Even trade')
+      : diff > 0 ? `You get ${money(diff)} more` : `You give ${money(-diff)} more`)
+      + (unpriced ? ` · ${unpriced} ${unpriced === 1 ? 'card has' : 'cards have'} no price, counted as $0` : '');
+    $('#trade-summary', main).innerHTML = `
+      <div><div class="muted small">Out · ${count(n('out'))} ${n('out') === 1 ? 'card' : 'cards'}</div><div class="big">${money(out)}</div></div>
+      <div><div class="muted small">In · ${count(n('in'))} ${n('in') === 1 ? 'card' : 'cards'}</div><div class="big">${money(got)}</div></div>
+      <div class="trade-diff${diff > 0.005 ? ' up' : diff < -0.005 ? ' down' : ''}"><div class="muted small">Difference</div><div class="big">${diff > 0.005 ? '+' : diff < -0.005 ? '−' : ''}${money(Math.abs(diff))}</div><div class="small">${verdict}</div></div>
+      ${n('out') || n('in') ? '<button class="btn" id="trade-clear" type="button">Clear trade</button>' : ''}`;
+    const clear = $('#trade-clear', main);
+    if (clear) clear.onclick = () => {
+      const before = S.trade;
+      S.trade = { out: [], in: [] }; saveTrade(); showAll();
+      toast('Trade cleared.', { label: 'Undo', run: () => { S.trade = before; saveTrade(); if (S.view === 'trade') render(); } });
+    };
+  };
+  const showLines = (side) => {
+    const lines = tradeLines(side);
+    $(`[data-lines="${side}"]`, main).innerHTML = lines.length
+      ? `<div class="list">${lines.map((l) => {
+          const max = side === 'out' ? l.c.qty : Infinity;
+          return tradeRow(l.c, `
+            <span class="stepper"><button type="button" data-tq="-1" aria-label="One fewer ${esc(l.c.name)}">−</button><output>${l.n}</output><button type="button" data-tq="1" aria-label="One more ${esc(l.c.name)}"${l.n >= max ? ' disabled' : ''}>+</button></span>
+            <span class="trade-line">${l.c.price != null ? money(l.n * l.c.price) : '–'}<button type="button" class="link-btn" data-remove aria-label="Remove ${esc(l.c.name)}">Remove</button></span>`,
+            `${l.c.price != null ? money(l.c.price) + ' each' : 'no price'}${side === 'out' ? ` · ${l.c.qty} owned` : ''}${side === 'out' && l.n > l.c.qty ? ' · <span class="warn-text">more than you own</span>' : ''}`);
+        }).join('')}</div>
+        <div class="trade-side-total"><span>${tradeSides[side]} total</span><strong>${money(tradeTotal(side))}</strong></div>`
+      : `<p class="muted small">${side === 'out' ? 'Search above to add cards you would trade away.' : 'Search above to add cards you would get.'}</p>`;
+  };
+  const showMatches = (side) => {
+    const input = $(`[data-q="${side}"]`, main);
+    const box = $(`[data-matches="${side}"]`, main);
+    if (!input.value.trim()) { box.innerHTML = ''; return; }
+    box.innerHTML = matches[side].length
+      ? `<div class="list">${matches[side].map((c, i) => {
+          const have = S.trade[side].find((l) => l.id === c.id)?.n || 0;
+          const full = side === 'out' && have >= c.qty;
+          return tradeRow(c, `<span class="price">${c.price != null ? money(c.price) : '–'}</span><button type="button" class="btn${i === 0 ? ' primary' : ''} pack-add" data-add="${i}" aria-label="Add ${esc(c.name)} to ${tradeSides[side]}"${full ? ' disabled' : ''}>${full ? 'All added' : 'Add'}</button>`, `${c.qty} owned`);
+        }).join('')}</div>`
+      : `<p class="empty small">${side === 'out' ? 'None of your cards match.' : 'No cards match.'}</p>`;
+  };
+  const showAll = () => { showSummary(); for (const side in tradeSides) { showLines(side); showMatches(side); } };
+  const add = (side, c) => {
+    const line = S.trade[side].find((l) => l.id === c.id);
+    if (side === 'out' && (line?.n || 0) >= c.qty) return;
+    if (line) line.n++; else S.trade[side].push({ id: c.id, n: 1 });
+    saveTrade();
+    const input = $(`[data-q="${side}"]`, main);
+    input.value = ''; matches[side] = [];
+    showSummary(); showLines(side); showMatches(side);
+    input.focus();
+  };
+
+  main.querySelectorAll('[data-q]').forEach((input) => {
+    const side = input.dataset.q;
+    input.addEventListener('input', () => { matches[side] = tradeMatches(input.value, side); showMatches(side); });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && matches[side][0]) { e.preventDefault(); add(side, matches[side][0]); }
+    });
+  });
+  $('.trade', main).addEventListener('click', (e) => {
+    const sideEl = e.target.closest('[data-side]');
+    if (!sideEl) return;
+    const side = sideEl.dataset.side;
+    const addBtn = e.target.closest('[data-add]');
+    if (addBtn) { add(side, matches[side][+addBtn.dataset.add]); return; }
+    const step = e.target.closest('[data-tq]'), remove = e.target.closest('[data-remove]');
+    if (!step && !remove) return;
+    const id = e.target.closest('[data-id]').dataset.id;
+    const i = S.trade[side].findIndex((l) => l.id === id);
+    if (i < 0) return;
+    const line = S.trade[side][i];
+    line.n = remove ? 0 : Math.min(line.n + Number(step.dataset.tq), side === 'out' ? S.byId.get(id).qty : Infinity);
+    if (line.n <= 0) S.trade[side].splice(i, 1);
+    saveTrade();
+    showSummary(); showLines(side); showMatches(side);
+  });
+  showAll();
+}
+
 function renderOrders(main) {
   const paid = S.orders.reduce((n, o) => n + (Number.isFinite(o.paid) ? o.paid : 0), 0);
   const remaining = S.orders.reduce((n, o) => n + (Number.isFinite(o.remaining) ? o.remaining : 0), 0);
@@ -1436,10 +1563,10 @@ function render() {
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'decks', 'events', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'events', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
   // Links from Discord alerts open one card: #cards?q=OP01-001&card=OP01:5
   const cardLink = new URLSearchParams(location.hash.split('?')[1] || '').get('card');
   if (cardLink && S.byId.has(cardLink)) openCard(cardLink);
