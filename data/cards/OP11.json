@@ -85,7 +85,7 @@
 {"id":"OP11:88","productId":632438,"cardId":"OP11-068","name":"Charlotte Daifuku","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP11:89","productId":632439,"cardId":"OP11-069","name":"Charlotte Brulee","rarity":"R","alt":false,"target":4,"qty":14,"price":0.01},
 {"id":"OP11:90","productId":632440,"cardId":"OP11-070","name":"Charlotte Pudding","rarity":"SR","alt":false,"target":4,"qty":6,"price":1.6},
-{"id":"OP11:91","productId":632441,"cardId":"OP11-070","name":"Charlotte Pudding (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":2,"price":13.49},
+{"id":"OP11:91","productId":632441,"cardId":"OP11-070","name":"Charlotte Pudding (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":13.49},
 {"id":"OP11:92","productId":632442,"cardId":"OP11-071","name":"Charlotte Perospero","rarity":"R","alt":false,"target":4,"qty":12,"price":0.02},
 {"id":"OP11:93","productId":632443,"cardId":"OP11-072","name":"Charlotte Mont-d'or","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP11:94","productId":632444,"cardId":"OP11-073","name":"Charlotte Linlin","rarity":"R","alt":false,"target":4,"qty":12,"price":0.02},
