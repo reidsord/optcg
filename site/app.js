@@ -1388,9 +1388,12 @@ function renderTrade(main) {
   const showSummary = () => {
     const out = tradeTotal('out'), got = tradeTotal('in'), diff = got - out;
     const n = (side) => tradeLines(side).reduce((k, l) => k + l.n, 0);
-    const verdict = !n('out') && !n('in') ? 'Add cards to each side'
-      : Math.abs(diff) < 0.005 ? 'Even trade'
-      : diff > 0 ? `You get ${money(diff)} more` : `You give ${money(-diff)} more`;
+    // Unpriced cards count as $0, so say the totals are incomplete instead of calling it even.
+    const unpriced = [...tradeLines('out'), ...tradeLines('in')].filter((l) => l.c.price == null).length;
+    const verdict = (!n('out') && !n('in') ? 'Add cards to each side'
+      : Math.abs(diff) < 0.005 ? (unpriced ? 'Even on priced cards' : 'Even trade')
+      : diff > 0 ? `You get ${money(diff)} more` : `You give ${money(-diff)} more`)
+      + (unpriced ? ` · ${unpriced} ${unpriced === 1 ? 'card has' : 'cards have'} no price, counted as $0` : '');
     $('#trade-summary', main).innerHTML = `
       <div><div class="muted small">Out · ${count(n('out'))} ${n('out') === 1 ? 'card' : 'cards'}</div><div class="big">${money(out)}</div></div>
       <div><div class="muted small">In · ${count(n('in'))} ${n('in') === 1 ? 'card' : 'cards'}</div><div class="big">${money(got)}</div></div>
