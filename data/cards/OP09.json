@@ -133,7 +133,7 @@
 {"id":"OP09:136","productId":597050,"cardId":"OP09-105","name":"Sanji (105)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP09:137","productId":597051,"cardId":"OP09-106","name":"Nico Olvia","rarity":"C","alt":false,"target":4,"qty":4,"price":0.05},
 {"id":"OP09:138","productId":597052,"cardId":"OP09-107","name":"Nico Robin (107)","rarity":"R","alt":false,"target":4,"qty":8,"price":0.25},
-{"id":"OP09:139","productId":597053,"cardId":"OP09-107","name":"Nico Robin (107) (Parallel)","rarity":"R","alt":true,"target":1,"qty":2,"price":28.99},
+{"id":"OP09:139","productId":597053,"cardId":"OP09-107","name":"Nico Robin (107) (Parallel)","rarity":"R","alt":true,"target":1,"qty":1,"price":28.99},
 {"id":"OP09:140","productId":597054,"cardId":"OP09-108","name":"Bartholomew Kuma","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"OP09:141","productId":597055,"cardId":"OP09-109","name":"Jaguar.D.Saul","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP09:142","productId":597056,"cardId":"OP09-110","name":"Pierre","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
