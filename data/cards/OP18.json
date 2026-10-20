@@ -38,5 +38,8 @@
 {"id":"p723309","productId":723309,"cardId":"OP18-063","name":"Kiwi & Mozu","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.99,"added":"2026-10-14"},
 {"id":"p723378","productId":723378,"cardId":"OP18-085","name":"Cerberus","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.99,"added":"2026-10-15"},
 {"id":"p723531","productId":723531,"cardId":"OP18-101","name":"Kumadori","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.99,"added":"2026-10-16"},
-{"id":"p724463","productId":724463,"cardId":"","name":"Eyelashes","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-17"}
+{"id":"p724463","productId":724463,"cardId":"","name":"Eyelashes","rarity":"","alt":null,"target":1,"qty":0,"price":null,"added":"2026-10-17"},
+{"id":"p724624","productId":724624,"cardId":"OP18-036","name":"Monkey.D.Luffy (036)","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-20"},
+{"id":"p724625","productId":724625,"cardId":"OP18-047","name":"Mr.1 (Daz.Bonez)","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-20"},
+{"id":"p724626","productId":724626,"cardId":"OP18-077","name":"White Hobby Horse 1","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-20"}
 ]
