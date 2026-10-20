@@ -77,7 +77,7 @@
 {"id":"OP08:80","productId":558096,"cardId":"OP08-065","name":"Charlotte Smoothie","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP08:81","productId":558097,"cardId":"OP08-066","name":"Charlotte Brulee","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP08:82","productId":558098,"cardId":"OP08-067","name":"Charlotte Pudding (067)","rarity":"R","alt":false,"target":4,"qty":9,"price":0.01},
-{"id":"OP08:83","productId":558099,"cardId":"OP08-067","name":"Charlotte Pudding (067) (Parallel)","rarity":"R","alt":true,"target":1,"qty":2,"price":7.99},
+{"id":"OP08:83","productId":558099,"cardId":"OP08-067","name":"Charlotte Pudding (067) (Parallel)","rarity":"R","alt":true,"target":1,"qty":1,"price":7.99},
 {"id":"OP08:84","productId":558100,"cardId":"OP08-068","name":"Charlotte Perospero","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP08:85","productId":558101,"cardId":"OP08-069","name":"Charlotte Linlin","rarity":"SR","alt":false,"target":4,"qty":5,"price":1},
 {"id":"OP08:86","productId":558102,"cardId":"OP08-069","name":"Charlotte Linlin (Parallel)","rarity":"SR","alt":true,"target":1,"qty":3,"price":8.5},
