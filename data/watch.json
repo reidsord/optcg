@@ -45,7 +45,7 @@
 {"id":"shop.family-time-games.com","store":"Family Time Games","url":"https://shop.family-time-games.com/","miles":21.7,"snippets":[]},
 {"id":"booksnbrews.com","store":"Books & Brews","url":"http://www.booksnbrews.com","miles":21.8,"snippets":[]},
 {"id":"hotspotcollectiblesandtoys.com","store":"Hot Spot Collectibles and Toys","url":"https://www.hotspotcollectiblesandtoys.com/","miles":22.2,"snippets":[]},
-{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[]},
+{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[],"error":"HTTP Error 403: Forbidden"},
 {"id":"nextlevelgamesmuncie.com","store":"NLG Carmel","url":"https://www.nextlevelgamesmuncie.com/carmel-events","miles":26.9,"snippets":[]},
 {"id":"indycollectorsemporium.com","store":"Collectors Emporium","url":"https://indycollectorsemporium.com/","miles":30.4,"snippets":[]}
 ]}
