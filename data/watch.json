@@ -1,4 +1,4 @@
-{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Other": {"series": 1, "hourET": 15.5, "leadDays": 0}},
 "sets":[
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
@@ -38,7 +38,7 @@
 {"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
-{"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[],"error":"HTTP Error 500: Internal Server Error"},
+{"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[],"error":"<urlopen error _ssl.c:993: The handshake operation timed out>"},
 {"id":"bestcardshopindy.com","store":"Best Card Shop","url":"http://www.bestcardshopindy.com","miles":15.4,"snippets":[]},
 {"id":"laughtail.com","store":"Laughtail","url":"https://www.laughtail.com/","miles":20.1,"snippets":[]},
 {"id":"bulldogcommunitygaming.com","store":"Bulldog Community Gaming","url":"https://www.bulldogcommunitygaming.com","miles":21.2,"snippets":[]},
