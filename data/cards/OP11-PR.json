@@ -47,7 +47,7 @@
 {"id":"OP11-PR:50","productId":634492,"cardId":"OP11-076","name":"Hannyabal","rarity":"C","alt":false,"target":4,"qty":0,"price":0.9},
 {"id":"OP11-PR:51","productId":634493,"cardId":"OP11-077","name":"Randolph","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP11-PR:52","productId":634494,"cardId":"OP11-078","name":"Decuplets","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.57},
-{"id":"OP11-PR:53","productId":634495,"cardId":"OP11-079","name":"When Two Men Are Fighting the Last Thing I Need Is Some Half-Hearted Assistance!!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.38},
+{"id":"OP11-PR:53","productId":634495,"cardId":"OP11-079","name":"When Two Men Are Fighting the Last Thing I Need Is Some Half-Hearted Assistance!!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.51},
 {"id":"OP11-PR:54","productId":634496,"cardId":"OP11-081","name":"Cognac Mama-Mash","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP11-PR:55","productId":634497,"cardId":"OP11-085","name":"Kurozumi Orochi","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP11-PR:56","productId":634498,"cardId":"OP11-086","name":"Coribou","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
@@ -65,7 +65,7 @@
 {"id":"OP11-PR:68","productId":634510,"cardId":"OP11-102","name":"Camie","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.44},
 {"id":"OP11-PR:69","productId":634511,"cardId":"OP11-103","name":"Long-Jaw Neptunian","rarity":"C","alt":false,"target":4,"qty":1,"price":0.2},
 {"id":"OP11-PR:70","productId":634512,"cardId":"OP11-105","name":"Charlotte Chiffon","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.4},
-{"id":"OP11-PR:71","productId":634513,"cardId":"OP11-107","name":"Topknot Neptunian","rarity":"C","alt":false,"target":4,"qty":0,"price":6.99},
+{"id":"OP11-PR:71","productId":634513,"cardId":"OP11-107","name":"Topknot Neptunian","rarity":"C","alt":false,"target":4,"qty":0,"price":2},
 {"id":"OP11-PR:72","productId":634514,"cardId":"OP11-109","name":"Pappag","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP11-PR:73","productId":634515,"cardId":"OP11-110","name":"Fukaboshi","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
 {"id":"OP11-PR:74","productId":634516,"cardId":"OP11-111","name":"Mamboshi","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.25},
@@ -74,5 +74,5 @@
 {"id":"OP11-PR:77","productId":634520,"cardId":"OP11-115","name":"You're Just Not My Type!","rarity":"UC","alt":false,"target":4,"qty":1,"price":4},
 {"id":"OP11-PR:78","productId":634521,"cardId":"OP11-116","name":"Merman Combat Ultramarine","rarity":"C","alt":false,"target":4,"qty":0,"price":0.45},
 {"id":"OP11-PR:79","productId":634522,"cardId":"OP11-117","name":"Fish-Man Island","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
-{"id":"OP11-PR:80","productId":634527,"cardId":"","name":"A Fist of Divine Speed - Release Event Pack","rarity":"","alt":true,"target":1,"qty":0,"price":6}
+{"id":"OP11-PR:80","productId":634527,"cardId":"","name":"A Fist of Divine Speed - Release Event Pack","rarity":"","alt":true,"target":1,"qty":0,"price":5.99}
 ]
