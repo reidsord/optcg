@@ -1346,12 +1346,14 @@ function renderDecks(main) {
 // ---------- Trade window ----------
 // Kept in this browser only: a trade never changes quantities.
 
-const TRADE_RESULTS = 8;
+const TRADE_PAGE = 50;
 const tradeSides = { out: 'Out', in: 'In' };
 S.trade = (() => { try { const t = JSON.parse(store.get('trade') || '{}'); return { out: t.out || [], in: t.in || [] }; } catch { return { out: [], in: [] }; } })();
 const saveTrade = () => store.set('trade', S.trade.out.length || S.trade.in.length ? JSON.stringify(S.trade) : null);
 const tradeLines = (side) => S.trade[side].map((l) => ({ ...l, c: S.byId.get(l.id) })).filter((l) => l.c);
 const tradeTotal = (side) => tradeLines(side).reduce((n, l) => n + l.n * (l.c.price || 0), 0);
+// Cards usually change hands at 80-85% of their listed price.
+S.tradePct = Number(store.get('trade-pct')) || 85;
 
 // Out searches the cards you own; In searches every card.
 function tradeMatches(q, side) {
@@ -1360,7 +1362,7 @@ function tradeMatches(q, side) {
   const lower = q.toLowerCase();
   const list = filterCards({ q, preset: side === 'out' ? 'owned' : 'all', set: '', own: '', variant: '', rarity: '', sort: '' });
   const rank = (c) => (c.cardId.toLowerCase() === lower ? 0 : c.name.toLowerCase().startsWith(lower) ? 1 : 2) * 2 + (c.qty > 0 ? 0 : 1);
-  return list.map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]).slice(0, TRADE_RESULTS);
+  return list.map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]);
 }
 
 function tradeRow(c, extra, info = '') {
@@ -1384,7 +1386,8 @@ function renderTrade(main) {
       </section>`).join('')}
     </div></div>`;
 
-  const matches = { out: [], in: [] };
+  const matches = { out: [], in: [] }, shown = { out: TRADE_PAGE, in: TRADE_PAGE };
+  const signed = (v) => (v > 0.005 ? '+' : v < -0.005 ? '−' : '') + money(Math.abs(v));
   const showSummary = () => {
     const out = tradeTotal('out'), got = tradeTotal('in'), diff = got - out;
     const n = (side) => tradeLines(side).reduce((k, l) => k + l.n, 0);
@@ -1397,8 +1400,17 @@ function renderTrade(main) {
     $('#trade-summary', main).innerHTML = `
       <div><div class="muted small">Out · ${count(n('out'))} ${n('out') === 1 ? 'card' : 'cards'}</div><div class="big">${money(out)}</div></div>
       <div><div class="muted small">In · ${count(n('in'))} ${n('in') === 1 ? 'card' : 'cards'}</div><div class="big">${money(got)}</div></div>
-      <div class="trade-diff${diff > 0.005 ? ' up' : diff < -0.005 ? ' down' : ''}"><div class="muted small">Difference</div><div class="big">${diff > 0.005 ? '+' : diff < -0.005 ? '−' : ''}${money(Math.abs(diff))}</div><div class="small">${verdict}</div></div>
+      <div class="trade-diff${diff > 0.005 ? ' up' : diff < -0.005 ? ' down' : ''}"><div class="muted small">Difference</div><div class="big">${signed(diff)}</div><div class="small">${verdict}</div></div>
+      <div class="trade-diff trade-pct${diff * S.tradePct / 100 > 0.005 ? ' up' : diff * S.tradePct / 100 < -0.005 ? ' down' : ''}">
+        <label class="muted small">At <input id="trade-pct" type="number" inputmode="decimal" min="1" max="100" step="1" value="${S.tradePct}" aria-label="Percent of price"> %</label>
+        <div class="big" id="trade-pct-diff">${signed(diff * S.tradePct / 100)}</div>
+        <div class="small muted" id="trade-pct-sides">Out ${money(out * S.tradePct / 100)} · In ${money(got * S.tradePct / 100)}</div></div>
       ${n('out') || n('in') ? '<button class="btn" id="trade-clear" type="button">Clear trade</button>' : ''}`;
+    $('#trade-pct', main).onchange = (e) => {
+      const v = Number(e.target.value);
+      if (v > 0 && v <= 100) { S.tradePct = v; store.set('trade-pct', String(v)); }
+      showSummary();
+    };
     const clear = $('#trade-clear', main);
     if (clear) clear.onclick = () => {
       const before = S.trade;
@@ -1423,13 +1435,19 @@ function renderTrade(main) {
     const input = $(`[data-q="${side}"]`, main);
     const box = $(`[data-matches="${side}"]`, main);
     if (!input.value.trim()) { box.innerHTML = ''; return; }
-    box.innerHTML = matches[side].length
-      ? `<div class="list">${matches[side].map((c, i) => {
+    const list = matches[side], more = list.length - shown[side];
+    const scroll = box.querySelector('.trade-results')?.scrollTop || 0;
+    box.innerHTML = list.length
+      ? `<div class="trade-results-head muted small"><span>${count(list.length)} ${list.length === 1 ? 'match' : 'matches'}</span><button type="button" class="link-btn" data-done>Done</button></div>
+        <div class="list trade-results">${list.slice(0, shown[side]).map((c, i) => {
           const have = S.trade[side].find((l) => l.id === c.id)?.n || 0;
           const full = side === 'out' && have >= c.qty;
-          return tradeRow(c, `<span class="price">${c.price != null ? money(c.price) : '–'}</span><button type="button" class="btn${i === 0 ? ' primary' : ''} pack-add" data-add="${i}" aria-label="Add ${esc(c.name)} to ${tradeSides[side]}"${full ? ' disabled' : ''}>${full ? 'All added' : 'Add'}</button>`, `${c.qty} owned`);
-        }).join('')}</div>`
+          return tradeRow(c, `<span class="price">${c.price != null ? money(c.price) : '–'}</span><button type="button" class="btn primary pack-add" data-add="${i}" aria-label="Add ${esc(c.name)} to ${tradeSides[side]}"${full ? ' disabled' : ''}>${full ? 'All added' : have ? `Add (${have})` : 'Add'}</button>`, `${c.qty} owned`);
+        }).join('')}
+        ${more > 0 ? `<button type="button" class="link-btn trade-more" data-more>Show ${count(Math.min(more, TRADE_PAGE))} more of ${count(more)}</button>` : ''}</div>`
       : `<p class="empty small">${side === 'out' ? 'None of your cards match.' : 'No cards match.'}</p>`;
+    const results = box.querySelector('.trade-results');
+    if (results) results.scrollTop = scroll;
   };
   const showAll = () => { showSummary(); for (const side in tradeSides) { showLines(side); showMatches(side); } };
   const add = (side, c) => {
@@ -1437,15 +1455,12 @@ function renderTrade(main) {
     if (side === 'out' && (line?.n || 0) >= c.qty) return;
     if (line) line.n++; else S.trade[side].push({ id: c.id, n: 1 });
     saveTrade();
-    const input = $(`[data-q="${side}"]`, main);
-    input.value = ''; matches[side] = [];
     showSummary(); showLines(side); showMatches(side);
-    input.focus();
   };
 
   main.querySelectorAll('[data-q]').forEach((input) => {
     const side = input.dataset.q;
-    input.addEventListener('input', () => { matches[side] = tradeMatches(input.value, side); showMatches(side); });
+    input.addEventListener('input', () => { matches[side] = tradeMatches(input.value, side); shown[side] = TRADE_PAGE; showMatches(side); });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && matches[side][0]) { e.preventDefault(); add(side, matches[side][0]); }
     });
@@ -1456,6 +1471,8 @@ function renderTrade(main) {
     const side = sideEl.dataset.side;
     const addBtn = e.target.closest('[data-add]');
     if (addBtn) { add(side, matches[side][+addBtn.dataset.add]); return; }
+    if (e.target.closest('[data-more]')) { shown[side] += TRADE_PAGE; showMatches(side); return; }
+    if (e.target.closest('[data-done]')) { const input = $(`[data-q="${side}"]`, main); input.value = ''; matches[side] = []; showMatches(side); return; }
     const step = e.target.closest('[data-tq]'), remove = e.target.closest('[data-remove]');
     if (!step && !remove) return;
     const id = e.target.closest('[data-id]').dataset.id;

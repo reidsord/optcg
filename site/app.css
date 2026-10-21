@@ -365,6 +365,10 @@ select.select { padding: 6px 30px 6px 12px; min-height: 36px; appearance: none; 
 .trade-matches { margin: 8px 0 12px; }
 .trade-matches:empty { margin: 0 0 12px; }
 .trade-row { grid-template-columns: 44px 1fr auto auto; }
+.trade-results-head { display: flex; justify-content: space-between; align-items: center; padding: 0 4px 4px; }
+.trade-results { max-height: min(60vh, 560px); overflow-y: auto; overscroll-behavior: contain; }
+.trade-more { display: block; width: 100%; padding: 12px; border-top: 1px solid var(--line); }
+.trade-pct input { width: 3.6em; margin: 0 2px; padding: 2px 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-2); color: var(--text); font: inherit; text-align: right; }
 .trade-line { display: flex; flex-direction: column; align-items: flex-end; min-width: 72px; font-variant-numeric: tabular-nums; font-weight: 600; }
 .trade-line .link-btn { font-size: 12px; font-weight: 400; padding: 2px 0; }
 .trade-side-total { display: flex; justify-content: space-between; padding: 10px 12px 0; color: var(--muted); }
