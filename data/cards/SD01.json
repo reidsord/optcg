@@ -1,13 +1,13 @@
 [
-{"id":"tcg:24708:716428","productId":716428,"cardId":"OP16-001","name":"Portgas.D.Ace (Ace Deck)","rarity":"L","alt":false,"target":4,"qty":0,"price":1},
-{"id":"tcg:24708:716429","productId":716429,"cardId":"OP15-098","name":"Monkey.D.Luffy (OP15-098) (Luffy Deck)","rarity":"L","alt":false,"target":4,"qty":0,"price":2.94},
+{"id":"tcg:24708:716428","productId":716428,"cardId":"OP16-001","name":"Portgas.D.Ace (Ace Deck)","rarity":"L","alt":false,"target":4,"qty":0,"price":1.49},
+{"id":"tcg:24708:716429","productId":716429,"cardId":"OP15-098","name":"Monkey.D.Luffy (OP15-098) (Luffy Deck)","rarity":"L","alt":false,"target":4,"qty":0,"price":2.79},
 {"id":"tcg:24708:716430","productId":716430,"cardId":"OP16-021","name":"Moby Dick (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"tcg:24708:716431","productId":716431,"cardId":"OP16-015","name":"Monkey.D.Luffy (OP16-015) (Ace Deck)","rarity":"SR","alt":false,"target":4,"qty":0,"price":0.25},
 {"id":"tcg:24708:716432","productId":716432,"cardId":"OP05-106","name":"Shura (Luffy Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"tcg:24708:716433","productId":716433,"cardId":"OP15-114","name":"Wyper (Luffy Deck)","rarity":"SR","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"tcg:24708:716434","productId":716434,"cardId":"OP15-116","name":"Gum-Gum Golden Rifle (Luffy Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.12},
 {"id":"tcg:24708:716518","productId":716518,"cardId":"ST15-003","name":"Kingdew (Ace Deck)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
-{"id":"tcg:24708:716628","productId":716628,"cardId":"OP15-113","name":"Roronoa Zoro (Luffy Deck)","rarity":"SR","alt":false,"target":4,"qty":0,"price":1},
+{"id":"tcg:24708:716628","productId":716628,"cardId":"OP15-113","name":"Roronoa Zoro (Luffy Deck)","rarity":"SR","alt":false,"target":4,"qty":0,"price":1.99},
 {"id":"tcg:24708:716634","productId":716634,"cardId":"OP15-103","name":"Genbo (Luffy Deck)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
 {"id":"tcg:24708:716653","productId":716653,"cardId":"OP05-113","name":"Yama (Luffy Deck)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.09},
 {"id":"tcg:24708:716663","productId":716663,"cardId":"OP12-002","name":"Edward.Newgate (OP12-002) (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.15},
@@ -30,5 +30,5 @@
 {"id":"tcg:24708:721564","productId":721564,"cardId":"OP16-017","name":"LittleOars Jr. (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.09},
 {"id":"tcg:24708:721565","productId":721565,"cardId":"OP16-011","name":"Vista (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"p694893","productId":694893,"cardId":"","name":"Set Sail Deck Set","rarity":"","alt":null,"target":1,"qty":0,"price":14,"added":"2026-10-08"},
-{"id":"p694894","productId":694894,"cardId":"","name":"Set Sail Deck Set Display","rarity":"","alt":null,"target":1,"qty":0,"price":99.5,"added":"2026-10-08"}
+{"id":"p694894","productId":694894,"cardId":"","name":"Set Sail Deck Set Display","rarity":"","alt":null,"target":1,"qty":0,"price":99,"added":"2026-10-08"}
 ]
