@@ -77,8 +77,8 @@ product pages on [the official card game site](https://en.onepiece-cardgame.com/
 Products are limited to cards (boosters, decks and card sets); figures, models,
 sleeves, playmats and storage are skipped. When it finds a new
 event of a kind listed in `notifyKinds`, a new announcement or a new product, it
-opens a GitHub issue labeled `alert` that mentions the people in `mention`, so
-GitHub's app or email sends a notification. Premium Bandai's item pages block
+posts it to Discord (below); it no longer opens GitHub issues, so there are no
+alert emails. Premium Bandai's item pages block
 automated visits, so its card game drops are picked up from the official site,
 which marks them **Premium Bandai**. Changing `home` or `radiusMiles` refreshes
 the list without sending alerts for everything already there.
