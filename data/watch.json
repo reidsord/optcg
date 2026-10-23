@@ -1,9 +1,10 @@
-{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Other": {"series": 2, "hourET": 15.5, "leadDays": 7}},
 "sets":[
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
 ],
 "series":[
+{"id":"[North America] Heroines Battle Vol.2 [EB-05]","kind":"Other","seen":"2026-10-23","drop":"2026-10-23T14:00:00+00:00","firstEvent":"2026-11-06T13:00:00"},
 {"id":"Pirates Party 2026 Vol.4","kind":"Pirates Party","seen":"2026-10-17","drop":"2026-10-17T19:00:00+00:00","firstEvent":"2026-11-01T12:30:00"},
 {"id":"Instant Event","kind":"Other","seen":"2026-10-14","drop":"2026-10-14T19:28:34+00:00","firstEvent":"2026-10-14T18:30:00"},
 {"id":"[Oct-Dec 2026]Store Tournament Event OP","kind":"Store Tournament","seen":"2026-10-09","drop":"2026-09-17T14:00:00+00:00","firstEvent":"2026-10-08T18:00:00"},
@@ -14,7 +15,7 @@
 ],
 "official":[
 {"id":"https://en.onepiece-cardgame.com/events/02_361.html","name":"Pirates League: ONE PIECE CARD GAME Official Shop Edition 2026","lines":[]},
-{"id":"https://en.onepiece-cardgame.com/events/02_452.html","name":"Store Tournament 2026 Vol. 4","lines":["Store Registration: August 1-31, 2026","Player Registration: September 17, 2026 onwards","Store Registration: September 1-30, 2026","Player Registration: October 17, 2026 onwards","Store Registration: October 1-31, 2026","Player Registration: November 17, 2026 onwards"],"opens":"2026-11-17T00:00:00-05:00","hasTime":false,"reminded":[]},
+{"id":"https://en.onepiece-cardgame.com/events/02_452.html","name":"Store Tournament 2026 Vol. 4","lines":["Store Registration: August 1-31, 2026","Player Registration: September 17, 2026 onwards","Store Registration: September 1-30, 2026","Player Registration: October 17, 2026 onwards","Store Registration: October 1-31, 2026","Player Registration: November 17, 2026 onwards"],"opens":"2026-11-17T00:00:00-05:00","hasTime":false,"reminded":[],"discordEvent":{"id":"1563247940896694303","opens":"2026-11-17T00:00:00-05:00"}},
 {"id":"https://en.onepiece-cardgame.com/events/02_483.html","name":"tabletop.me 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/02_512.html","name":"Spiel Essen 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/02_514.html","name":"Paris Games Week","lines":[]},
@@ -28,7 +29,7 @@
 {"id":"https://en.onepiece-cardgame.com/events/malltour2026.html","name":"ONE PIECE CARD GAME MALL TOUR 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/pirates-party-vol3-2026.html","name":"Pirates Party 2026 Vol. 3","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/pirates-party-vol4-2026.html","name":"Pirates Party 2026 Vol. 4","lines":[]},
-{"id":"https://en.onepiece-cardgame.com/events/store-tournament-op18.html","name":"4th Anniversary Event (OP-18 Release Event)","lines":["Player Application Period: November 6, 2026 onwards"],"opens":"2026-11-06T00:00:00-05:00","hasTime":false,"reminded":[]},
+{"id":"https://en.onepiece-cardgame.com/events/store-tournament-op18.html","name":"4th Anniversary Event (OP-18 Release Event)","lines":["Player Application Period: November 6, 2026 onwards"],"opens":"2026-11-06T00:00:00-05:00","hasTime":false,"reminded":[],"discordEvent":{"id":"1563247939487273042","opens":"2026-11-06T00:00:00-05:00"}},
 {"id":"https://en.onepiece-cardgame.com/events/treasure-cup-august-2026.html","name":"Treasure Cup August 2026","lines":[]},
 {"id":"https://en.onepiece-cardgame.com/events/treasure-cup-dec-2026.html","name":"Treasure Cup December 2026","lines":[]}
 ],
@@ -36,7 +37,7 @@
 {"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
-{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[],"error":"Remote end closed connection without response"},
+{"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":["Want to know more about our preorders and signing up for Prerelease"]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
 {"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[],"error":"HTTP Error 500: Internal Server Error"},
