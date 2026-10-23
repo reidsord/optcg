@@ -69,6 +69,11 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 .eyebrow { display: block; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .brand h1 { font-size: 24px; letter-spacing: -.01em; }
 .top-actions { display: flex; align-items: center; gap: 8px; }
+/* Touch devices: keep the buttons clear of the phone's own top-right status controls */
+@media (hover: none) and (pointer: coarse) {
+  .top { padding-top: max(18px, env(safe-area-inset-top)); }
+  .top-actions { margin-right: max(88px, env(safe-area-inset-right)); }
+}
 .pill { font-size: 13px; padding: 5px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; }
 .pill.ok { background: var(--accent-soft); color: var(--accent); }
 .pill.err { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
