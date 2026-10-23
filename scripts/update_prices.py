@@ -124,7 +124,7 @@ def main(dry_run=False):
             number = extended(p, "Number") or ""
             dest = next((c for c in set_codes if c in prefix and number.startswith(prefix[c])), home)
             alt, target = classify(p["name"], number, dest)
-            if alt and dest.startswith("ST-"):
+            if dest.startswith("ST-") and "(Parallel)" in p["name"]:
                 continue  # Reid doesn't track Starter Deck parallels
             card = card_row({
                 "id": f"p{p['productId']}",
