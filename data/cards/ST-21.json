@@ -4,7 +4,7 @@
 {"id":"Starter Decks:418","productId":628485,"cardId":"","name":"Starter Deck EX: Gear 5 Bonus Pack","rarity":"","alt":false,"target":1,"qty":0,"price":83.76},
 {"id":"Starter Decks:419","productId":606576,"cardId":"","name":"Starter Deck EX: Gear 5 Display","rarity":"","alt":false,"target":1,"qty":0,"price":549.84},
 {"id":"Starter Decks:420","productId":615564,"cardId":"ST21-001","name":"Monkey.D.Luffy (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":3.45},
-{"id":"Starter Decks:421","productId":615565,"cardId":"ST21-001","name":"Monkey.D.Luffy (001) (Parallel)","rarity":"L","alt":true,"target":1,"qty":0,"price":57},
+{"id":"Starter Decks:421","productId":615565,"cardId":"ST21-001","name":"Monkey.D.Luffy (001) (Parallel)","rarity":"L","alt":true,"target":1,"qty":2,"price":57},
 {"id":"Starter Decks:422","productId":615566,"cardId":"ST21-002","name":"Usopp","rarity":"C","alt":false,"target":4,"qty":8,"price":0.02},
 {"id":"Starter Decks:423","productId":615567,"cardId":"ST21-002","name":"Usopp (Parallel)","rarity":"C","alt":true,"target":1,"qty":0,"price":1.99},
 {"id":"Starter Decks:424","productId":615568,"cardId":"ST21-003","name":"Sanji","rarity":"C","alt":false,"target":4,"qty":8,"price":1.22},
