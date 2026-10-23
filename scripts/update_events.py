@@ -3,7 +3,7 @@
 - data/alerts.json is the settings file: home location, search radius, which kinds of
   event are worth a notification, and who to mention.
 - data/events.json keeps upcoming events within the radius, one per line.
-- data/drops.json keeps One Piece products seen on Premium Bandai USA, one per line.
+- data/drops.json keeps One Piece card products (boosters, decks, card sets), one per line.
 - Anything seen for the first time, of a kind worth a notification, is written to
   the file named by --notify (Markdown), which the workflow posts as a GitHub issue,
   and to --discord (one webhook message per line) when a Discord webhook is set up.
@@ -12,6 +12,7 @@ Usage: python3 scripts/update_events.py [--dry-run] [--notify PATH] [--discord P
 """
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -22,12 +23,12 @@ from html import unescape
 from urllib.parse import urljoin
 
 from common import DATA, dump_rows, read_json, write_text
+import discord_events
 import signups
 
 TCG_API = "https://api.bandai-tcg-plus.com/api/user/event/list"
 TCG_EVENT = "https://www.bandai-tcg-plus.com/event/{}"
 ONE_PIECE = 4  # Bandai TCG+ game_title_id
-PB = "https://p-bandai.com/us"
 OFFICIAL = "https://en.onepiece-cardgame.com"
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36",
       "Accept": "application/json, text/html;q=0.9, */*;q=0.8", "Accept-Language": "en-US,en;q=0.9"}
@@ -140,8 +141,7 @@ def fetch_events(cfg, today):
 
 # ---------- Products and official announcements ----------
 # Premium Bandai's item pages and search sit behind a bot check, so card game drops come
-# from the official card game site's product list, which tags Premium Bandai exclusives,
-# plus the featured items on Premium Bandai's own One Piece page.
+# from the official card game site's product list, which tags Premium Bandai exclusives.
 
 def clean(html):
     return re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", html or ""))).strip()
@@ -172,32 +172,23 @@ def fetch_products(pages=2):
     return rows
 
 
-def fetch_pbandai_featured():
-    rows = {}
-    html = fetch(f"{PB}/series/onepiece-series")
-    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S):
-        try:
-            data = json.loads(block)
-        except ValueError:
-            continue
-        for item in (data.get("mainEntity") or {}).get("itemListElement") or []:
-            m = re.search(r"/item/([A-Z0-9]+)", item.get("url") or "")
-            if m:
-                rows["pb:" + m.group(1)] = {"id": "pb:" + m.group(1), "name": item.get("name") or m.group(1), "url": item["url"],
-                                            "category": "Premium Bandai", "premiumBandai": True}
-    return rows
+# Reid only wants cards: boosters, decks and card sets, not figures, sleeves, playmats or storage.
+CARD_PRODUCT = re.compile(r"booster|deck|card collection|card set|double pack|gift collection|anniversary set|special set", re.I)
+
+
+def is_card_product(row):
+    return row.get("category") in ("Boosters", "Decks") or bool(CARD_PRODUCT.search(row.get("name") or ""))
 
 
 def fetch_drops():
     rows = {}
-    for name, fn in [("official product list", fetch_products), ("Premium Bandai One Piece page", fetch_pbandai_featured)]:
-        try:
-            found = fn()
-            print(f"{name}: {len(found)} items")
-            rows.update(found)
-        except Exception as e:
-            print(f"{name} failed: {e}")
-            return None  # don't mark items as gone because one source was down
+    try:
+        found = fetch_products()
+    except Exception as e:
+        print(f"official product list failed: {e}")
+        return None
+    rows = {k: r for k, r in found.items() if is_card_product(r)}
+    print(f"official product list: {len(found)} items, {len(rows)} card products")
     for r in rows.values():
         for k in [k for k, v in r.items() if v is None]:
             del r[k]
@@ -378,7 +369,7 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
     old_events = {e["id"]: e for e in old.get("events", [])}
     old_news = {a["id"]: a for a in old.get("announcements", [])}
     old_search = old.get("search") or {}
-    old_drops = {d["id"]: d for d in read_json(f"{DATA}/drops.json", {}).get("items", [])}
+    old_drops = {d["id"]: d for d in read_json(f"{DATA}/drops.json", {}).get("items", []) if is_card_product(d)}
     old_watch = read_json(f"{DATA}/watch.json", {})
     quick = lambda url: fetch(url, tries=1, timeout=25)
 
@@ -436,6 +427,7 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
             drops.setdefault(pid, prev)
     sets = signups.release_dates(drops, {r["id"]: r for r in old_watch.get("sets", [])}, quick, today)
     signup_alerts += signups.predict_drops(sets, series, pattern, now)
+    discord_events.sync(official, os.environ.get("DISCORD_BOT_TOKEN"), os.environ.get("DISCORD_GUILD_ID"), now, dry_run)
 
     if not dry_run:
         ev_rows = sorted(events.values(), key=lambda e: (e.get("start") or "", e["id"]))

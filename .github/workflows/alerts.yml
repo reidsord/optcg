@@ -12,6 +12,8 @@ on:
   pull_request:
     paths:
       - "scripts/update_events.py"
+      - "scripts/signups.py"
+      - "scripts/discord_events.py"
       - ".github/workflows/alerts.yml"
 
 permissions:
@@ -38,6 +40,9 @@ jobs:
 
       - name: Look for new events and drops
         if: github.event_name != 'pull_request' && !inputs.test
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
         run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md" --discord "$RUNNER_TEMP/discord.jsonl"
 
       - name: Build a Discord test message

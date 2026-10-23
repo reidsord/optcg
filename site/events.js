@@ -151,7 +151,7 @@ export async function renderEvents(main, { getJson, ref }) {
         <button type="button" class="chip" id="pb-only" aria-pressed="${pbOnly}">Premium Bandai only</button></div>
       ${products.length ? `<div class="drops">${products.map(productCard).join('')}</div>`
         : '<p class="empty small">Nothing yet. The first check fills this in.</p>'}
-      <p class="muted small">Premium Bandai blocks automated visits to its store pages, so card game drops come from the official card game site, which marks Premium Bandai exclusives, plus the featured items on <a href="https://p-bandai.com/us/series/onepiece-series" target="_blank" rel="noopener">Premium Bandai's One Piece page</a>.</p>`;
+      <p class="muted small">Premium Bandai blocks automated visits to its store pages, so card game drops come from the official card game site, which marks Premium Bandai exclusives. Only card products are listed: boosters, decks and card sets, not figures, sleeves, playmats or storage.</p>`;
 
     main.querySelectorAll('[data-f]').forEach((b) => (b.onclick = () => { filter = b.dataset.f; store.set('events-filter', filter); draw(); }));
     const pb = main.querySelector('#pb-only');

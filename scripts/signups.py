@@ -235,6 +235,8 @@ def watch_official(news, old, fetch, now):
             row.update({"opens": opens, "hasTime": has_time})
             if prev.get("opens") == opens:
                 row["reminded"] = prev.get("reminded") or []
+        if prev.get("discordEvent"):
+            row["discordEvent"] = prev["discordEvent"]
         rows[a["url"]] = row
         fresh = [l for l in lines if l not in (prev.get("lines") or [])]
         current = not opens or datetime.fromisoformat(opens) >= now - timedelta(days=1)
