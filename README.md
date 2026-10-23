@@ -105,6 +105,17 @@ when the predicted time is close. To check the webhook, run
 **Check events and drops** from the Actions tab with a test search such as
 `EB05 prerelease`; it posts the matching events (or the matching product) to Discord.
 
+To also add each upcoming player sign-up from the official event pages to the
+server's **Events** list (so Discord reminds everyone marked Interested), make a
+bot in the [Discord Developer Portal](https://discord.com/developers/applications)
+(**New Application → Bot → Reset Token**), invite it to the server with the
+**Manage Events** permission (**OAuth2 → URL Generator → bot**, then tick
+**Manage Events** and open the link), and save two repository secrets:
+`DISCORD_BOT_TOKEN` (the bot token) and `DISCORD_GUILD_ID` (right-click the server
+with Developer Mode on → **Copy Server ID**). Pages that give a time get a one-hour
+event at that time; pages that give only a date get an event from 8 AM ET to the
+end of that day. If the date on the page changes, the event moves with it.
+
 ## Setup
 
 1. In **Settings → Pages**, set **Source** to **GitHub Actions**.

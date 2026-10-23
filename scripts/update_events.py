@@ -12,6 +12,7 @@ Usage: python3 scripts/update_events.py [--dry-run] [--notify PATH] [--discord P
 """
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -22,6 +23,7 @@ from html import unescape
 from urllib.parse import urljoin
 
 from common import DATA, dump_rows, read_json, write_text
+import discord_events
 import signups
 
 TCG_API = "https://api.bandai-tcg-plus.com/api/user/event/list"
@@ -425,6 +427,7 @@ def main(dry_run=False, notify_path=None, test_home=None, discord_path=None):
             drops.setdefault(pid, prev)
     sets = signups.release_dates(drops, {r["id"]: r for r in old_watch.get("sets", [])}, quick, today)
     signup_alerts += signups.predict_drops(sets, series, pattern, now)
+    discord_events.sync(official, os.environ.get("DISCORD_BOT_TOKEN"), os.environ.get("DISCORD_GUILD_ID"), now, dry_run)
 
     if not dry_run:
         ev_rows = sorted(events.values(), key=lambda e: (e.get("start") or "", e["id"]))
