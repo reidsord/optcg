@@ -1,4 +1,4 @@
-{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Other": {"series": 1, "hourET": 15.5, "leadDays": 0}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}},
 "sets":[
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
