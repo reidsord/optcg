@@ -1344,7 +1344,7 @@ function renderDecks(main) {
 }
 
 // ---------- Trade window ----------
-// Kept in this browser only: a trade never changes quantities.
+// Kept in this browser only. Quantities change only when you press Complete trade.
 
 const TRADE_PAGE = 50;
 const tradeSides = { out: 'Out', in: 'In' };
@@ -1352,6 +1352,13 @@ S.trade = (() => { try { const t = JSON.parse(store.get('trade') || '{}'); retur
 const saveTrade = () => store.set('trade', S.trade.out.length || S.trade.in.length ? JSON.stringify(S.trade) : null);
 const tradeLines = (side) => S.trade[side].map((l) => ({ ...l, c: S.byId.get(l.id) })).filter((l) => l.c);
 const tradeTotal = (side) => tradeLines(side).reduce((n, l) => n + l.n * (l.c.price || 0), 0);
+// Net quantity change per card: Out subtracts, In adds (a card on both sides nets out).
+function tradeChanges() {
+  const net = new Map();
+  for (const l of tradeLines('out')) net.set(l.c, (net.get(l.c) || 0) - l.n);
+  for (const l of tradeLines('in')) net.set(l.c, (net.get(l.c) || 0) + l.n);
+  return [...net].map(([c, d]) => ({ c, before: c.qty, after: Math.max(0, Math.min(999, c.qty + d)) })).filter((x) => x.after !== x.before);
+}
 // Cards usually change hands at 80-85% of their listed price.
 S.tradePct = Number(store.get('trade-pct')) || 85;
 
@@ -1405,7 +1412,9 @@ function renderTrade(main) {
         <label class="muted small">At <input id="trade-pct" type="number" inputmode="decimal" min="1" max="100" step="1" value="${S.tradePct}" aria-label="Percent of price"> %</label>
         <div class="big" id="trade-pct-diff">${signed(diff * S.tradePct / 100)}</div>
         <div class="small muted" id="trade-pct-sides">Out ${money(out * S.tradePct / 100)} · In ${money(got * S.tradePct / 100)}</div></div>
-      ${n('out') || n('in') ? '<button class="btn" id="trade-clear" type="button">Clear trade</button>' : ''}`;
+      ${n('out') || n('in') ? `<div class="trade-actions">
+        <button class="btn" id="trade-clear" type="button">Clear trade</button>
+        <button class="btn primary" id="trade-complete" type="button">${S.canEdit ? 'Complete trade' : 'Sign in to complete'}</button></div>` : ''}`;
     $('#trade-pct', main).onchange = (e) => {
       const v = Number(e.target.value);
       if (v > 0 && v <= 100) { S.tradePct = v; store.set('trade-pct', String(v)); }
@@ -1417,6 +1426,34 @@ function renderTrade(main) {
       S.trade = { out: [], in: [] }; saveTrade(); showAll();
       toast('Trade cleared.', { label: 'Undo', run: () => { S.trade = before; saveTrade(); if (S.view === 'trade') render(); } });
     };
+    const complete = $('#trade-complete', main);
+    if (complete) complete.onclick = () => (S.canEdit ? confirmTrade() : openAccount());
+  };
+  const confirmTrade = () => {
+    const changes = tradeChanges();
+    const d = $('#trade-dialog');
+    const sign = (x) => (x.after > x.before ? '+' : '−') + Math.abs(x.after - x.before);
+    d.innerHTML = `<form method="dialog">
+      <h2>Complete trade?</h2>
+      <p>${changes.length ? `This updates ${count(changes.length)} ${changes.length === 1 ? 'card' : 'cards'} in your inventory, then clears the trade.` : 'Nothing to change: the two sides cancel out. The trade will be cleared.'}</p>
+      ${changes.length ? `<ul class="trade-confirm">${changes.map((x) => `<li><span>${esc(x.c.name)}<span class="muted small"> · ${esc(x.c.set)}${x.c.cardId ? ' · ' + esc(x.c.cardId) : ''}${kind(x.c) === 'alt' ? ' · Alt' : ''}</span></span>
+        <span class="trade-confirm-qty">${x.before} → ${x.after} <span class="${x.after > x.before ? 'up' : 'down'}">${sign(x)}</span></span></li>`).join('')}</ul>` : ''}
+      <div class="dialog-actions"><span class="spacer"></span>
+        <button class="btn" value="cancel">Cancel</button>
+        <button class="btn primary" value="complete">Complete trade</button></div></form>`;
+    d.onclose = () => {
+      if (d.returnValue !== 'complete') return;
+      const trade = S.trade;
+      for (const x of changes) setQty(x.c, x.after);
+      S.trade = { out: [], in: [] }; saveTrade();
+      if (S.view === 'trade') render();
+      toast(changes.length ? `Trade complete. Updated ${count(changes.length)} ${changes.length === 1 ? 'card' : 'cards'}.` : 'Trade cleared.', {
+        label: 'Undo',
+        run: () => { for (const x of changes) setQty(x.c, x.before); S.trade = trade; saveTrade(); if (S.view === 'trade') render(); },
+      });
+    };
+    d.returnValue = '';
+    d.showModal();
   };
   const showLines = (side) => {
     const lines = tradeLines(side);
