@@ -4,7 +4,7 @@
 {"id":"Starter Decks:214","productId":502983,"cardId":"","name":"Ultra Deck: The Three Captains Display","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:215","productId":502984,"cardId":"","name":"Ultra Deck: The Three Captains Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:216","productId":525044,"cardId":"ST10-001","name":"Trafalgar Law (001)","rarity":"L","alt":false,"target":4,"qty":2,"price":7.44},
-{"id":"Starter Decks:217","productId":525045,"cardId":"ST10-002","name":"Monkey.D.Luffy (002)","rarity":"L","alt":false,"target":4,"qty":2,"price":16},
+{"id":"Starter Decks:217","productId":525045,"cardId":"ST10-002","name":"Monkey.D.Luffy (002)","rarity":"L","alt":false,"target":4,"qty":2,"price":17.62},
 {"id":"Starter Decks:218","productId":525046,"cardId":"ST10-003","name":"Eustass\"Captain\"Kid (003)","rarity":"L","alt":false,"target":4,"qty":2,"price":1.6},
 {"id":"Starter Decks:219","productId":525047,"cardId":"ST10-004","name":"Sanji","rarity":"C","alt":false,"target":4,"qty":8,"price":0.15},
 {"id":"Starter Decks:220","productId":525048,"cardId":"ST10-005","name":"Jinbe","rarity":"C","alt":false,"target":4,"qty":8,"price":0.07},
@@ -19,5 +19,5 @@
 {"id":"Starter Decks:229","productId":525058,"cardId":"ST10-014","name":"Wire","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},
 {"id":"Starter Decks:230","productId":525059,"cardId":"ST10-015","name":"Gum-Gum Giant Sumo Slap","rarity":"C","alt":false,"target":4,"qty":8,"price":0.44},
 {"id":"Starter Decks:231","productId":525061,"cardId":"ST10-016","name":"Gum-Gum Kong Gatling","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09},
-{"id":"Starter Decks:232","productId":525064,"cardId":"ST10-017","name":"Punk Vise","rarity":"C","alt":false,"target":4,"qty":8,"price":0.09}
+{"id":"Starter Decks:232","productId":525064,"cardId":"ST10-017","name":"Punk Vise","rarity":"C","alt":false,"target":4,"qty":8,"price":0.1}
 ]

@@ -6,7 +6,7 @@
 {"id":"OP13-PR:9","productId":661373,"cardId":"OP13-008","name":"Emporio.Ivankov","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
 {"id":"OP13-PR:10","productId":661374,"cardId":"OP13-009","name":"Curly.Dadan","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"OP13-PR:11","productId":661375,"cardId":"OP13-010","name":"Lord of the Coast","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
-{"id":"OP13-PR:12","productId":661418,"cardId":"OP13-011","name":"Nefeltari Cobra","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.72},
+{"id":"OP13-PR:12","productId":661418,"cardId":"OP13-011","name":"Nefeltari Cobra","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.73},
 {"id":"OP13-PR:13","productId":661376,"cardId":"OP13-013","name":"Higuma","rarity":"C","alt":false,"target":4,"qty":0,"price":0.14},
 {"id":"OP13-PR:14","productId":661377,"cardId":"OP13-014","name":"Portgas.D.Rouge","rarity":"C","alt":false,"target":4,"qty":0,"price":1.24},
 {"id":"OP13-PR:15","productId":661419,"cardId":"OP13-015","name":"Makino","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.99},
@@ -54,11 +54,11 @@
 {"id":"OP13-PR:57","productId":661402,"cardId":"OP13-078","name":"Oro Jackson","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP13-PR:58","productId":661403,"cardId":"OP13-081","name":"Koala","rarity":"C","alt":false,"target":4,"qty":0,"price":0.38},
 {"id":"OP13-PR:59","productId":661404,"cardId":"OP13-085","name":"Saint Jalmac","rarity":"C","alt":false,"target":4,"qty":0,"price":0.04},
-{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.99},
+{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":3},
 {"id":"OP13-PR:61","productId":661438,"cardId":"OP13-087","name":"Saint Charlos","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.2},
 {"id":"OP13-PR:62","productId":661439,"cardId":"OP13-088","name":"Terry Gilteo","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.6},
 {"id":"OP13-PR:63","productId":661440,"cardId":"OP13-090","name":"Hack","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.62},
-{"id":"OP13-PR:64","productId":661405,"cardId":"OP13-092","name":"Saint Mjosgard","rarity":"C","alt":false,"target":4,"qty":0,"price":1.98},
+{"id":"OP13-PR:64","productId":661405,"cardId":"OP13-092","name":"Saint Mjosgard","rarity":"C","alt":false,"target":4,"qty":0,"price":1.94},
 {"id":"OP13-PR:65","productId":661406,"cardId":"OP13-093","name":"Morgans","rarity":"C","alt":false,"target":4,"qty":1,"price":0.99},
 {"id":"OP13-PR:66","productId":661407,"cardId":"OP13-094","name":"York","rarity":"C","alt":false,"target":4,"qty":0,"price":0.35},
 {"id":"OP13-PR:67","productId":661408,"cardId":"OP13-095","name":"Saint Rosward","rarity":"C","alt":false,"target":4,"qty":0,"price":0.85},
@@ -79,5 +79,5 @@
 {"id":"OP13-PR:82","productId":661882,"cardId":"ST01-012","name":"Monkey.D.Luffy - ST01-012 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"SR","alt":false,"target":4,"qty":2,"price":11.51},
 {"id":"OP13-PR:83","productId":657797,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament 3 Brothers Pack","rarity":"","alt":false,"target":1,"qty":0,"price":19.25},
 {"id":"OP13-PR:84","productId":657796,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5},
-{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.9}
+{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.89}
 ]
