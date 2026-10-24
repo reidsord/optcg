@@ -32,7 +32,7 @@
 {"id":"https://en.onepiece-cardgame.com/events/treasure-cup-dec-2026.html","name":"Treasure Cup December 2026","lines":[]}
 ],
 "stores":[
-{"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":["Delta Reign Mage's Prerelease 3","Delta Reign Mage's Prerelease 4"]},
+{"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":["Delta Reign Mage's Prerelease 4"]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
 {"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
