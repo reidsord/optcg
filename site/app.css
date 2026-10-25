@@ -361,7 +361,12 @@ select.select { padding: 6px 30px 6px 12px; min-height: 36px; appearance: none; 
 /* Trade window */
 .trade-summary { display: flex; gap: 12px 28px; align-items: center; flex-wrap: wrap; }
 .trade-summary .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 2px 0 0; }
-.trade-summary .btn { margin-left: auto; }
+.trade-actions { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.trade-confirm { list-style: none; padding: 0; margin: 12px 0; max-height: 50vh; overflow-y: auto; border-top: 1px solid var(--line); }
+.trade-confirm li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); color: var(--text); font-size: 14px; }
+.trade-confirm-qty { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+.trade-confirm .up { color: var(--accent); }
+.trade-confirm .down { color: var(--warn); }
 .trade-diff.up .big, .trade-diff.up .small { color: var(--accent); }
 .trade-diff.down .big, .trade-diff.down .small { color: var(--warn); }
 .trade-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
