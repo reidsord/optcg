@@ -18,7 +18,6 @@ on:
 
 permissions:
   contents: write
-  issues: write
 
 concurrency:
   group: alerts
@@ -43,7 +42,7 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           DISCORD_GUILD_ID: ${{ secrets.DISCORD_GUILD_ID }}
-        run: python3 scripts/update_events.py --notify "$RUNNER_TEMP/alert.md" --discord "$RUNNER_TEMP/discord.jsonl"
+        run: python3 scripts/update_events.py --discord "$RUNNER_TEMP/discord.jsonl"
 
       - name: Build a Discord test message
         if: inputs.test
@@ -67,16 +66,6 @@ jobs:
             sleep $((i * 5))
           done
           exit 1
-
-      - name: Open an issue for anything new
-        if: github.event_name != 'pull_request' && !inputs.test
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          f="$RUNNER_TEMP/alert.md"
-          [ -s "$f" ] || exit 0
-          gh label create alert --color D93F0B --description "New tournaments and drops" --force
-          gh issue create --title "$(head -n 1 "$f")" --body "$(tail -n +2 "$f")" --label alert
 
       - name: Post to Discord
         if: github.event_name != 'pull_request'

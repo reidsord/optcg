@@ -25,6 +25,8 @@ UNREADABLE = ("facebook.com", "fb.com", "instagram.com", "x.com", "twitter.com",
 MAX_SNIPPETS = 12
 # Store search pages mix in other games and search boilerplate; skip those lines.
 OTHER_GAMES = re.compile(r"pok[eé]mon|swsh|\bsv\d|magic|mtg|lorcana|yu-?gi-?oh|digimon|flesh and blood|star wars|gundam|dragon ball|weiss|union arena|sorcery|altered|riftbound", re.I)
+# Store pages mix many games, so a prerelease line only counts when it names One Piece or a One Piece set code.
+ONE_PIECE = re.compile(r"one ?piece|optcg|\b(?:OP|EB|ST|PRB)-?\d{2}\b", re.I)
 BOILERPLATE = re.compile(r"results? (found )?for|search results|^search:", re.I)
 
 
@@ -293,7 +295,7 @@ def read_store(store, fetch):
     for text in texts:
         for m in PRERELEASE.finditer(text):
             s = re.sub(r"\s+", " ", m.group(0)).strip()
-            if len(s) > 15 and not OTHER_GAMES.search(s) and not BOILERPLATE.search(s):
+            if len(s) > 15 and ONE_PIECE.search(s) and not OTHER_GAMES.search(s) and not BOILERPLATE.search(s):
                 snippets.append(s[:300])
     return list(dict.fromkeys(snippets))[:MAX_SNIPPETS]
 
@@ -315,7 +317,7 @@ def watch_stores(events, old, fetch):
         for store, snippets, err in pool.map(check, stores.values()):
             prev = old.get(store["id"]) or {}
             if snippets is None:
-                rows[store["id"]] = {**store, "snippets": prev.get("snippets") or [], "error": err}
+                rows[store["id"]] = {**store, "snippets": [x for x in prev.get("snippets") or [] if ONE_PIECE.search(x)], "error": err}
                 continue
             rows[store["id"]] = {**store, "snippets": snippets}
             fresh = [s for s in snippets if s not in (prev.get("snippets") or [])]
