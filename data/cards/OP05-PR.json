@@ -1,5 +1,5 @@
 [
-{"id":"OP05-PR:5","productId":530887,"cardId":"OP05-003","name":"Inazuma","rarity":"UC","alt":false,"target":4,"qty":0,"price":14.2},
+{"id":"OP05-PR:5","productId":530887,"cardId":"OP05-003","name":"Inazuma","rarity":"UC","alt":false,"target":4,"qty":0,"price":15},
 {"id":"OP05-PR:6","productId":530889,"cardId":"OP05-004","name":"Emporio.Ivankov","rarity":"UC","alt":false,"target":4,"qty":0,"price":38484.4},
 {"id":"OP05-PR:7","productId":530890,"cardId":"OP05-008","name":"Chaka","rarity":"UC","alt":false,"target":4,"qty":0,"price":9},
 {"id":"OP05-PR:8","productId":530891,"cardId":"OP05-009","name":"Toh-Toh","rarity":"C","alt":false,"target":4,"qty":0,"price":1.6},
@@ -71,7 +71,7 @@
 {"id":"OP05-PR:74","productId":530958,"cardId":"OP05-111","name":"Hotori","rarity":"UC","alt":false,"target":4,"qty":0,"price":10},
 {"id":"OP05-PR:75","productId":530959,"cardId":"OP05-112","name":"Captain McKinley","rarity":"C","alt":false,"target":4,"qty":0,"price":3.44},
 {"id":"OP05-PR:76","productId":530960,"cardId":"OP05-113","name":"Yama","rarity":"C","alt":false,"target":4,"qty":0,"price":1},
-{"id":"OP05-PR:77","productId":530961,"cardId":"OP05-114","name":"El Thor","rarity":"UC","alt":false,"target":4,"qty":0,"price":10.75},
+{"id":"OP05-PR:77","productId":530961,"cardId":"OP05-114","name":"El Thor","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.62},
 {"id":"OP05-PR:78","productId":530962,"cardId":"OP05-116","name":"Hino Bird Zap","rarity":"C","alt":false,"target":4,"qty":0,"price":13.04},
 {"id":"OP05-PR:79","productId":530963,"cardId":"OP05-117","name":"Upper Yard","rarity":"UC","alt":false,"target":4,"qty":0,"price":8.69},
 {"id":"OP05-PR:80","productId":520771,"cardId":"","name":"Awakening of the New Era - 1st Anniversary Tournament Pack","rarity":"","alt":false,"target":1,"qty":0,"price":89.98}

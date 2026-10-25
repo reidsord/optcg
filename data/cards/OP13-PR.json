@@ -1,5 +1,5 @@
 [
-{"id":"OP13-PR:5","productId":661881,"cardId":"OP07-053","name":"Portgas.D.Ace - OP07-053 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"R","alt":false,"target":4,"qty":0,"price":3.5},
+{"id":"OP13-PR:5","productId":661881,"cardId":"OP07-053","name":"Portgas.D.Ace - OP07-053 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"R","alt":false,"target":4,"qty":0,"price":3.51},
 {"id":"OP13-PR:6","productId":661880,"cardId":"OP09-027","name":"Sabo - OP09-027 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"UC","alt":false,"target":4,"qty":0,"price":2},
 {"id":"OP13-PR:7","productId":661417,"cardId":"OP13-005","name":"Inazuma","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.25},
 {"id":"OP13-PR:8","productId":661372,"cardId":"OP13-006","name":"Woop Slap","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
@@ -21,7 +21,7 @@
 {"id":"OP13-PR:24","productId":661423,"cardId":"OP13-030","name":"Tony Tony.Chopper","rarity":"UC","alt":false,"target":4,"qty":0,"price":25},
 {"id":"OP13-PR:25","productId":661424,"cardId":"OP13-032","name":"Nico Robin","rarity":"UC","alt":false,"target":4,"qty":0,"price":23.96},
 {"id":"OP13-PR:26","productId":661383,"cardId":"OP13-033","name":"Franky","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
-{"id":"OP13-PR:27","productId":661384,"cardId":"OP13-034","name":"Brook","rarity":"C","alt":false,"target":4,"qty":1,"price":0.56},
+{"id":"OP13-PR:27","productId":661384,"cardId":"OP13-034","name":"Brook","rarity":"C","alt":false,"target":4,"qty":1,"price":0.99},
 {"id":"OP13-PR:28","productId":661385,"cardId":"OP13-035","name":"Bepo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.68},
 {"id":"OP13-PR:29","productId":661425,"cardId":"OP13-036","name":"Helmeppo","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"OP13-PR:30","productId":661426,"cardId":"OP13-038","name":"Gum-Gum Elephant Gun","rarity":"UC","alt":false,"target":4,"qty":2,"price":0.2},
@@ -54,7 +54,7 @@
 {"id":"OP13-PR:57","productId":661402,"cardId":"OP13-078","name":"Oro Jackson","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP13-PR:58","productId":661403,"cardId":"OP13-081","name":"Koala","rarity":"C","alt":false,"target":4,"qty":0,"price":0.38},
 {"id":"OP13-PR:59","productId":661404,"cardId":"OP13-085","name":"Saint Jalmac","rarity":"C","alt":false,"target":4,"qty":0,"price":0.04},
-{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":3},
+{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.83},
 {"id":"OP13-PR:61","productId":661438,"cardId":"OP13-087","name":"Saint Charlos","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.2},
 {"id":"OP13-PR:62","productId":661439,"cardId":"OP13-088","name":"Terry Gilteo","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.6},
 {"id":"OP13-PR:63","productId":661440,"cardId":"OP13-090","name":"Hack","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.62},
@@ -77,7 +77,7 @@
 {"id":"OP13-PR:80","productId":661416,"cardId":"OP13-115","name":"Paper Art Afterimage","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP13-PR:81","productId":661446,"cardId":"OP13-116","name":"The One Who Is the Most Free Is the Pirate King!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":9.98},
 {"id":"OP13-PR:82","productId":661882,"cardId":"ST01-012","name":"Monkey.D.Luffy - ST01-012 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"SR","alt":false,"target":4,"qty":2,"price":11.51},
-{"id":"OP13-PR:83","productId":657797,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament 3 Brothers Pack","rarity":"","alt":false,"target":1,"qty":0,"price":19.25},
+{"id":"OP13-PR:83","productId":657797,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament 3 Brothers Pack","rarity":"","alt":false,"target":1,"qty":0,"price":19.24},
 {"id":"OP13-PR:84","productId":657796,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5},
-{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.89}
+{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.95}
 ]
