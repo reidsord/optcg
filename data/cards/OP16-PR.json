@@ -11,7 +11,7 @@
 {"id":"OP16-PR:14","productId":696718,"cardId":"OP16-016","name":"Ramba","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
 {"id":"OP16-PR:15","productId":696719,"cardId":"OP16-018","name":"Rockstar","rarity":"C","alt":false,"target":4,"qty":0,"price":0.4},
 {"id":"OP16-PR:16","productId":696720,"cardId":"OP16-019","name":"Let's Show 'Em What We're Made Of!!","rarity":"C","alt":false,"target":4,"qty":1,"price":0.24},
-{"id":"OP16-PR:17","productId":696775,"cardId":"OP16-020","name":"If You're Coming with Me...Kiss Your Lives Goodbye!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.27},
+{"id":"OP16-PR:17","productId":696775,"cardId":"OP16-020","name":"If You're Coming with Me...Kiss Your Lives Goodbye!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":14.99},
 {"id":"OP16-PR:18","productId":696721,"cardId":"OP16-023","name":"Arlong","rarity":"C","alt":false,"target":4,"qty":0,"price":0.14},
 {"id":"OP16-PR:19","productId":696776,"cardId":"OP16-024","name":"Inazuma","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.4},
 {"id":"OP16-PR:20","productId":696777,"cardId":"OP16-025","name":"Bunkov","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.49},
@@ -22,11 +22,11 @@
 {"id":"OP16-PR:25","productId":696724,"cardId":"OP16-035","name":"Roronoa Zoro (035)","rarity":"C","alt":false,"target":4,"qty":1,"price":2.5},
 {"id":"OP16-PR:26","productId":696725,"cardId":"OP16-036","name":"Mr.2.Bon.Kurei(Bentham) (036)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.4},
 {"id":"OP16-PR:27","productId":696726,"cardId":"OP16-037","name":"Mr.3(Galdino) (037)","rarity":"C","alt":false,"target":4,"qty":1,"price":0.24},
-{"id":"OP16-PR:28","productId":696727,"cardId":"OP16-039","name":"Gum-Gum Twin Jet Pistol","rarity":"C","alt":false,"target":4,"qty":0,"price":1.8},
+{"id":"OP16-PR:28","productId":696727,"cardId":"OP16-039","name":"Gum-Gum Twin Jet Pistol","rarity":"C","alt":false,"target":4,"qty":0,"price":2.5},
 {"id":"OP16-PR:29","productId":696780,"cardId":"OP16-040","name":"Gum-Gum Hammer Rifle","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.54},
 {"id":"OP16-PR:30","productId":696781,"cardId":"OP16-043","name":"Usopp","rarity":"UC","alt":false,"target":4,"qty":0,"price":3},
 {"id":"OP16-PR:31","productId":696728,"cardId":"OP16-044","name":"Emporio.Ivankov (044)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.39},
-{"id":"OP16-PR:32","productId":696783,"cardId":"OP16-045","name":"Crocodile","rarity":"UC","alt":false,"target":4,"qty":0,"price":13.47},
+{"id":"OP16-PR:32","productId":696783,"cardId":"OP16-045","name":"Crocodile","rarity":"UC","alt":false,"target":4,"qty":0,"price":13},
 {"id":"OP16-PR:33","productId":696729,"cardId":"OP16-046","name":"Jinbe (046)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
 {"id":"OP16-PR:34","productId":696730,"cardId":"OP16-047","name":"Donquixote Doflamingo (047)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.35},
 {"id":"OP16-PR:35","productId":696731,"cardId":"OP16-049","name":"Portgas.D.Ace (049)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
@@ -63,7 +63,7 @@
 {"id":"OP16-PR:66","productId":696796,"cardId":"OP16-099","name":"I've Come Here... To Cut Those Chains!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":8.93},
 {"id":"OP16-PR:67","productId":696761,"cardId":"OP16-100","name":"Hallowed Glacier Slash","rarity":"C","alt":false,"target":4,"qty":0,"price":0.18},
 {"id":"OP16-PR:68","productId":696762,"cardId":"OP16-101","name":"Mahoroba","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"OP16-PR:69","productId":696797,"cardId":"OP16-102","name":"Avalo Pizarro","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.57},
+{"id":"OP16-PR:69","productId":696797,"cardId":"OP16-102","name":"Avalo Pizarro","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.52},
 {"id":"OP16-PR:70","productId":696798,"cardId":"OP16-103","name":"Van Augur","rarity":"UC","alt":false,"target":4,"qty":0,"price":4.8},
 {"id":"OP16-PR:71","productId":696763,"cardId":"OP16-105","name":"Gecko Moria","rarity":"C","alt":false,"target":4,"qty":0,"price":0.4},
 {"id":"OP16-PR:72","productId":696765,"cardId":"OP16-107","name":"Jesus Burgess","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
@@ -74,5 +74,5 @@
 {"id":"OP16-PR:77","productId":696769,"cardId":"OP16-114","name":"Laffitte","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"OP16-PR:78","productId":696801,"cardId":"OP16-115","name":"Black Vortex","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.69},
 {"id":"OP16-PR:79","productId":696770,"cardId":"OP16-117","name":"Black Hole","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"OP16-PR:80","productId":697491,"cardId":"","name":"The Time of Battle - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.5}
+{"id":"OP16-PR:80","productId":697491,"cardId":"","name":"The Time of Battle - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":4.99}
 ]
