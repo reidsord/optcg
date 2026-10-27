@@ -5,8 +5,8 @@
 {"id":"tcg:23907:602793","productId":602793,"cardId":"OP01-005","name":"Uta","rarity":"R","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"tcg:23907:602794","productId":602794,"cardId":"OP01-011","name":"Gordon","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.21},
 {"id":"tcg:23907:602795","productId":602795,"cardId":"OP01-013","name":"Sanji","rarity":"R","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"tcg:23907:602796","productId":602796,"cardId":"OP01-016","name":"Nami","rarity":"R","alt":false,"target":4,"qty":0,"price":1.5},
-{"id":"tcg:23907:602797","productId":602797,"cardId":"OP01-021","name":"Franky (021)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.44},
+{"id":"tcg:23907:602796","productId":602796,"cardId":"OP01-016","name":"Nami","rarity":"R","alt":false,"target":4,"qty":0,"price":1.49},
+{"id":"tcg:23907:602797","productId":602797,"cardId":"OP01-021","name":"Franky (021)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.45},
 {"id":"tcg:23907:602798","productId":602798,"cardId":"OP02-015","name":"Makino","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.4},
 {"id":"tcg:23907:602799","productId":602799,"cardId":"ST01-005","name":"Jinbe","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
 {"id":"tcg:23907:602800","productId":602800,"cardId":"ST01-006","name":"Tony Tony.Chopper (006)","rarity":"C","alt":false,"target":4,"qty":0,"price":1.25},
@@ -17,12 +17,12 @@
 {"id":"tcg:23907:602805","productId":602805,"cardId":"ST01-017","name":"Thousand Sunny","rarity":"C","alt":false,"target":4,"qty":0,"price":1.2},
 {"id":"tcg:23907:602806","productId":602806,"cardId":"OP01-003","name":"Monkey.D.Luffy (003)","rarity":"L","alt":false,"target":4,"qty":0,"price":2.92},
 {"id":"tcg:23907:602807","productId":602807,"cardId":"OP01-012","name":"Sai","rarity":"C","alt":false,"target":4,"qty":0,"price":0.05},
-{"id":"tcg:23907:602808","productId":602808,"cardId":"OP01-015","name":"Tony Tony.Chopper (015)","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.11},
+{"id":"tcg:23907:602808","productId":602808,"cardId":"OP01-015","name":"Tony Tony.Chopper (015)","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.1},
 {"id":"tcg:23907:602809","productId":602809,"cardId":"OP01-029","name":"Radical Beam!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.58},
 {"id":"tcg:23907:602810","productId":602810,"cardId":"OP01-008","name":"Cavendish","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
 {"id":"tcg:23907:602811","productId":602811,"cardId":"OP01-019","name":"Bartolomeo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.09},
 {"id":"tcg:23907:602812","productId":602812,"cardId":"ST01-010","name":"Franky (010)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.1},
 {"id":"tcg:23907:672598","productId":672598,"cardId":"","name":"DON!! Card","rarity":"DON!!","alt":false,"target":10,"qty":0,"price":0.03},
-{"id":"tcg:23907:705727","productId":705727,"cardId":"P-080","name":"Monkey.D.Luffy - P-080","rarity":"PR","alt":false,"target":4,"qty":0,"price":32.99},
-{"id":"tcg:23907:705728","productId":705728,"cardId":"P-022","name":"Monkey.D.Luffy - P-022","rarity":"PR","alt":false,"target":4,"qty":0,"price":5.25}
+{"id":"tcg:23907:705727","productId":705727,"cardId":"P-080","name":"Monkey.D.Luffy - P-080","rarity":"PR","alt":false,"target":4,"qty":0,"price":32.71},
+{"id":"tcg:23907:705728","productId":705728,"cardId":"P-022","name":"Monkey.D.Luffy - P-022","rarity":"PR","alt":false,"target":4,"qty":0,"price":5.13}
 ]
