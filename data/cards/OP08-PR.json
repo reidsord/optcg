@@ -24,7 +24,7 @@
 {"id":"OP08-PR:27","productId":575928,"cardId":"OP08-035","name":"BB","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP08-PR:28","productId":576461,"cardId":"OP08-037","name":"Garchu","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.57},
 {"id":"OP08-PR:29","productId":575929,"cardId":"OP08-038","name":"We Would Never Sell a Comrade to an Enemy!!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.21},
-{"id":"OP08-PR:30","productId":576462,"cardId":"OP08-040","name":"Atmos","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.96},
+{"id":"OP08-PR:30","productId":576462,"cardId":"OP08-040","name":"Atmos","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.95},
 {"id":"OP08-PR:31","productId":575930,"cardId":"OP08-041","name":"Aphelandra","rarity":"C","alt":false,"target":4,"qty":0,"price":1.88},
 {"id":"OP08-PR:32","productId":576463,"cardId":"OP08-042","name":"Edward Weevil","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.86},
 {"id":"OP08-PR:33","productId":576464,"cardId":"OP08-044","name":"Kingdew","rarity":"UC","alt":false,"target":4,"qty":0,"price":3.64},
@@ -32,7 +32,7 @@
 {"id":"OP08-PR:35","productId":575931,"cardId":"OP08-048","name":"Sweetpea","rarity":"C","alt":false,"target":4,"qty":1,"price":0.17},
 {"id":"OP08-PR:36","productId":575932,"cardId":"OP08-049","name":"Speed Jil","rarity":"C","alt":false,"target":4,"qty":0,"price":0.3},
 {"id":"OP08-PR:37","productId":575933,"cardId":"OP08-050","name":"Namule","rarity":"C","alt":false,"target":4,"qty":0,"price":4.27},
-{"id":"OP08-PR:38","productId":575934,"cardId":"OP08-051","name":"Buckin","rarity":"C","alt":false,"target":4,"qty":0,"price":13.13},
+{"id":"OP08-PR:38","productId":575934,"cardId":"OP08-051","name":"Buckin","rarity":"C","alt":false,"target":4,"qty":0,"price":12.46},
 {"id":"OP08-PR:39","productId":575935,"cardId":"OP08-054","name":"You Can't Take Our King This Early in the Game.","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
 {"id":"OP08-PR:40","productId":576466,"cardId":"OP08-055","name":"Phoenix Brand","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.43},
 {"id":"OP08-PR:41","productId":575936,"cardId":"OP08-056","name":"Moby Dick","rarity":"C","alt":false,"target":4,"qty":0,"price":0.37},
@@ -74,5 +74,5 @@
 {"id":"OP08-PR:77","productId":576450,"cardId":"OP08-113","name":"S-Bear","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP08-PR:78","productId":576451,"cardId":"OP08-116","name":"Burn Bazooka","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP08-PR:79","productId":576481,"cardId":"OP08-117","name":"Burn Blade","rarity":"UC","alt":false,"target":4,"qty":1,"price":5},
-{"id":"OP08-PR:80","productId":577144,"cardId":"","name":"Two Legends - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":4.99}
+{"id":"OP08-PR:80","productId":577144,"cardId":"","name":"Two Legends - Pre-Release Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.23}
 ]

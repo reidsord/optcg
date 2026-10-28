@@ -12,7 +12,7 @@
 {"id":"tcg:24708:716653","productId":716653,"cardId":"OP05-113","name":"Yama (Luffy Deck)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
 {"id":"tcg:24708:716663","productId":716663,"cardId":"OP12-002","name":"Edward.Newgate (OP12-002) (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.13},
 {"id":"tcg:24708:716665","productId":716665,"cardId":"OP12-103","name":"Seto (Luffy Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.09},
-{"id":"tcg:24708:716666","productId":716666,"cardId":"OP16-002","name":"Izo (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.12},
+{"id":"tcg:24708:716666","productId":716666,"cardId":"OP16-002","name":"Izo (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.11},
 {"id":"tcg:24708:716667","productId":716667,"cardId":"OP16-016","name":"Ramba (Ace Deck)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.05},
 {"id":"tcg:24708:716668","productId":716668,"cardId":"OP16-014","name":"Marco (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.09},
 {"id":"tcg:24708:716669","productId":716669,"cardId":"OP15-109","name":"Nico Robin (Luffy Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.09},
@@ -29,6 +29,6 @@
 {"id":"tcg:24708:721563","productId":721563,"cardId":"OP16-007","name":"Jozu (Ace Deck)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.07},
 {"id":"tcg:24708:721564","productId":721564,"cardId":"OP16-017","name":"LittleOars Jr. (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.08},
 {"id":"tcg:24708:721565","productId":721565,"cardId":"OP16-011","name":"Vista (Ace Deck)","rarity":"R","alt":false,"target":4,"qty":0,"price":0.09},
-{"id":"p694893","productId":694893,"cardId":"","name":"Set Sail Deck Set","rarity":"","alt":null,"target":1,"qty":0,"price":16,"added":"2026-10-08"},
+{"id":"p694893","productId":694893,"cardId":"","name":"Set Sail Deck Set","rarity":"","alt":null,"target":1,"qty":0,"price":18.48,"added":"2026-10-08"},
 {"id":"p694894","productId":694894,"cardId":"","name":"Set Sail Deck Set Display","rarity":"","alt":null,"target":1,"qty":0,"price":99,"added":"2026-10-08"}
 ]
