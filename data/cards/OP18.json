@@ -27,7 +27,7 @@
 {"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.67,"added":"2026-10-08"},
 {"id":"p712909","productId":712909,"cardId":"","name":"Double Pack Set Vol. 13 Display","rarity":"","alt":null,"target":1,"qty":0,"price":495.91,"added":"2026-10-08"},
 {"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":339.99,"added":"2026-10-08"},
-{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3900,"added":"2026-10-08"},
+{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3849.68,"added":"2026-10-08"},
 {"id":"p712904","productId":712904,"cardId":"","name":"The Dominance of God Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":24,"added":"2026-10-08"},
 {"id":"p712903","productId":712903,"cardId":"","name":"The Dominance of God Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":39.99,"added":"2026-10-08"},
 {"id":"p723145","productId":723145,"cardId":"OP18-091","name":"Brogy","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99,"added":"2026-10-10"},
@@ -49,5 +49,6 @@
 {"id":"p725884","productId":725884,"cardId":"OP18-051","name":"Mr. 4 & Miss.Merry Christmas","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-27"},
 {"id":"p725885","productId":725885,"cardId":"OP18-070","name":"Tom","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-27"},
 {"id":"p725887","productId":725887,"cardId":"OP18-110","name":"Blueno","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-27"},
-{"id":"p726144","productId":726144,"cardId":"OP18-018","name":"Let's Go, Karoo!!","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-28"}
+{"id":"p726144","productId":726144,"cardId":"OP18-018","name":"Let's Go, Karoo!!","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-28"},
+{"id":"p726787","productId":726787,"cardId":"OP18-040","name":"Diable Jambe Flambe Shot","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-10-29"}
 ]
