@@ -573,13 +573,13 @@
   },
   {
     "id": "order:54",
-    "qty": 12,
+    "qty": 2,
     "set": "OP18",
     "store": "Bulldog",
     "order": "",
     "date": "",
-    "paid": 211.86,
-    "remaining": 1200.54,
+    "paid": 235.4,
+    "remaining": null,
     "note": ""
   },
   {
