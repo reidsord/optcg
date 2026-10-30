@@ -1,6 +1,6 @@
 {"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Other": {"series": 2, "hourET": 10.0, "leadDays": 7}},
 "sets":[
-{"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false,"alerted":["soon"]},
+{"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false,"alerted":["soon","today"]},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
 ],
 "series":[
@@ -45,7 +45,7 @@
 {"id":"shop.family-time-games.com","store":"Family Time Games","url":"https://shop.family-time-games.com/","miles":21.7,"snippets":[]},
 {"id":"booksnbrews.com","store":"Books & Brews","url":"http://www.booksnbrews.com","miles":21.8,"snippets":[]},
 {"id":"hotspotcollectiblesandtoys.com","store":"Hot Spot Collectibles and Toys","url":"https://www.hotspotcollectiblesandtoys.com/","miles":22.2,"snippets":[]},
-{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[]},
+{"id":"playtestlounge.com","store":"Play Test Lounge LLC","url":"https://www.playtestlounge.com","miles":23.8,"snippets":[],"error":"HTTP Error 403: Forbidden"},
 {"id":"nextlevelgamesmuncie.com","store":"NLG Carmel","url":"https://www.nextlevelgamesmuncie.com/carmel-events","miles":26.9,"snippets":[]},
 {"id":"indycollectorsemporium.com","store":"Collectors Emporium","url":"https://indycollectorsemporium.com/","miles":30.4,"snippets":[]}
 ]}
