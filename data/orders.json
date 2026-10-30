@@ -595,12 +595,12 @@
   },
   {
     "id": "order:56",
-    "qty": 12,
+    "qty": 1,
     "set": "EB05",
     "store": "Bulldog",
     "order": "#002118",
     "date": "2026-05-16",
-    "paid": 1412.4,
+    "paid": 120,
     "remaining": 0,
     "note": "paid"
   },
