@@ -1,7 +1,7 @@
 [
 {"id":"tcg:24820:712884","productId":712884,"cardId":"OP01-016","name":"Nami (OP01-016) (SP)","rarity":"R","alt":true,"target":1,"qty":0,"price":425.99},
 {"id":"tcg:24820:712885","productId":712885,"cardId":"EB05-016","name":"Nico Robin (016) (SP)","rarity":"SR","alt":true,"target":1,"qty":0,"price":400},
-{"id":"tcg:24820:712886","productId":712886,"cardId":"EB05-010","name":"Nico Robin (010)","rarity":"L","alt":false,"target":4,"qty":3,"price":0.02},
+{"id":"tcg:24820:712886","productId":712886,"cardId":"EB05-010","name":"Nico Robin (010)","rarity":"L","alt":false,"target":4,"qty":4,"price":0.02},
 {"id":"tcg:24820:712887","productId":712887,"cardId":"EB05-056","name":"Nico Olvia","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
 {"id":"tcg:24820:713205","productId":713205,"cardId":"EB05-042","name":"Shinobu","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
 {"id":"tcg:24820:713242","productId":713242,"cardId":"EB05-036","name":"Tsuru","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
