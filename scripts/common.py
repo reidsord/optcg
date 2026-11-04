@@ -12,7 +12,7 @@ CARD_FIELDS = ["id", "productId", "cardId", "name", "rarity", "alt", "target", "
 
 ALT_PATTERN = re.compile(
     r"\((?:[^)]*\b(?:Alternate Art|Parallel|SP|Manga|Textured Foil|Dash Pack|Box Topper|"
-    r"Wanted Poster|TR|Pandaman Art|Full Art|Gold|Silver)\b[^)]*)\)"
+    r"Wanted Poster|TR|Pandaman Art|Full Art|Gold|Silver|Heroine Leader)\b[^)]*)\)"
 )
 
 
