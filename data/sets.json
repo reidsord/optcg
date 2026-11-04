@@ -540,7 +540,12 @@
     "name": "The Dominance of God",
     "groupId": 24833,
     "file": "OP18.json",
-    "color": "#8c4a53"
+    "color": "#8c4a53",
+    "groupIds": [
+      24833,
+      24820
+    ],
+    "cardPrefix": "OP18-"
   },
   {
     "code": "SD01",
