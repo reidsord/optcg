@@ -60,6 +60,15 @@ const series = (code) => { const i = SERIES.indexOf(code.match(/^[A-Z]+/)?.[0]);
 const setOrder = (a, b) =>
   GROUP_ORDER.indexOf(setGroup(a.code)) - GROUP_ORDER.indexOf(setGroup(b.code)) ||
   series(b.code) - series(a.code) || a.code.localeCompare(b.code, 'en', { numeric: true });
+// Cards within a set, in card number order: the set's own numbers first (EB05-001, EB05-002, ...), then reprints
+// from other sets, then sealed product. A card's base print comes before its alts. New cards from the daily job
+// are appended to the file as TCGplayer lists them, so the file order alone is not reliable.
+const ownPrefix = (s) => s.cardPrefix || `${s.code.replace(/-(PR|RP)$/, '').replace('-', '')}-`;
+const cardOrder = (s) => {
+  const own = ownPrefix(s);
+  const rank = (c) => (!c.cardId ? 2 : c.cardId.startsWith(own) ? 0 : 1);
+  return (a, b) => rank(a) - rank(b) || (a.cardId || '').localeCompare(b.cardId || '', 'en', { numeric: true }) || !!a.alt - !!b.alt;
+};
 // Small sets the set picker shows as one item.
 const BUNDLES = [{ code: 'ST-SPR', name: 'Super Pre-Release Starter Decks (ST-01 to ST-04)', group: 'Starter decks', test: (code) => /^ST-\d+-PR$/.test(code) }];
 const bundleOf = (code) => BUNDLES.find((b) => b.test(code));
@@ -281,7 +290,7 @@ async function load() {
   S.sets = sets;
   S.setByCode = new Map(sets.map((s, i) => [s.code, { ...s, index: i }]));
   S.cards = [];
-  sets.forEach((s, i) => files[i].forEach((c) => S.cards.push({ ...c, set: s.code, setIndex: i, file: s.file })));
+  sets.forEach((s, i) => files[i].sort(cardOrder(s)).forEach((c) => S.cards.push({ ...c, set: s.code, setIndex: i, file: s.file })));
   S.byId = new Map(S.cards.map((c) => [c.id, c]));
   S.orders = orders;
   S.notes = notes.text || '';
