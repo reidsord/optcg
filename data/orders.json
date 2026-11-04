@@ -588,8 +588,8 @@
     "set": "OP18",
     "store": "Elf n Moon",
     "order": "",
-    "date": "",
-    "paid": null,
+    "date": "2026-08-22",
+    "paid": 250.36,
     "remaining": null,
     "note": ""
   },
