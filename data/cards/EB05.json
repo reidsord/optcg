@@ -41,7 +41,7 @@
 {"id":"tcg:24820:719549","productId":719549,"cardId":"EB05-060","name":"Take Care of Lilith!!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01},
 {"id":"tcg:24820:719768","productId":719768,"cardId":"EB05-048","name":"Hedgehog Stinger","rarity":"R","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"tcg:24820:721353","productId":721353,"cardId":"EB05-031","name":"Vinsmoke Reiju","rarity":"R","alt":false,"target":4,"qty":4,"price":0.1},
-{"id":"tcg:24820:721355","productId":721355,"cardId":"EB05-043","name":"Perona","rarity":"R","alt":false,"target":4,"qty":0,"price":0.05},
+{"id":"tcg:24820:721355","productId":721355,"cardId":"EB05-043","name":"Perona","rarity":"R","alt":false,"target":4,"qty":3,"price":0.05},
 {"id":"tcg:24820:721358","productId":721358,"cardId":"EB05-004","name":"Baby 5","rarity":"R","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"tcg:24820:721365","productId":721365,"cardId":"EB05-018","name":"Rebecca","rarity":"R","alt":false,"target":4,"qty":4,"price":0.13},
 {"id":"tcg:24820:721369","productId":721369,"cardId":"EB05-024","name":"Little Sadi","rarity":"R","alt":false,"target":4,"qty":3,"price":0.09},
