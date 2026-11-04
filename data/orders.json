@@ -660,17 +660,6 @@
     "note": ""
   },
   {
-    "id": "1b3b7e81-c2ef-49c5-8b42-cfbb342a3a91",
-    "qty": "2",
-    "set": "OP18",
-    "store": "Elf n Moon",
-    "order": "",
-    "date": "2026-10-01",
-    "paid": 250.36,
-    "remaining": null,
-    "note": ""
-  },
-  {
     "id": "order:1793805338190",
     "qty": 1,
     "set": "OP05",
