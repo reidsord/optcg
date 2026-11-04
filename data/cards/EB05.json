@@ -29,7 +29,7 @@
 {"id":"tcg:24820:718676","productId":718676,"cardId":"EB05-020","name":"My name is Shirahoshi!!","rarity":"R","alt":false,"target":4,"qty":0,"price":0.05},
 {"id":"tcg:24820:718677","productId":718677,"cardId":"EB05-014","name":"Shirahoshi (Manga)","rarity":"SR","alt":true,"target":1,"qty":0,"price":689.99},
 {"id":"tcg:24820:718678","productId":718678,"cardId":"EB05-014","name":"Shirahoshi","rarity":"SR","alt":false,"target":4,"qty":0,"price":0.9},
-{"id":"tcg:24820:718679","productId":718679,"cardId":"EB05-006","name":"Miss Buckingham Stussy","rarity":"SR","alt":false,"target":4,"qty":0,"price":2.45},
+{"id":"tcg:24820:718679","productId":718679,"cardId":"EB05-006","name":"Miss Buckingham Stussy","rarity":"SR","alt":false,"target":4,"qty":2,"price":2.45},
 {"id":"tcg:24820:718680","productId":718680,"cardId":"EB05-021","name":"Alvida","rarity":"SR","alt":false,"target":4,"qty":0,"price":4.59},
 {"id":"tcg:24820:718681","productId":718681,"cardId":"EB05-055","name":"Nami","rarity":"SR","alt":false,"target":4,"qty":0,"price":4.95},
 {"id":"tcg:24820:718682","productId":718682,"cardId":"EB05-052","name":"Gloriosa","rarity":"SR","alt":false,"target":4,"qty":0,"price":4.6},
