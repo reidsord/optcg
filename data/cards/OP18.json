@@ -24,11 +24,11 @@
 {"id":"tcg:24833:722651","productId":722651,"cardId":"OP18-106","name":"Doberman","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
 {"id":"tcg:24833:722652","productId":722652,"cardId":"OP18-017","name":"Roronoa Zoro","rarity":"C","alt":false,"target":4,"qty":0,"price":3},
 {"id":"tcg:24833:722777","productId":722777,"cardId":"OP18-069","name":"Sodomu & Gomora","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
-{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.54,"added":"2026-10-08"},
+{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.52,"added":"2026-10-08"},
 {"id":"p712909","productId":712909,"cardId":"","name":"Double Pack Set Vol. 13 Display","rarity":"","alt":null,"target":1,"qty":0,"price":495.9,"added":"2026-10-08"},
-{"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":300,"added":"2026-10-08"},
-{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3559.99,"added":"2026-10-08"},
-{"id":"p712904","productId":712904,"cardId":"","name":"The Dominance of God Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":23.98,"added":"2026-10-08"},
+{"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":293.9,"added":"2026-10-08"},
+{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":3517.98,"added":"2026-10-08"},
+{"id":"p712904","productId":712904,"cardId":"","name":"The Dominance of God Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":23.97,"added":"2026-10-08"},
 {"id":"p712903","productId":712903,"cardId":"","name":"The Dominance of God Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":39.99,"added":"2026-10-08"},
 {"id":"p723145","productId":723145,"cardId":"OP18-091","name":"Brogy","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99,"added":"2026-10-10"},
 {"id":"p723152","productId":723152,"cardId":"OP18-111","name":"Momonga","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99,"added":"2026-10-10"},
@@ -56,5 +56,6 @@
 {"id":"p729862","productId":729862,"cardId":"OP18-075","name":"Thousand Sunny","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-02"},
 {"id":"p729867","productId":729867,"cardId":"OP18-094","name":"Hee Hee Hee!! I Smell Adventure!!","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-02"},
 {"id":"p729870","productId":729870,"cardId":"OP18-116","name":"Iron Body Empty Tree","rarity":"C","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-02"},
-{"id":"tcg:24820:722714","productId":722714,"cardId":"OP18-055","name":"Mr.9 & Ms. Wednesday","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99}
+{"id":"tcg:24820:722714","productId":722714,"cardId":"OP18-055","name":"Mr.9 & Ms. Wednesday","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
+{"id":"p730161","productId":730161,"cardId":"OP18-096","name":"I'll Make the Call","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-05"}
 ]
