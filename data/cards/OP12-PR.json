@@ -13,7 +13,7 @@
 {"id":"OP12-PR:16","productId":649288,"cardId":"OP12-019","name":"Color of Arms Haki","rarity":"C","alt":false,"target":4,"qty":0,"price":0.75},
 {"id":"OP12-PR:17","productId":649287,"cardId":"OP12-021","name":"Ipponmatsu","rarity":"C","alt":false,"target":4,"qty":2,"price":0.2},
 {"id":"OP12-PR:18","productId":649286,"cardId":"OP12-022","name":"Inuarashi","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
-{"id":"OP12-PR:19","productId":649301,"cardId":"OP12-023","name":"Kawamatsu","rarity":"UC","alt":false,"target":4,"qty":1,"price":19},
+{"id":"OP12-PR:19","productId":649301,"cardId":"OP12-023","name":"Kawamatsu","rarity":"UC","alt":false,"target":4,"qty":1,"price":18},
 {"id":"OP12-PR:20","productId":649285,"cardId":"OP12-024","name":"Gyukimaru","rarity":"C","alt":false,"target":4,"qty":1,"price":0.68},
 {"id":"OP12-PR:21","productId":649284,"cardId":"OP12-025","name":"Kin'emon","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP12-PR:22","productId":649303,"cardId":"OP12-026","name":"Kuina","rarity":"UC","alt":false,"target":4,"qty":0,"price":4.19},
@@ -45,7 +45,7 @@
 {"id":"OP12-PR:48","productId":649267,"cardId":"OP12-069","name":"Crocodile","rarity":"C","alt":false,"target":4,"qty":1,"price":0.74},
 {"id":"OP12-PR:49","productId":649314,"cardId":"OP12-072","name":"Zeff","rarity":"UC","alt":false,"target":4,"qty":1,"price":0.55},
 {"id":"OP12-PR:50","productId":649266,"cardId":"OP12-074","name":"Patty","rarity":"C","alt":false,"target":4,"qty":1,"price":0.15},
-{"id":"OP12-PR:51","productId":649265,"cardId":"OP12-075","name":"Ms. All Sunday","rarity":"C","alt":false,"target":4,"qty":0,"price":17.99},
+{"id":"OP12-PR:51","productId":649265,"cardId":"OP12-075","name":"Ms. All Sunday","rarity":"C","alt":false,"target":4,"qty":0,"price":15},
 {"id":"OP12-PR:52","productId":649315,"cardId":"OP12-076","name":"Monet","rarity":"UC","alt":false,"target":4,"qty":1,"price":5},
 {"id":"OP12-PR:53","productId":649264,"cardId":"OP12-077","name":"The \"Extinguishes All Sound Created by Your Influence\" Technique","rarity":"C","alt":false,"target":4,"qty":1,"price":1.67},
 {"id":"OP12-PR:54","productId":649316,"cardId":"OP12-078","name":"Brochette Blow","rarity":"UC","alt":false,"target":4,"qty":1,"price":2.99},
@@ -70,9 +70,9 @@
 {"id":"OP12-PR:73","productId":649252,"cardId":"OP12-109","name":"Pacifista","rarity":"C","alt":false,"target":4,"qty":0,"price":0.35},
 {"id":"OP12-PR:74","productId":649251,"cardId":"OP12-110","name":"Buffalo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
 {"id":"OP12-PR:75","productId":649250,"cardId":"OP12-111","name":"Baby 5 (111)","rarity":"C","alt":false,"target":4,"qty":1,"price":0.4},
-{"id":"OP12-PR:76","productId":649324,"cardId":"OP12-113","name":"Roronoa Zoro (113)","rarity":"UC","alt":false,"target":4,"qty":0,"price":12.04},
+{"id":"OP12-PR:76","productId":649324,"cardId":"OP12-113","name":"Roronoa Zoro (113)","rarity":"UC","alt":false,"target":4,"qty":0,"price":14.99},
 {"id":"OP12-PR:77","productId":649325,"cardId":"OP12-114","name":"Wyper","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.5},
 {"id":"OP12-PR:78","productId":649326,"cardId":"OP12-115","name":"I Love You!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":17.4},
 {"id":"OP12-PR:79","productId":649248,"cardId":"OP12-116","name":"We'll Ring the Bell Waiting for You!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.29},
-{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5}
+{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.32}
 ]
