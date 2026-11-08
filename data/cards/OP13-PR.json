@@ -54,8 +54,8 @@
 {"id":"OP13-PR:57","productId":661402,"cardId":"OP13-078","name":"Oro Jackson","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP13-PR:58","productId":661403,"cardId":"OP13-081","name":"Koala","rarity":"C","alt":false,"target":4,"qty":0,"price":0.38},
 {"id":"OP13-PR:59","productId":661404,"cardId":"OP13-085","name":"Saint Jalmac","rarity":"C","alt":false,"target":4,"qty":0,"price":0.04},
-{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.21},
-{"id":"OP13-PR:61","productId":661438,"cardId":"OP13-087","name":"Saint Charlos","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.83},
+{"id":"OP13-PR:60","productId":661437,"cardId":"OP13-086","name":"Saint Shalria","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.19},
+{"id":"OP13-PR:61","productId":661438,"cardId":"OP13-087","name":"Saint Charlos","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.49},
 {"id":"OP13-PR:62","productId":661439,"cardId":"OP13-088","name":"Terry Gilteo","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.59},
 {"id":"OP13-PR:63","productId":661440,"cardId":"OP13-090","name":"Hack","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.62},
 {"id":"OP13-PR:64","productId":661405,"cardId":"OP13-092","name":"Saint Mjosgard","rarity":"C","alt":false,"target":4,"qty":0,"price":1.94},
@@ -64,7 +64,7 @@
 {"id":"OP13-PR:67","productId":661408,"cardId":"OP13-095","name":"Saint Rosward","rarity":"C","alt":false,"target":4,"qty":0,"price":0.85},
 {"id":"OP13-PR:68","productId":661409,"cardId":"OP13-097","name":"The World's Equilibrium Cannot Be Maintained Forever","rarity":"C","alt":false,"target":4,"qty":0,"price":1},
 {"id":"OP13-PR:69","productId":661441,"cardId":"OP13-098","name":"Never Existed... in the First Place...","rarity":"UC","alt":false,"target":4,"qty":0,"price":7.61},
-{"id":"OP13-PR:70","productId":661410,"cardId":"OP13-099","name":"The Empty Throne","rarity":"C","alt":false,"target":4,"qty":0,"price":1.78},
+{"id":"OP13-PR:70","productId":661410,"cardId":"OP13-099","name":"The Empty Throne","rarity":"C","alt":false,"target":4,"qty":0,"price":1.8},
 {"id":"OP13-PR:71","productId":661442,"cardId":"OP13-101","name":"Atlas","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"OP13-PR:72","productId":661443,"cardId":"OP13-102","name":"Edison","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.99},
 {"id":"OP13-PR:73","productId":661411,"cardId":"OP13-103","name":"Gyogyo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.03},
@@ -76,8 +76,8 @@
 {"id":"OP13-PR:79","productId":661415,"cardId":"OP13-112","name":"Vegapunk","rarity":"C","alt":false,"target":4,"qty":0,"price":0.32},
 {"id":"OP13-PR:80","productId":661416,"cardId":"OP13-115","name":"Paper Art Afterimage","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP13-PR:81","productId":661446,"cardId":"OP13-116","name":"The One Who Is the Most Free Is the Pirate King!!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":9.58},
-{"id":"OP13-PR:82","productId":661882,"cardId":"ST01-012","name":"Monkey.D.Luffy - ST01-012 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"SR","alt":false,"target":4,"qty":2,"price":12.6},
+{"id":"OP13-PR:82","productId":661882,"cardId":"ST01-012","name":"Monkey.D.Luffy - ST01-012 (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"SR","alt":false,"target":4,"qty":2,"price":12.5},
 {"id":"OP13-PR:83","productId":657797,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament 3 Brothers Pack","rarity":"","alt":false,"target":1,"qty":0,"price":18.45},
 {"id":"OP13-PR:84","productId":657796,"cardId":"","name":"Carrying On His Will - 3rd Anniversary Tournament Pack","rarity":"","alt":false,"target":1,"qty":0,"price":4.99},
-{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.72}
+{"id":"OP13-PR:85","productId":661879,"cardId":"","name":"Monkey.D.Luffy (3rd Anniversary Tournament 3 Brothers Pack)","rarity":"L","alt":false,"target":1,"qty":3,"price":0.69}
 ]
