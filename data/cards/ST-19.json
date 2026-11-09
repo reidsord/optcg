@@ -1,5 +1,5 @@
 [
-{"id":"Starter Decks:385","productId":545045,"cardId":"","name":"Starter Deck 19: BLACK Smoker","rarity":"","alt":false,"target":1,"qty":0,"price":53.91},
+{"id":"Starter Decks:385","productId":545045,"cardId":"","name":"Starter Deck 19: BLACK Smoker","rarity":"","alt":false,"target":1,"qty":0,"price":54.35},
 {"id":"Starter Decks:386","productId":545046,"cardId":"","name":"Starter Deck 19: BLACK Smoker Display","rarity":"","alt":false,"target":1,"qty":0,"price":499.99},
 {"id":"Starter Decks:387","productId":545047,"cardId":"","name":"Starter Deck 19: BLACK Smoker Display Case","rarity":"","alt":false,"target":1,"qty":0,"price":0},
 {"id":"Starter Decks:388","productId":581036,"cardId":"OP02-093","name":"Smoker (OP02-093)","rarity":"L","alt":false,"target":4,"qty":2,"price":1},
@@ -12,8 +12,8 @@
 {"id":"Starter Decks:395","productId":581044,"cardId":"OP03-079","name":"Vergo","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"Starter Decks:396","productId":581045,"cardId":"OP03-089","name":"Brannew","rarity":"R","alt":false,"target":4,"qty":4,"price":0.12},
 {"id":"Starter Decks:397","productId":581046,"cardId":"ST19-001","name":"Smoker (ST19-001)","rarity":"C","alt":false,"target":4,"qty":8,"price":0.05},
-{"id":"Starter Decks:398","productId":581047,"cardId":"ST19-002","name":"Sengoku","rarity":"C","alt":false,"target":4,"qty":8,"price":0.08},
-{"id":"Starter Decks:399","productId":581048,"cardId":"ST19-003","name":"Tashigi","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.52},
+{"id":"Starter Decks:398","productId":581047,"cardId":"ST19-002","name":"Sengoku","rarity":"C","alt":false,"target":4,"qty":8,"price":0.04},
+{"id":"Starter Decks:399","productId":581048,"cardId":"ST19-003","name":"Tashigi","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.49},
 {"id":"Starter Decks:400","productId":581049,"cardId":"ST19-004","name":"Hina","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.25},
 {"id":"Starter Decks:401","productId":581050,"cardId":"ST19-005","name":"Monkey.D.Garp","rarity":"C","alt":false,"target":4,"qty":8,"price":0.01}
 ]
