@@ -24,10 +24,10 @@
 {"id":"tcg:24833:722651","productId":722651,"cardId":"OP18-106","name":"Doberman","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
 {"id":"tcg:24833:722652","productId":722652,"cardId":"OP18-017","name":"Roronoa Zoro","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
 {"id":"tcg:24833:722777","productId":722777,"cardId":"OP18-069","name":"Sodomu & Gomora","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99},
-{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.42,"added":"2026-10-08"},
-{"id":"p712909","productId":712909,"cardId":"","name":"Double Pack Set Vol. 13 Display","rarity":"","alt":null,"target":1,"qty":0,"price":495.8,"added":"2026-10-08"},
-{"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":230.42,"added":"2026-10-08"},
-{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2864.93,"added":"2026-10-08"},
+{"id":"p712907","productId":712907,"cardId":"","name":"Double Pack Set Vol. 13","rarity":"","alt":null,"target":1,"qty":0,"price":69.38,"added":"2026-10-08"},
+{"id":"p712909","productId":712909,"cardId":"","name":"Double Pack Set Vol. 13 Display","rarity":"","alt":null,"target":1,"qty":0,"price":474.99,"added":"2026-10-08"},
+{"id":"p712901","productId":712901,"cardId":"","name":"The Dominance of God Booster Box","rarity":"","alt":null,"target":1,"qty":0,"price":224.16,"added":"2026-10-08"},
+{"id":"p712902","productId":712902,"cardId":"","name":"The Dominance of God Booster Box Case","rarity":"","alt":null,"target":1,"qty":0,"price":2815,"added":"2026-10-08"},
 {"id":"p712904","productId":712904,"cardId":"","name":"The Dominance of God Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":23.88,"added":"2026-10-08"},
 {"id":"p712903","productId":712903,"cardId":"","name":"The Dominance of God Sleeved Booster Pack","rarity":"","alt":null,"target":1,"qty":0,"price":39.99,"added":"2026-10-08"},
 {"id":"p723145","productId":723145,"cardId":"OP18-091","name":"Brogy","rarity":"C","alt":false,"target":4,"qty":0,"price":2.99,"added":"2026-10-10"},
@@ -67,5 +67,7 @@
 {"id":"p731759","productId":731759,"cardId":"OP18-038","name":"Shoot Down That Flag.","rarity":"UC","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-09"},
 {"id":"p731746","productId":731746,"cardId":"OP18-060","name":"Saint Gunko (060) (Alternate Art)","rarity":"L","alt":true,"target":1,"qty":0,"price":null,"added":"2026-11-09"},
 {"id":"p731750","productId":731750,"cardId":"OP18-060","name":"Saint Gunko (060) (SP)","rarity":"L","alt":true,"target":1,"qty":0,"price":null,"added":"2026-11-09"},
-{"id":"p731754","productId":731754,"cardId":"OP18-117","name":"Buster Call","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-09"}
+{"id":"p731754","productId":731754,"cardId":"OP18-117","name":"Buster Call","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-09"},
+{"id":"p732599","productId":732599,"cardId":"OP18-022","name":"Monkey.D.Luffy (022) (Alternate Art)","rarity":"L","alt":true,"target":1,"qty":0,"price":null,"added":"2026-11-11"},
+{"id":"p732600","productId":732600,"cardId":"OP18-049","name":"Mr.2.Bon.Kurei(Bentham)","rarity":"R","alt":false,"target":4,"qty":0,"price":null,"added":"2026-11-11"}
 ]
