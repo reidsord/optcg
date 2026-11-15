@@ -23,7 +23,7 @@
 {"id":"OP10-PR:26","productId":620762,"cardId":"OP10-036","name":"Perona (036)","rarity":"C","alt":false,"target":4,"qty":0,"price":13.73},
 {"id":"OP10-PR:27","productId":620763,"cardId":"OP10-038","name":"Roronoa Zoro (038)","rarity":"C","alt":false,"target":4,"qty":0,"price":8.49},
 {"id":"OP10-PR:28","productId":620764,"cardId":"OP10-039","name":"Gum-Gum Dragon Fire Pistol Twister Star","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.16},
-{"id":"OP10-PR:29","productId":620765,"cardId":"OP10-040","name":"The Weak Do Not Have the Right to Choose How They Die","rarity":"C","alt":false,"target":4,"qty":0,"price":20},
+{"id":"OP10-PR:29","productId":620765,"cardId":"OP10-040","name":"The Weak Do Not Have the Right to Choose How They Die","rarity":"C","alt":false,"target":4,"qty":0,"price":16},
 {"id":"OP10-PR:30","productId":620766,"cardId":"OP10-043","name":"Moocy","rarity":"C","alt":false,"target":4,"qty":0,"price":0.49},
 {"id":"OP10-PR:31","productId":620767,"cardId":"OP10-044","name":"Cub","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP10-PR:32","productId":620768,"cardId":"OP10-047","name":"Koala","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.99},
@@ -54,7 +54,7 @@
 {"id":"OP10-PR:57","productId":620793,"cardId":"OP10-085","name":"Jesus Burgess","rarity":"UC","alt":false,"target":4,"qty":0,"price":2.15},
 {"id":"OP10-PR:58","productId":620794,"cardId":"OP10-087","name":"Tony Tony.Chopper (087)","rarity":"UC","alt":false,"target":4,"qty":0,"price":28},
 {"id":"OP10-PR:59","productId":620795,"cardId":"OP10-088","name":"Nami (088)","rarity":"UC","alt":false,"target":4,"qty":0,"price":19.77},
-{"id":"OP10-PR:60","productId":620796,"cardId":"OP10-089","name":"Nico Robin","rarity":"C","alt":false,"target":4,"qty":0,"price":29.99},
+{"id":"OP10-PR:60","productId":620796,"cardId":"OP10-089","name":"Nico Robin","rarity":"C","alt":false,"target":4,"qty":0,"price":28.1},
 {"id":"OP10-PR:61","productId":620797,"cardId":"OP10-091","name":"Brook (091)","rarity":"C","alt":false,"target":4,"qty":0,"price":1.86},
 {"id":"OP10-PR:62","productId":620798,"cardId":"OP10-092","name":"Perona (092)","rarity":"C","alt":false,"target":4,"qty":0,"price":13.12},
 {"id":"OP10-PR:63","productId":620799,"cardId":"OP10-093","name":"Saint Homing","rarity":"C","alt":false,"target":4,"qty":1,"price":0.25},
@@ -74,5 +74,5 @@
 {"id":"OP10-PR:77","productId":620813,"cardId":"OP10-114","name":"X.Drake","rarity":"UC","alt":false,"target":4,"qty":0,"price":4},
 {"id":"OP10-PR:78","productId":620814,"cardId":"OP10-115","name":"Let's Meet Again in the New World","rarity":"C","alt":false,"target":4,"qty":0,"price":0.5},
 {"id":"OP10-PR:79","productId":620815,"cardId":"OP10-117","name":"ROOM","rarity":"UC","alt":false,"target":4,"qty":0,"price":4.7},
-{"id":"OP10-PR:80","productId":620841,"cardId":"","name":"Royal Blood - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.5}
+{"id":"OP10-PR:80","productId":620841,"cardId":"","name":"Royal Blood - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":6.4}
 ]

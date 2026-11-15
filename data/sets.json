@@ -630,5 +630,12 @@
     ],
     "cardPrefix": "EB04-",
     "file": "EB04-PR.json"
+  },
+  {
+    "code": "EB06",
+    "name": "Extra Booster: East Blue",
+    "groupId": 24946,
+    "file": "EB06.json",
+    "added": "2026-11-15"
   }
 ]
