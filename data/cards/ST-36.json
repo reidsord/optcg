@@ -1,7 +1,7 @@
 [
 {"id":"Starter Decks:717","productId":704897,"cardId":"","name":"Starter Deck 36: YELLOW Eustass”Captain”Kid","rarity":"","alt":false,"target":1,"qty":0,"price":10},
-{"id":"Starter Decks:718","productId":704896,"cardId":"","name":"Starter Deck 36: YELLOW Eustass”Captain”Kid Display","rarity":"","alt":false,"target":1,"qty":0,"price":64.99},
-{"id":"Starter Decks:719","productId":706356,"cardId":"OP10-099","name":"Eustass\"Captain\"Kid (OP10-099)","rarity":"L","alt":false,"target":4,"qty":2,"price":0.24},
+{"id":"Starter Decks:718","productId":704896,"cardId":"","name":"Starter Deck 36: YELLOW Eustass”Captain”Kid Display","rarity":"","alt":false,"target":1,"qty":0,"price":66.68},
+{"id":"Starter Decks:719","productId":706356,"cardId":"OP10-099","name":"Eustass\"Captain\"Kid (OP10-099)","rarity":"L","alt":false,"target":4,"qty":2,"price":0.19},
 {"id":"Starter Decks:720","productId":706357,"cardId":"OP10-103","name":"Capone\"Gang\"Bege","rarity":"R","alt":false,"target":4,"qty":4,"price":0.03},
 {"id":"Starter Decks:721","productId":706358,"cardId":"OP10-109","name":"Basil Hawkins","rarity":"R","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"Starter Decks:722","productId":706359,"cardId":"OP10-111","name":"Monkey.D.Luffy","rarity":"R","alt":false,"target":4,"qty":4,"price":0.07},
@@ -11,5 +11,5 @@
 {"id":"Starter Decks:726","productId":706363,"cardId":"ST36-002","name":"Killer","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.4},
 {"id":"Starter Decks:727","productId":706364,"cardId":"ST36-003","name":"Scratchmen Apoo","rarity":"C","alt":false,"target":4,"qty":8,"price":0.25},
 {"id":"Starter Decks:728","productId":706365,"cardId":"ST36-004","name":"Bartolomeo","rarity":"C","alt":false,"target":4,"qty":8,"price":0.08},
-{"id":"Starter Decks:729","productId":706366,"cardId":"ST36-005","name":"Eustass\"Captain\"Kid (ST36-005)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.5}
+{"id":"Starter Decks:729","productId":706366,"cardId":"ST36-005","name":"Eustass\"Captain\"Kid (ST36-005)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.25}
 ]
