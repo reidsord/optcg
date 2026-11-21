@@ -1,10 +1,11 @@
-{"pattern":{"Release Event": {"series": 1, "hourET": 9.0, "leadDays": 14}, "Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Release Event": {"series": 1, "hourET": 9.0, "leadDays": 14}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Treasure Cup": {"series": 1, "hourET": 14.0, "leadDays": 14}},
 "sets":[
 {"id":"OP19","name":"BOOSTER PACK -COME IN, WORLD- [OP-19]","url":"https://en.onepiece-cardgame.com/products/op19.html","release":"2027-02-26","prerelease":"2027-02-19","expected":"2027-02-05T10:00:00-05:00","learned":false},
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false,"alerted":["soon","today"]},
 {"id":"OP17","name":"BOOSTER PACK -THE WORLD’S STRONGEST WARRIORS- [OP-17]","url":"https://en.onepiece-cardgame.com/products/boosters/op17/","release":"2026-08-28"}
 ],
 "series":[
+{"id":"ONE PIECE CARD GAME Store Treasure Cup 2026 December","kind":"Treasure Cup","seen":"2026-11-21","drop":"2026-11-20T19:00:00+00:00","firstEvent":"2026-12-04T18:30:00"},
 {"id":"[North America] ONE PIECE CARD GAME OP-18 Release Event","kind":"Release Event","seen":"2026-11-06","drop":"2026-11-06T14:00:00+00:00","firstEvent":"2026-11-20T18:00:00"},
 {"id":"[North America] Heroines Battle Vol.2 [EB-05]","kind":"Other","seen":"2026-10-23","drop":"2026-10-23T14:00:00+00:00","firstEvent":"2026-11-06T13:00:00"},
 {"id":"Pirates Party 2026 Vol.4","kind":"Pirates Party","seen":"2026-10-17","drop":"2026-10-17T19:00:00+00:00","firstEvent":"2026-11-01T12:30:00"},
@@ -39,7 +40,7 @@
 {"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
 {"id":"paradigmgames.co","store":"Paradigm Games","url":"https://paradigmgames.co/","miles":13.4,"snippets":[]},
 {"id":"nanigaming.com","store":"Nani Entertainment LLC","url":"https://www.nanigaming.com/","miles":13.9,"snippets":[]},
-{"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[],"error":"HTTP Error 500: Internal Server Error"},
+{"id":"whiteflaggames.com","store":"White Flag Games","url":"https://www.whiteflaggames.com","miles":14.5,"snippets":[]},
 {"id":"bestcardshopindy.com","store":"Best Card Shop","url":"http://www.bestcardshopindy.com","miles":15.4,"snippets":[]},
 {"id":"laughtail.com","store":"Laughtail","url":"https://www.laughtail.com/","miles":20.1,"snippets":[]},
 {"id":"bulldogcommunitygaming.com","store":"Bulldog Community Gaming","url":"https://www.bulldogcommunitygaming.com","miles":21.2,"snippets":[]},
