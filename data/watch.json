@@ -1,4 +1,4 @@
-{"pattern":{"Release Event": {"series": 1, "hourET": 9.0, "leadDays": 14}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Treasure Cup": {"series": 1, "hourET": 14.0, "leadDays": 14}},
+{"pattern":{"Store Tournament": {"series": 1, "hourET": 10.0, "leadDays": 21}, "Release Event": {"series": 1, "hourET": 9.0, "leadDays": 14}, "Pirates Party": {"series": 3, "hourET": 15.0, "leadDays": 52}, "Treasure Cup": {"series": 1, "hourET": 14.0, "leadDays": 14}},
 "sets":[
 {"id":"OP19","name":"BOOSTER PACK -COME IN, WORLD- [OP-19]","url":"https://en.onepiece-cardgame.com/products/op19.html","release":"2027-02-26","prerelease":"2027-02-19","expected":"2027-02-05T10:00:00-05:00","learned":false},
 {"id":"OP18","name":"BOOSTER PACK -THE DOMINANCE OF GOD- [OP-18]","url":"https://en.onepiece-cardgame.com/products/op18.html","release":"2026-11-20","prerelease":"2026-11-13","expected":"2026-10-30T10:00:00-04:00","learned":false,"alerted":["soon","today"]},
@@ -34,7 +34,7 @@
 {"id":"https://en.onepiece-cardgame.com/events/treasure-cup-dec-2026.html","name":"Treasure Cup December 2026","lines":[]}
 ],
 "stores":[
-{"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":[]},
+{"id":"magescomics.com","store":"Mage's Comics and Games, Inc.","url":"https://www.magescomics.com/","miles":3.4,"snippets":["OP-18 Prerelease One Piece"]},
 {"id":"grandmastertcg.com","store":"Grandmaster Games","url":"https://www.grandmastertcg.com","miles":6.7,"snippets":[],"error":"<urlopen error [Errno -2] Name or service not known>"},
 {"id":"elfnmoon.com","store":"Elf N Moon","url":"https://elfnmoon.com","miles":9.5,"snippets":[]},
 {"id":"goodgamesna.com","store":"Good Games Indianapolis","url":"https://www.goodgamesna.com/","miles":10.9,"snippets":[]},
