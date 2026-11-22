@@ -28,8 +28,8 @@ const S = {
   priceHist: new Map(), valueHist: [], range: store.get('range') || '365', chartCleanup: null,
   packLog: (() => { try { return JSON.parse(store.get('pack-log') || '[]'); } catch { return []; } })(),
   homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
-  decks: [], deckSel: 0, priceAlerts: { targets: {} },
-  pendingCards: {}, pendingOrders: false, pendingNotes: false, pendingDecks: false,
+  decks: [], deckSel: 0, priceAlerts: { targets: {} }, accessories: [], accCat: 'all',
+  pendingCards: {}, pendingOrders: false, pendingNotes: false, pendingDecks: false, pendingAcc: false,
   saving: false, saveTimer: null, error: null,
 };
 
@@ -280,8 +280,9 @@ async function load() {
     getJson('data/history.json', sha), getJson('data/meta.json', sha),
   ]);
   const optional = (path) => getJson(path, sha).catch(() => []);
-  const [priceHist, valueHist, decks, priceAlerts] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json'), optional('data/decks.json'), getJson('data/price-alerts.json', sha).catch(() => ({}))]);
+  const [priceHist, valueHist, decks, priceAlerts, accessories] = await Promise.all([optional('data/price-history.json'), optional('data/value-history.json'), optional('data/decks.json'), getJson('data/price-alerts.json', sha).catch(() => ({})), optional('data/accessories.json')]);
   S.decks = decks;
+  S.accessories = accessories;
   S.priceAlerts = { ...priceAlerts, targets: priceAlerts.targets || {} };
   S.priceHist = new Map(priceHist.map((r) => [r.p, r.h]));
   S.valueHist = valueHist;
@@ -313,6 +314,7 @@ function restorePending() {
     }
     if (saved.orders) { S.orders = saved.orders; S.pendingOrders = true; }
     if (saved.decks) { S.decks = saved.decks; S.pendingDecks = true; }
+    if (saved.accessories) { S.accessories = saved.accessories; S.pendingAcc = true; }
     if (saved.notes != null) { S.notes = saved.notes; S.pendingNotes = true; }
   } catch {}
 }
@@ -323,11 +325,12 @@ function persistPending() {
     cards: Object.fromEntries(Object.entries(S.pendingCards).map(([id, p]) => [id, { qty: p.qty, t: p.t }])),
     orders: S.pendingOrders ? S.orders : null,
     decks: S.pendingDecks ? S.decks : null,
+    accessories: S.pendingAcc ? S.accessories : null,
     notes: S.pendingNotes ? S.notes : null,
   }) : null);
 }
 
-const hasPending = () => Object.keys(S.pendingCards).length > 0 || S.pendingOrders || S.pendingNotes || S.pendingDecks;
+const hasPending = () => Object.keys(S.pendingCards).length > 0 || S.pendingOrders || S.pendingNotes || S.pendingDecks || S.pendingAcc;
 
 function setQty(c, qty) {
   qty = Math.max(0, Math.min(999, qty | 0));
@@ -385,7 +388,8 @@ async function save() {
   renderSaveStatus();
   const cards = S.pendingCards, orders = S.pendingOrders ? S.orders.slice() : null, notes = S.pendingNotes ? S.notes : null;
   const decks = S.pendingDecks ? S.decks.slice() : null;
-  S.pendingCards = {}; S.pendingOrders = false; S.pendingNotes = false; S.pendingDecks = false;
+  const acc = S.pendingAcc ? S.accessories.map((a) => ({ ...a })) : null;
+  S.pendingCards = {}; S.pendingOrders = false; S.pendingNotes = false; S.pendingDecks = false; S.pendingAcc = false;
 
   const updaters = {};
   const byFile = {};
@@ -407,12 +411,14 @@ async function save() {
   if (orders) updaters['data/orders.json'] = () => dumpJson(orders);
   if (notes != null) updaters['data/notes.json'] = () => dumpJson({ text: notes });
   if (decks) updaters['data/decks.json'] = () => dumpJson(decks);
+  if (acc) updaters['data/accessories.json'] = (text) => mergeAccessories(acc, text);
 
   const parts = [];
   if (entries.length) parts.push(entries.length === 1 ? `${entries[0].name} ${entries[0].before}→${entries[0].after}` : `${entries.length} quantities`);
   if (orders) parts.push('orders');
   if (notes != null) parts.push('notes');
   if (decks) parts.push('decks');
+  if (acc) parts.push('accessories');
 
   try {
     await commitFiles(updaters, `Update ${parts.join(', ')}`);
@@ -427,6 +433,7 @@ async function save() {
     if (orders && !S.pendingOrders) S.pendingOrders = true;
     if (notes != null && !S.pendingNotes) S.pendingNotes = true;
     if (decks && !S.pendingDecks) S.pendingDecks = true;
+    if (acc && !S.pendingAcc) S.pendingAcc = true;
     S.error = e.message;
     if (e.status === 401 || e.status === 403) S.canEdit = false;
   }
@@ -1618,6 +1625,171 @@ function renderHistory(main) {
   }));
 }
 
+// ---------- Accessories ----------
+// data/accessories.json, one item per line. Reid sets name, category, qty, his own
+// price (myPrice) and an optional TCGplayer product; the daily job fills tcgPrice
+// with TCGplayer's lowest listed price for linked items. tcgPrice wins when there is one.
+
+const ACC_CATS = [
+  ['playmats', 'Playmats', 'Mat'],
+  ['sleeves', 'Sleeves', 'Slv'],
+  ['deckboxes', 'Deck boxes', 'Box'],
+  ['binders', 'Binders', 'Bnd'],
+  ['toploaders', 'Toploaders, one-touches and card savers', 'Top'],
+  ['storage', 'Storage boxes and cases', 'Sto'],
+  ['counters', 'Dice, counters and markers', 'Dce'],
+  ['mat-gear', 'Playmat tubes and bags', 'Bag'],
+  ['other', 'Other', '•••'],
+];
+const accCat = (key) => ACC_CATS.find((c) => c[0] === key) || ACC_CATS[ACC_CATS.length - 1];
+const accPrice = (a) => (a.productId && a.tcgPrice != null ? a.tcgPrice : a.myPrice ?? null);
+const accSource = (a) => (a.productId && a.tcgPrice != null ? 'tcg' : a.myPrice != null ? 'mine' : null);
+const accTotals = (list = S.accessories) => list.reduce((t, a) => {
+  if (a.qty > 0) { t.items++; t.copies += a.qty; t.value += a.qty * (accPrice(a) || 0); }
+  if (a.qty > 0 && accPrice(a) == null) t.unpriced++;
+  return t;
+}, { items: 0, copies: 0, value: 0, unpriced: 0 });
+const productIdFrom = (s) => {
+  s = String(s || '').trim();
+  const m = /tcgplayer\.com\/(?:[a-z-]+\/)?product\/(\d+)/i.exec(s) || /^(\d{3,9})$/.exec(s);
+  return m ? Number(m[1]) : null;
+};
+const ACC_JOB_FIELDS = ['tcgPrice', 'tcgAt', 'tcgGroup', 'tcgName', 'tcgSearchedAt'];
+
+// Write Reid's edits on top of the newest file, keeping the daily job's TCGplayer
+// fields for items whose link didn't change.
+function mergeAccessories(items, text) {
+  const latest = new Map(JSON.parse(text || '[]').map((r) => [r.id, r]));
+  return dumpRows(items.map((a) => {
+    const row = { ...a };
+    const was = latest.get(a.id);
+    for (const k of ACC_JOB_FIELDS) {
+      if (was && was.productId === a.productId && a.productId && was[k] !== undefined) row[k] = was[k];
+      else if (!a.productId || (was && was.productId !== a.productId)) delete row[k];
+    }
+    return row;
+  }));
+}
+
+function accChanged() { S.pendingAcc = true; changed(); }
+
+function accRow(a) {
+  const short = accCat(a.cat)[2];
+  const price = accPrice(a), src = accSource(a);
+  const thumb = a.productId
+    ? `<img src="https://tcgplayer-cdn.tcgplayer.com/product/${a.productId}_200w.jpg" alt="" loading="lazy" decoding="async" data-fallback="${esc(a.name)}">`
+    : `<span class="thumb acc-thumb" aria-hidden="true">${esc(short)}</span>`;
+  const info = [src === 'tcg' ? `TCGplayer low${a.tcgAt ? ' · ' + fmtDate(a.tcgAt) : ''}` : src === 'mine' ? (a.productId ? 'No TCGplayer listing, your price' : 'Your price') : 'No price yet', a.note].filter(Boolean);
+  const qty = S.canEdit
+    ? `<span class="stepper"><button type="button" data-acc-step="-1" aria-label="Remove one ${esc(a.name)}">−</button><output>${a.qty}</output><button type="button" data-acc-step="1" aria-label="Add one ${esc(a.name)}">+</button></span>`
+    : `<span class="qty-ro">${a.qty} owned</span>`;
+  return `<div class="row acc-row${a.qty > 0 ? '' : ' acc-none'}" data-acc="${esc(a.id)}">
+    ${thumb}
+    <div><div class="title" data-acc-open>${esc(a.name)}</div><div class="info">${info.map(esc).join(' · ')}</div></div>
+    <span class="price">${price != null ? money(price) : '–'}${a.qty > 1 && price != null ? `<span class="acc-each">${money(a.qty * price)} total</span>` : ''}</span>
+    ${qty}
+  </div>`;
+}
+
+function renderAccessories(main) {
+  const t = accTotals();
+  const counts = new Map();
+  for (const a of S.accessories) counts.set(a.cat, (counts.get(a.cat) || 0) + 1);
+  if (S.accCat !== 'all' && !counts.has(S.accCat)) S.accCat = 'all';
+  const list = S.accessories.filter((a) => S.accCat === 'all' || a.cat === S.accCat);
+  const groups = ACC_CATS.map(([key, label]) => [key, label, list.filter((a) => accCat(a.cat)[0] === key)]).filter((g) => g[2].length);
+  const missing = ACC_CATS.filter(([key]) => key !== 'other' && !counts.has(key));
+  main.innerHTML = `
+    <div class="section-head" style="margin-top:0">
+      <div><h2>Accessories</h2><div class="hint">${money(t.value)} · ${count(t.copies)} ${t.copies === 1 ? 'item' : 'items'} owned${t.unpriced ? ` · ${t.unpriced} without a price` : ''} · not counted in collection value</div></div>
+      ${S.canEdit ? '<button class="btn primary" id="add-acc" type="button">+ Add accessory</button>' : ''}
+    </div>
+    ${S.accessories.length ? `<div class="chips" role="group" aria-label="Category">
+      <button class="chip" type="button" data-cat="all" aria-pressed="${S.accCat === 'all'}">All ${S.accessories.length}</button>
+      ${ACC_CATS.filter(([key]) => counts.has(key)).map(([key, label]) => `<button class="chip" type="button" data-cat="${key}" aria-pressed="${S.accCat === key}">${esc(label)} ${counts.get(key)}</button>`).join('')}
+    </div>` : ''}
+    ${groups.length ? groups.map(([key, label, rows]) => {
+      const gt = accTotals(rows);
+      return `<div class="section-head"><h2>${esc(label)}</h2><span class="hint">${count(gt.copies)} owned · ${money(gt.value)}</span></div>
+        <div class="list">${rows.map(accRow).join('')}</div>`;
+    }).join('') : `<p class="empty">No accessories yet.${S.canEdit ? ' Add playmats, sleeves, deck boxes and the rest with <strong>+ Add accessory</strong>.' : ' Sign in to add them.'}</p>`}
+    ${S.canEdit && missing.length ? `<div class="callout acc-missing">
+      <h3>${S.accessories.length ? 'Nothing tracked yet for' : 'Start with'}</h3>
+      <div class="chips acc-suggest">${missing.map(([key, label]) => `<button class="chip" type="button" data-add-cat="${key}">+ ${esc(label)}</button>`).join('')}</div>
+      <p class="muted small">Sealed boxes, packs and decks are already tracked in Cards, and DON!! cards are in their sets.</p>
+    </div>` : ''}
+    <p class="rule acc-rule">Linked items use TCGplayer's lowest listed price, updated each morning. Items without a link, or with no listing that day, use the price you enter.</p>`;
+  $('#add-acc', main)?.addEventListener('click', () => editAccessory(null, S.accCat !== 'all' ? S.accCat : 'playmats'));
+  main.querySelectorAll('[data-add-cat]').forEach((b) => (b.onclick = () => editAccessory(null, b.dataset.addCat)));
+  main.querySelectorAll('[data-cat]').forEach((b) => (b.onclick = () => { S.accCat = b.dataset.cat; render(); }));
+  main.querySelectorAll('[data-acc]').forEach((row) => {
+    const a = S.accessories.find((x) => x.id === row.dataset.acc);
+    row.querySelectorAll('[data-acc-step]').forEach((b) => (b.onclick = () => {
+      const next = Math.max(0, Math.min(999, a.qty + Number(b.dataset.accStep)));
+      if (next === a.qty) return;
+      a.qty = next; accChanged(); render();
+    }));
+    row.addEventListener('click', (e) => { if (S.canEdit && !e.target.closest('.stepper')) editAccessory(a); });
+    if (S.canEdit) row.classList.add('clickable');
+  });
+}
+
+function editAccessory(item, cat = 'playmats') {
+  const a = item || { id: `acc:${Date.now()}`, cat, name: '', qty: 1, myPrice: null, productId: null, note: '', added: isoDay() };
+  const d = $('#acc-dialog');
+  const field = (name, label, value, { type = 'text', wide = false, hint = '' } = {}) =>
+    `<div${wide ? ' class="wide"' : ''}><label for="a-${name}">${label}</label><input id="a-${name}" name="${name}" type="${type}" ${type === 'number' ? 'step="any" min="0" inputmode="decimal"' : ''} value="${esc(value ?? '')}" ${hint}></div>`;
+  const tcgNow = a.productId && a.tcgPrice != null ? `TCGplayer low is ${money(a.tcgPrice)}${a.tcgAt ? ` (${fmtDate(a.tcgAt)})` : ''}.` : a.productId ? 'The TCGplayer price fills in on the next morning update.' : '';
+  d.innerHTML = `<form method="dialog">
+    <h2>${item ? 'Edit accessory' : 'Add accessory'}</h2>
+    <div class="form-grid">
+      ${field('name', 'Name', a.name, { wide: true, hint: 'required placeholder="e.g. Luffy Gear 5 playmat" autocomplete="off"' })}
+      <div><label for="a-cat">Category</label><select id="a-cat" name="cat" class="select acc-select">${ACC_CATS.map(([key, label]) => `<option value="${key}"${accCat(a.cat)[0] === key ? ' selected' : ''}>${esc(label)}</option>`).join('')}</select></div>
+      ${field('qty', 'Quantity', a.qty, { type: 'number' })}
+      ${field('tcg', 'TCGplayer link or product ID (optional)', a.productId ? `https://www.tcgplayer.com/product/${a.productId}` : '', { wide: true, hint: 'inputmode="url" autocomplete="off" placeholder="https://www.tcgplayer.com/product/…"' })}
+      <div class="wide acc-find"><a id="a-find" href="#" target="_blank" rel="noopener">Find it on TCGplayer</a><span class="muted small" id="a-tcg-note">${esc(tcgNow)}</span></div>
+      ${field('myPrice', 'Your price, each', a.myPrice, { type: 'number', hint: 'placeholder="Used without a TCGplayer price"' })}
+      ${field('note', 'Note', a.note, { hint: 'placeholder="e.g. 2 packs of 70, store prize"' })}
+    </div>
+    <p class="err-text" id="a-err"></p>
+    <div class="dialog-actions">
+      ${item ? '<button class="btn danger" value="delete" formnovalidate>Delete</button>' : ''}
+      <span class="spacer"></span>
+      <button class="btn" value="cancel" formnovalidate>Cancel</button>
+      <button class="btn primary" value="save">Save</button>
+    </div></form>`;
+  const form = d.querySelector('form');
+  const find = $('#a-find', d);
+  const updateFind = () => { find.href = `https://www.tcgplayer.com/search/all/product?q=${encodeURIComponent(form.name.value.trim() || 'one piece card game ' + accCat(form.cat.value)[1])}`; };
+  form.name.addEventListener('input', updateFind);
+  form.cat.addEventListener('change', updateFind);
+  updateFind();
+  form.addEventListener('submit', (e) => {
+    if (e.submitter?.value !== 'save') return;
+    const link = form.tcg.value.trim();
+    if (link && !productIdFrom(link)) { e.preventDefault(); $('#a-err', d).textContent = 'That doesn’t look like a TCGplayer product link. Paste the page address, like tcgplayer.com/product/123456/…'; }
+  });
+  d.onclose = () => {
+    if (d.returnValue === 'delete') {
+      const index = S.accessories.indexOf(item);
+      S.accessories.splice(index, 1);
+      accChanged(); render();
+      toast(`${item.name} deleted.`, { label: 'Undo', run: () => { S.accessories.splice(index, 0, item); accChanged(); render(); } });
+    } else if (d.returnValue === 'save') {
+      const f = new FormData(form);
+      const num = (k) => { const v = String(f.get(k)).trim(); return v === '' || !Number.isFinite(Number(v)) ? null : Math.max(0, Number(v)); };
+      const productId = productIdFrom(f.get('tcg'));
+      const next = { ...a, cat: f.get('cat'), name: String(f.get('name')).trim() || 'Untitled', qty: Math.min(999, Math.round(num('qty') ?? 0)), myPrice: num('myPrice'), productId, note: String(f.get('note')).trim() };
+      if (productId !== a.productId) for (const k of ACC_JOB_FIELDS) delete next[k];
+      for (const k of ['myPrice', 'productId', 'note']) if (next[k] == null || next[k] === '') delete next[k];
+      if (item) S.accessories[S.accessories.indexOf(item)] = next; else S.accessories.push(next);
+      accChanged(); render();
+    }
+  };
+  d.returnValue = '';
+  d.showModal();
+}
+
 // ---------- Router ----------
 
 function render() {
@@ -1626,10 +1798,10 @@ function render() {
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'events', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'accessories', 'events', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, accessories: renderAccessories, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
   // Links from Discord alerts open one card: #cards?q=OP01-001&card=OP01:5
   const cardLink = new URLSearchParams(location.hash.split('?')[1] || '').get('card');
   if (cardLink && S.byId.has(cardLink)) openCard(cardLink);

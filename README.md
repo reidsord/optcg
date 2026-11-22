@@ -14,6 +14,11 @@ JSON files in this repo.
 - **Trade**: search cards into an Out column (cards you own) and an In column
   (any card) to see each card's value, each side's total and the difference.
   The trade stays in that browser and never changes quantities.
+- **Accessories**: playmats, sleeves, deck boxes, binders, toploaders, storage,
+  dice and counters, playmat tubes and anything else, with quantities and prices.
+  Paste an item's TCGplayer link to price it at the lowest listed price each
+  morning; otherwise (or when nothing is listed) it uses the price you enter.
+  Kept apart from the collection value.
 - **Events**: upcoming tournaments near home from Bandai TCG+, official event
   announcements, and new products (Premium Bandai exclusives marked).
 - **Orders**: orders and preorders with paid and remaining totals.
@@ -33,6 +38,8 @@ JSON files in this repo.
 | `data/value-history.json` | Collection value on each day the price job ran. |
 | `data/decks.json` | Decks saved on the Decks tab. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
+| `data/accessories.json` | Accessories, one per line: `name`, `cat`, `qty`, your price `myPrice`, and an optional TCGplayer `productId`. The daily job adds `tcgPrice` (lowest listed), `tcgAt` and where it found the product (`tcgGroup`). |
+| `scripts/update_accessories.py` | Daily job: TCGplayer lowest listed price for linked accessories, searched in the One Piece and Supplies categories. |
 | `data/price-alerts.json` | Settings for Discord price alerts (`movePct`, `minPrice`) and the price targets set on card details (`targets`, productId → price). |
 | `data/price-alert-state.json` | Where each owned card's price stood at its last alert, and which targets are already hit. Written by the price job. |
 | `scripts/price_alerts.py` | Runs after the price update: posts big moves on cards you own and price-target hits to Discord. |

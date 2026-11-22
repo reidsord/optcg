@@ -484,3 +484,15 @@ dialog input, dialog textarea { width: 100%; min-height: 40px; border: 1px solid
 .price-alert-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .price-alert-row .text-input { width: 9em; flex: 0 0 auto; }
 .alert-note { margin: 10px 0 0; }
+
+/* Accessories */
+.acc-thumb { display: grid; place-items: center; height: 44px !important; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+.acc-row.clickable { cursor: pointer; }
+.acc-row.clickable:hover { background: var(--surface-2); }
+.acc-row.acc-none .title, .acc-row.acc-none .price { color: var(--muted); }
+.acc-each { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+.acc-missing { margin-top: 22px; }
+.acc-suggest { flex-wrap: wrap; margin: 10px 0 8px; overflow: visible; }
+.acc-rule { margin-top: 18px; }
+.acc-find { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-top: 6px; font-size: 13px; }
+dialog select.acc-select { width: 100%; min-height: 40px; }
