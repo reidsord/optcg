@@ -1,6 +1,6 @@
 [
 {"id":"OP17:5","productId":705925,"cardId":"OP17-001","name":"Edward.Newgate (001)","rarity":"L","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP17:6","productId":705924,"cardId":"OP17-001","name":"Edward.Newgate (001) (Alternate Art)","rarity":"L","alt":true,"target":1,"qty":0,"price":7},
+{"id":"OP17:6","productId":705924,"cardId":"OP17-001","name":"Edward.Newgate (001) (Alternate Art)","rarity":"L","alt":true,"target":1,"qty":1,"price":7},
 {"id":"OP17:7","productId":712591,"cardId":"OP17-002","name":"Atmos","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP17:8","productId":708075,"cardId":"OP17-003","name":"Izo","rarity":"R","alt":false,"target":4,"qty":9,"price":0.01},
 {"id":"OP17:9","productId":705921,"cardId":"OP17-004","name":"Inuarashi & Nekomamushi","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
