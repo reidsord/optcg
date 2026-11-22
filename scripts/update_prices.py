@@ -164,6 +164,15 @@ def main(dry_run=False):
     return 0
 
 
+def accessories_value():
+    """Accessories count toward collection value: TCGplayer price when linked and listed, else Reid's price."""
+    total = 0
+    for a in read_json(f"{DATA}/accessories.json", []):
+        price = a.get("tcgPrice") if a.get("productId") and a.get("tcgPrice") is not None else a.get("myPrice")
+        total += (a.get("qty") or 0) * (price or 0)
+    return total
+
+
 def record_history(cards, today):
     history = read_price_history()
     for rows in cards.values():
@@ -173,7 +182,7 @@ def record_history(cards, today):
     write_price_history(history, cutoff)
 
     owned = [c for rows in cards.values() for c in rows if (c.get("qty") or 0) > 0]
-    value = money_round(sum(c["qty"] * (c.get("price") or 0) for c in owned))
+    value = money_round(sum(c["qty"] * (c.get("price") or 0) for c in owned) + accessories_value())
     days = [r for r in read_value_history() if r["date"] != today]
     days.append({"date": today, "value": value, "copies": sum(c["qty"] for c in owned)})
     write_value_history(days)

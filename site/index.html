@@ -33,9 +33,7 @@
 </header>
 
 <section class="stats" aria-label="Collection summary">
-  <div class="stat stat-main"><span class="label">Collection value</span><strong id="stat-value">–</strong></div>
-  <div class="stat"><span class="label">Copies</span><strong id="stat-copies">–</strong></div>
-  <div class="stat"><span class="label">Owned variants</span><strong id="stat-owned">–</strong></div>
+  <div class="stat stat-main"><span class="label">Collection value</span><div class="value-row"><strong id="stat-value">–</strong><span class="value-split" id="stat-split"></span></div></div>
   <div class="stat"><span class="label">Prices</span><strong id="stat-prices">–</strong></div>
 </section>
 
@@ -45,6 +43,8 @@
   <a href="#packs" data-tab="packs">Packs</a>
   <a href="#decks" data-tab="decks">Decks</a>
   <a href="#trade" data-tab="trade">Trade</a>
+  <a href="#accessories" data-tab="accessories">Accessories</a>
+  <a href="#stats" data-tab="stats">Stats</a>
   <a href="#events" data-tab="events">Events</a>
   <a href="#orders" data-tab="orders">Orders</a>
   <a href="#history" data-tab="history">History</a>
@@ -62,6 +62,7 @@
 <dialog id="account-dialog"></dialog>
 <dialog id="order-dialog"></dialog>
 <dialog id="trade-dialog"></dialog>
+<dialog id="acc-dialog"></dialog>
 <dialog id="card-dialog" class="card-dialog" aria-label="Card details"></dialog>
 <div id="toast" role="status" aria-live="polite" hidden></div>
 <div class="jump" id="jump" hidden>
