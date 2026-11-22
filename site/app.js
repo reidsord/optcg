@@ -28,7 +28,7 @@ const S = {
   priceHist: new Map(), valueHist: [], range: store.get('range') || '365', chartCleanup: null,
   packLog: (() => { try { return JSON.parse(store.get('pack-log') || '[]'); } catch { return []; } })(),
   homeQ: '', token: store.get('gh-token'), login: null, canEdit: false,
-  decks: [], deckSel: 0, priceAlerts: { targets: {} }, accessories: [], accCat: 'all',
+  decks: [], deckSel: 0, priceAlerts: { targets: {} }, accessories: [], accCat: 'all', accAll: store.get('acc-all') === '1',
   pendingCards: {}, pendingOrders: false, pendingNotes: false, pendingDecks: false, pendingAcc: false,
   saving: false, saveTimer: null, error: null,
 };
@@ -588,9 +588,13 @@ function totals(list = S.cards) {
   return { value, copies, owned };
 }
 
+// Collection value counts cards and accessories; copies and variants are cards only.
+const collectionValue = () => totals().value + accTotals().value;
+
 function renderStats() {
-  const t = totals();
-  $('#stat-value').textContent = money(t.value);
+  const t = totals(), acc = accTotals().value;
+  $('#stat-value').textContent = money(t.value + acc);
+  $('#stat-value').title = acc ? `Cards ${money(t.value)} · accessories ${money(acc)}` : '';
   $('#stat-copies').textContent = count(t.copies);
   $('#stat-owned').textContent = count(t.owned);
   $('#stat-prices').textContent = fmtDate(S.meta.pricesUpdatedAt);
@@ -707,7 +711,7 @@ function renderHome(main) {
 const RANGES = [['30', '1M'], ['90', '3M'], ['365', '1Y'], ['all', 'All']];
 
 function valueSeries() {
-  const live = { d: isoDay(), v: totals().value };
+  const live = { d: isoDay(), v: collectionValue() };
   const pts = S.valueHist.filter((r) => r.date < live.d).map((r) => ({ d: r.date, v: r.value, backfill: r.backfill }));
   pts.push(live);
   return S.range === 'all' ? pts : pts.filter((p) => p.d >= daysAgo(+S.range));
@@ -1679,7 +1683,7 @@ function accRow(a) {
   const thumb = a.productId
     ? `<img src="https://tcgplayer-cdn.tcgplayer.com/product/${a.productId}_200w.jpg" alt="" loading="lazy" decoding="async" data-fallback="${esc(a.name)}">`
     : `<span class="thumb acc-thumb" aria-hidden="true">${esc(short)}</span>`;
-  const info = [src === 'tcg' ? `TCGplayer low${a.tcgAt ? ' · ' + fmtDate(a.tcgAt) : ''}` : src === 'mine' ? (a.productId ? 'No TCGplayer listing, your price' : 'Your price') : 'No price yet', a.note].filter(Boolean);
+  const info = [a.auto && !(a.qty > 0) ? 'Official, not owned' : '', src === 'tcg' ? `TCGplayer low${a.tcgAt ? ' · ' + fmtDate(a.tcgAt) : ''}` : src === 'mine' ? (a.productId ? 'No TCGplayer listing, your price' : 'Your price') : 'No price yet', a.note].filter(Boolean);
   const qty = S.canEdit
     ? `<span class="stepper"><button type="button" data-acc-step="-1" aria-label="Remove one ${esc(a.name)}">−</button><output>${a.qty}</output><button type="button" data-acc-step="1" aria-label="Add one ${esc(a.name)}">+</button></span>`
     : `<span class="qty-ro">${a.qty} owned</span>`;
@@ -1693,35 +1697,44 @@ function accRow(a) {
 
 function renderAccessories(main) {
   const t = accTotals();
+  const mine = (a) => a.qty > 0 || !a.auto;
+  const shown = S.accessories.filter((a) => S.accAll || mine(a));
   const counts = new Map();
-  for (const a of S.accessories) counts.set(a.cat, (counts.get(a.cat) || 0) + 1);
+  for (const a of shown) counts.set(accCat(a.cat)[0], (counts.get(accCat(a.cat)[0]) || 0) + 1);
   if (S.accCat !== 'all' && !counts.has(S.accCat)) S.accCat = 'all';
-  const list = S.accessories.filter((a) => S.accCat === 'all' || a.cat === S.accCat);
+  const unowned = S.accessories.filter((a) => !(a.qty > 0)).length;
+  const list = shown.filter((a) => S.accCat === 'all' || accCat(a.cat)[0] === S.accCat);
   const groups = ACC_CATS.map(([key, label]) => [key, label, list.filter((a) => accCat(a.cat)[0] === key)]).filter((g) => g[2].length);
-  const missing = ACC_CATS.filter(([key]) => key !== 'other' && !counts.has(key));
+  const tracked = new Set(S.accessories.filter(mine).map((a) => accCat(a.cat)[0]));
+  const missing = ACC_CATS.filter(([key]) => key !== 'other' && !tracked.has(key));
   main.innerHTML = `
     <div class="section-head" style="margin-top:0">
-      <div><h2>Accessories</h2><div class="hint">${money(t.value)} · ${count(t.copies)} ${t.copies === 1 ? 'item' : 'items'} owned${t.unpriced ? ` · ${t.unpriced} without a price` : ''} · not counted in collection value</div></div>
+      <div><h2>Accessories</h2><div class="hint">${money(t.value)} · ${count(t.copies)} ${t.copies === 1 ? 'item' : 'items'} owned${t.unpriced ? ` · ${t.unpriced} without a price` : ''} · included in collection value</div></div>
       ${S.canEdit ? '<button class="btn primary" id="add-acc" type="button">+ Add accessory</button>' : ''}
     </div>
-    ${S.accessories.length ? `<div class="chips" role="group" aria-label="Category">
-      <button class="chip" type="button" data-cat="all" aria-pressed="${S.accCat === 'all'}">All ${S.accessories.length}</button>
+    ${S.accessories.some((a) => a.auto && !(a.qty > 0)) ? `<div class="seg acc-seg" role="group" aria-label="Show">
+      <button type="button" data-acc-all="0" aria-pressed="${!S.accAll}">Mine</button>
+      <button type="button" data-acc-all="1" aria-pressed="${!!S.accAll}">All, incl. ${count(unowned)} not owned</button>
+    </div>` : ''}
+    ${shown.length ? `<div class="chips" role="group" aria-label="Category">
+      <button class="chip" type="button" data-cat="all" aria-pressed="${S.accCat === 'all'}">All ${shown.length}</button>
       ${ACC_CATS.filter(([key]) => counts.has(key)).map(([key, label]) => `<button class="chip" type="button" data-cat="${key}" aria-pressed="${S.accCat === key}">${esc(label)} ${counts.get(key)}</button>`).join('')}
     </div>` : ''}
     ${groups.length ? groups.map(([key, label, rows]) => {
       const gt = accTotals(rows);
       return `<div class="section-head"><h2>${esc(label)}</h2><span class="hint">${count(gt.copies)} owned · ${money(gt.value)}</span></div>
         <div class="list">${rows.map(accRow).join('')}</div>`;
-    }).join('') : `<p class="empty">No accessories yet.${S.canEdit ? ' Add playmats, sleeves, deck boxes and the rest with <strong>+ Add accessory</strong>.' : ' Sign in to add them.'}</p>`}
+    }).join('') : S.accessories.length ? `<p class="empty">Nothing owned here yet. Switch to <strong>All</strong> to see official accessories you don't have.</p>` : `<p class="empty">No accessories yet.${S.canEdit ? ' Add playmats, sleeves, deck boxes and the rest with <strong>+ Add accessory</strong>.' : ' Sign in to add them.'}</p>`}
     ${S.canEdit && missing.length ? `<div class="callout acc-missing">
-      <h3>${S.accessories.length ? 'Nothing tracked yet for' : 'Start with'}</h3>
+      <h3>${tracked.size ? 'Nothing tracked yet for' : 'Start with'}</h3>
       <div class="chips acc-suggest">${missing.map(([key, label]) => `<button class="chip" type="button" data-add-cat="${key}">+ ${esc(label)}</button>`).join('')}</div>
       <p class="muted small">Sealed boxes, packs and decks are already tracked in Cards, and DON!! cards are in their sets.</p>
     </div>` : ''}
-    <p class="rule acc-rule">Linked items use TCGplayer's lowest listed price, updated each morning. Items without a link, or with no listing that day, use the price you enter.</p>`;
+    <p class="rule acc-rule">Linked items use TCGplayer's lowest listed price, updated each morning. Items without a link, or with no listing that day, use the price you enter. New official One Piece accessories listed on TCGplayer are added each morning at 0 owned.</p>`;
   $('#add-acc', main)?.addEventListener('click', () => editAccessory(null, S.accCat !== 'all' ? S.accCat : 'playmats'));
   main.querySelectorAll('[data-add-cat]').forEach((b) => (b.onclick = () => editAccessory(null, b.dataset.addCat)));
   main.querySelectorAll('[data-cat]').forEach((b) => (b.onclick = () => { S.accCat = b.dataset.cat; render(); }));
+  main.querySelectorAll('[data-acc-all]').forEach((b) => (b.onclick = () => { S.accAll = b.dataset.accAll === '1'; store.set('acc-all', S.accAll ? '1' : null); render(); }));
   main.querySelectorAll('[data-acc]').forEach((row) => {
     const a = S.accessories.find((x) => x.id === row.dataset.acc);
     row.querySelectorAll('[data-acc-step]').forEach((b) => (b.onclick = () => {

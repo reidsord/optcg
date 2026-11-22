@@ -45,8 +45,8 @@ jobs:
       - name: Update prices and add new cards
         if: github.event_name != 'pull_request' && !inputs.test_alert
         run: |
-          python3 scripts/update_prices.py
           python3 scripts/update_accessories.py || echo "::warning::Accessory prices didn't update today."
+          python3 scripts/update_prices.py
           python3 scripts/set_colors.py
 
       - name: Check price alerts

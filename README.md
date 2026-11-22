@@ -18,7 +18,8 @@ JSON files in this repo.
   dice and counters, playmat tubes and anything else, with quantities and prices.
   Paste an item's TCGplayer link to price it at the lowest listed price each
   morning; otherwise (or when nothing is listed) it uses the price you enter.
-  Kept apart from the collection value.
+  New official One Piece accessories on TCGplayer are added each morning at
+  0 owned (shown under **All**). Accessories count toward the collection value.
 - **Events**: upcoming tournaments near home from Bandai TCG+, official event
   announcements, and new products (Premium Bandai exclusives marked).
 - **Orders**: orders and preorders with paid and remaining totals.
@@ -39,7 +40,7 @@ JSON files in this repo.
 | `data/decks.json` | Decks saved on the Decks tab. |
 | `scripts/update_prices.py` | Daily job: lowest listed TCGplayer price (English cards), new cards and new sets. |
 | `data/accessories.json` | Accessories, one per line: `name`, `cat`, `qty`, your price `myPrice`, and an optional TCGplayer `productId`. The daily job adds `tcgPrice` (lowest listed), `tcgAt` and where it found the product (`tcgGroup`). |
-| `scripts/update_accessories.py` | Daily job: TCGplayer lowest listed price for linked accessories, searched in the One Piece and Supplies categories. |
+| `scripts/update_accessories.py` | Daily job: TCGplayer lowest listed price for linked accessories, searched in the One Piece and Supplies categories; also adds new official One Piece accessories at 0 owned (`auto`), remembering each in `meta.json` `accessoryProducts` so deleted ones stay deleted. |
 | `data/price-alerts.json` | Settings for Discord price alerts (`movePct`, `minPrice`) and the price targets set on card details (`targets`, productId → price). |
 | `data/price-alert-state.json` | Where each owned card's price stood at its last alert, and which targets are already hit. Written by the price job. |
 | `scripts/price_alerts.py` | Runs after the price update: posts big moves on cards you own and price-target hits to Discord. |
