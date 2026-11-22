@@ -47,7 +47,10 @@ def supply_categories():
 
 
 def find_groups(wanted, supply_cats, budget):
-    """Find which [category, group] lists each wanted productId. Returns (found, prices by productId)."""
+    """Find which [category, group] lists each wanted productId. Returns (found, prices by productId).
+
+    Reads each group's product list rather than its prices: a playmat with no listings
+    today has no price row but is still in the catalog."""
     found, rows = {}, {}
     requests = 0
     for cat in [ONE_PIECE] + supply_cats:
@@ -62,13 +65,13 @@ def find_groups(wanted, supply_cats, budget):
                 return found, rows
             requests += 1
             try:
-                prices = fetch(f"{TCGCSV}/{cat}/{g['groupId']}/prices")
+                products = fetch(f"{TCGCSV}/{cat}/{g['groupId']}/products")
             except Exception:
                 continue
-            for p in prices:
+            for p in products:
                 if p["productId"] in wanted:
                     found[p["productId"]] = [cat, g["groupId"]]
-                    rows.setdefault(p["productId"], []).append(p)
+                    print(f"  found {p['name']} in {cat}/{g['groupId']} ({g.get('name')})")
             time.sleep(0.1)
     return found, rows
 

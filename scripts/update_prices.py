@@ -119,7 +119,9 @@ def main(dry_run=False):
         # New listings go to the set claiming their card number prefix, else the group's own set.
         home = next((c for c in set_codes if c not in prefix), set_codes[0])
         for p in sorted(products, key=lambda p: (not extended(p, "Number"), extended(p, "Number") or "", p["name"])):
-            if p["productId"] in known_products or p["productId"] in excluded_products or "Japanese" in p["name"]:
+            # Category 68 only lists English products, so a name like "Japanese Version 3rd
+            # Anniversary Set" is an English listing of that bundle and is kept.
+            if p["productId"] in known_products or p["productId"] in excluded_products:
                 continue
             number = extended(p, "Number") or ""
             dest = next((c for c in set_codes if c in prefix and number.startswith(prefix[c])), home)
