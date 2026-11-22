@@ -592,9 +592,10 @@ function totals(list = S.cards) {
 const collectionValue = () => totals().value + accTotals().value;
 
 function renderStats() {
-  const t = totals(), acc = accTotals().value;
+  const t = totals(), acc = accTotals().value, sealed = totals(S.cards.filter(isSealed)).value;
   $('#stat-value').textContent = money(t.value + acc);
-  $('#stat-value').title = acc ? `Cards ${money(t.value)} · accessories ${money(acc)}` : '';
+  $('#stat-split').innerHTML = [['Cards', t.value - sealed], ['Sealed', sealed], ['Accessories', acc]]
+    .map(([label, v]) => `<span><span class="label">${label}</span> ${money(v)}</span>`).join('');
   $('#stat-copies').textContent = count(t.copies);
   $('#stat-owned').textContent = count(t.owned);
   $('#stat-prices').textContent = fmtDate(S.meta.pricesUpdatedAt);
