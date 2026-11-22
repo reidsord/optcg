@@ -77,7 +77,7 @@
 {"id":"OP12:80","productId":643799,"cardId":"OP12-061","name":"Donquixote Rosinante (061) (Alternate Art)","rarity":"L","alt":true,"target":1,"qty":0,"price":32.8},
 {"id":"OP12:81","productId":643800,"cardId":"OP12-062","name":"Vinsmoke Sora","rarity":"R","alt":false,"target":4,"qty":17,"price":0.01},
 {"id":"OP12:82","productId":643801,"cardId":"OP12-063","name":"Vinsmoke Reiju","rarity":"SR","alt":false,"target":4,"qty":12,"price":0.99},
-{"id":"OP12:83","productId":643802,"cardId":"OP12-063","name":"Vinsmoke Reiju (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":1,"price":12.99},
+{"id":"OP12:83","productId":643802,"cardId":"OP12-063","name":"Vinsmoke Reiju (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":12.99},
 {"id":"OP12:84","productId":643803,"cardId":"OP12-064","name":"Vergo","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP12:85","productId":643804,"cardId":"OP12-065","name":"Emporio.Ivankov (065)","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP12:86","productId":643805,"cardId":"OP12-066","name":"Carne","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},

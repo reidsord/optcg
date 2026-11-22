@@ -68,7 +68,7 @@
 {"id":"OP15:185","productId":685320,"cardId":"EB04-050","name":"I'll Whip You Into Shape.","rarity":"R","alt":false,"target":4,"qty":9,"price":0.01},
 {"id":"OP15:186","productId":685321,"cardId":"EB04-051","name":"Emet","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:187","productId":685322,"cardId":"EB04-052","name":"Sanji (EB04-052)","rarity":"R","alt":false,"target":4,"qty":9,"price":0.01},
-{"id":"OP15:188","productId":685323,"cardId":"EB04-052","name":"Sanji (EB04-052) (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":1,"price":4.53},
+{"id":"OP15:188","productId":685323,"cardId":"EB04-052","name":"Sanji (EB04-052) (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":4.53},
 {"id":"OP15:189","productId":685324,"cardId":"EB04-053","name":"Sentomaru","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:190","productId":685325,"cardId":"EB04-054","name":"Bartholomew Kuma (EB04-054)","rarity":"R","alt":false,"target":4,"qty":13,"price":0.02},
 {"id":"OP15:191","productId":685326,"cardId":"EB04-055","name":"Bartholomew Kuma (EB04-055)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
@@ -79,5 +79,5 @@
 {"id":"OP15:196","productId":685331,"cardId":"EB04-059","name":"Black Rope Dragon Twister","rarity":"R","alt":false,"target":4,"qty":7,"price":0.05},
 {"id":"OP15:197","productId":685332,"cardId":"EB04-060","name":"Gum-Gum Hawk Gatling","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:198","productId":685333,"cardId":"EB04-061","name":"Monkey.D.Luffy (EB04-061)","rarity":"SEC","alt":false,"target":4,"qty":4,"price":7},
-{"id":"OP15:199","productId":685334,"cardId":"EB04-061","name":"Monkey.D.Luffy (EB04-061) (Alternate Art)","rarity":"SEC","alt":true,"target":1,"qty":1,"price":24.21}
+{"id":"OP15:199","productId":685334,"cardId":"EB04-061","name":"Monkey.D.Luffy (EB04-061) (Alternate Art)","rarity":"SEC","alt":true,"target":1,"qty":0,"price":24.21}
 ]
