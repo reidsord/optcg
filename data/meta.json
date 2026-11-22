@@ -1,5 +1,5 @@
 {
-  "pricesUpdatedAt": "2026-11-21T18:03:02+00:00",
+  "pricesUpdatedAt": "2026-11-22T18:34:04+00:00",
   "priceSource": "TCGplayer lowest listed price (English)",
   "importedAt": "2026-10-08T18:48:24+00:00",
   "groupWatermark": 24946,
@@ -8,5 +8,18 @@
   ],
   "excludedProducts": [
     710740
+  ],
+  "accessoryProducts": [
+    489991,
+    489992,
+    504496,
+    508351,
+    508352,
+    508354,
+    508357,
+    508360,
+    509196,
+    527143,
+    530133
   ]
 }
