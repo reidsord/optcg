@@ -596,8 +596,6 @@ function renderStats() {
   $('#stat-value').textContent = money(t.value + acc);
   $('#stat-split').innerHTML = [['Cards', t.value - sealed], ['Sealed', sealed], ['Accessories', acc]]
     .map(([label, v]) => `<span><span class="label">${label}</span> ${money(v)}</span>`).join('');
-  $('#stat-copies').textContent = count(t.copies);
-  $('#stat-owned').textContent = count(t.owned);
   $('#stat-prices').textContent = fmtDate(S.meta.pricesUpdatedAt);
   $('#stat-prices').title = S.meta.priceSource || '';
   $('#foot-source').textContent = `Prices: ${S.meta.priceSource || 'TCGplayer'}`;
@@ -1804,6 +1802,95 @@ function editAccessory(item, cat = 'playmats') {
   d.showModal();
 }
 
+// ---------- Stats ----------
+
+function statRows() {
+  const owned = S.cards.filter((c) => c.qty > 0);
+  const cards = owned.filter((c) => !isSealed(c)), sealed = owned.filter(isSealed);
+  const sum = (list, f) => list.reduce((n, c) => n + f(c), 0);
+  const val = (c) => c.qty * (c.price || 0);
+  const top = (list, f) => list.reduce((best, c) => (!best || f(c) > f(best) ? c : best), null);
+  const cardLabel = (c) => (c ? `${c.name}${c.cardId ? ` (${c.cardId})` : ''} · ${c.set}` : '–');
+  const pct = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '–');
+  const acc = accTotals();
+  const cardValue = sum(cards, val), sealedValue = sum(sealed, val), total = cardValue + sealedValue + acc.value;
+
+  // Value over time
+  const hist = S.valueHist;
+  const ago = (days) => { const d = daysAgo(days); return [...hist].reverse().find((r) => r.date <= d); };
+  const change = (r) => (r ? `${total - r.value >= 0 ? '+' : '−'}${money(Math.abs(total - r.value))} (${r.value ? ((total / r.value - 1) * 100).toFixed(1) : 0}%)` : '–');
+  const high = hist.reduce((best, r) => (!best || r.value > best.value ? r : best), null);
+
+  // Sets
+  const progress = S.sets.map((s) => ({ s, p: setProgress(s.code) })).filter((x) => x.p.target);
+  const done = progress.filter((x) => x.p.pct >= 100);
+  const closest = progress.filter((x) => x.p.pct < 100).sort((a, b) => b.p.pct - a.p.pct)[0];
+  const bySetValue = [...progress].sort((a, b) => b.p.value - a.p.value)[0];
+  const allTarget = sum(progress, (x) => x.p.target), allHave = sum(progress, (x) => x.p.have);
+
+  // Cards
+  const unique = new Set(cards.filter((c) => c.cardId).map((c) => c.cardId)).size;
+  const alts = cards.filter((c) => kind(c) === 'alt');
+  const rarity = (r) => sum(cards.filter((c) => c.rarity === r), (c) => c.qty);
+  const copies = sum(cards, (c) => c.qty);
+  const byName = new Map();
+  for (const c of cards) if (c.cardId && c.rarity !== 'DON!!') byName.set(baseName(c), (byName.get(baseName(c)) || 0) + c.qty);
+  const favorite = [...byName].sort((a, b) => b[1] - a[1])[0];
+  const paid = S.orders.reduce((n, o) => n + (Number.isFinite(o.paid) ? o.paid : 0), 0);
+
+  return [
+    ['Collection', [
+      ['Total value', money(total)],
+      ['Cards', money(cardValue)],
+      ['Sealed', money(sealedValue)],
+      ['Accessories', money(acc.value)],
+      ['Change in the last 30 days', change(ago(30))],
+      ['Change in the last year', change(ago(365))],
+      ['Highest value recorded', high ? `${money(high.value)} · ${dayLabel(high.date, true)}` : '–'],
+    ]],
+    ['Cards', [
+      ['Copies', count(copies)],
+      ['Owned variants', count(cards.length)],
+      ['Different card numbers owned', count(unique)],
+      ['Alternate arts and parallels owned', count(alts.length)],
+      ['Secret rares (SEC) owned', count(rarity('SEC'))],
+      ['SP cards owned', count(sum(cards.filter((c) => /\(SP\)/.test(c.name)), (c) => c.qty))],
+      ['Treasure rares (TR) owned', count(rarity('TR'))],
+      ['Average value per copy', money(copies ? cardValue / copies : 0)],
+      ['Cards worth $100 or more', count(cards.filter((c) => (c.price || 0) >= 100).length)],
+      ['Bulk (copies under $1)', `${count(sum(cards.filter((c) => (c.price || 0) < 1), (c) => c.qty))} worth ${money(sum(cards.filter((c) => (c.price || 0) < 1), val))}`],
+      ['Most valuable card', (() => { const c = top(cards, (c) => c.price || 0); return c ? `${cardLabel(c)} · ${money(c.price)}` : '–'; })()],
+      ['Most copies of one card', (() => { const c = top(cards.filter((c) => c.rarity !== 'DON!!'), (c) => c.qty); return c ? `${cardLabel(c)} · ${count(c.qty)}` : '–'; })()],
+      ['Most collected character', favorite ? `${favorite[0]} · ${count(favorite[1])} copies` : '–'],
+    ]],
+    ['Sealed and accessories', [
+      ['Sealed products owned', count(sum(sealed, (c) => c.qty))],
+      ['Most valuable sealed product', (() => { const c = top(sealed, (c) => c.price || 0); return c ? `${c.name} · ${money(c.price)}` : '–'; })()],
+      ['Accessories owned', count(acc.copies)],
+    ]],
+    ['Sets', [
+      ['Overall completion', `${pct(allHave, allTarget)} (${count(allHave)} of ${count(allTarget)} target copies)`],
+      ['Sets complete', `${count(done.length)} of ${count(progress.length)}`],
+      ['Closest to complete', closest ? `${closest.s.code} · ${closest.p.pct}%, ${count(closest.p.target - closest.p.have)} copies to go` : '–'],
+      ['Most valuable set', bySetValue ? `${bySetValue.s.code} · ${money(bySetValue.p.value)}` : '–'],
+    ]],
+    ['Activity', [
+      ['Orders logged', `${count(S.orders.length)} · ${money(paid)} paid`],
+      ['Last quantity change', S.history[0] ? `${S.history[0].name} · ${fmtDate(S.history[0].t)}` : '–'],
+      ['Prices updated', fmtDate(S.meta.pricesUpdatedAt)],
+    ]],
+  ];
+}
+
+function renderStatsTab(main) {
+  main.innerHTML = `<div class="section-head" style="margin-top:0"><h2>Stats</h2><span class="hint">Prices: ${esc(S.meta.priceSource || 'TCGplayer')}</span></div>
+    ${statRows().map(([title, rows]) => `
+      <h3 class="stats-group">${esc(title)}</h3>
+      <div class="table-wrap"><table class="stats-table"><tbody>
+        ${rows.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td class="n">${esc(v)}</td></tr>`).join('')}
+      </tbody></table></div>`).join('')}`;
+}
+
 // ---------- Router ----------
 
 function render() {
@@ -1812,10 +1899,10 @@ function render() {
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'accessories', 'events', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'accessories', 'stats', 'events', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, accessories: renderAccessories, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, accessories: renderAccessories, stats: renderStatsTab, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
   // Links from Discord alerts open one card: #cards?q=OP01-001&card=OP01:5
   const cardLink = new URLSearchParams(location.hash.split('?')[1] || '').get('card');
   if (cardLink && S.byId.has(cardLink)) openCard(cardLink);

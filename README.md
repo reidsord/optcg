@@ -20,6 +20,9 @@ JSON files in this repo.
   morning; otherwise (or when nothing is listed) it uses the price you enter.
   New official One Piece accessories on TCGplayer are added each morning at
   0 owned (shown under **All**). Accessories count toward the collection value.
+- **Stats**: a table of collection numbers: value by cards, sealed and
+  accessories, copies, owned variants, rarities, most valuable and most-owned
+  cards, set completion and activity.
 - **Events**: upcoming tournaments near home from Bandai TCG+, official event
   announcements, and new products (Premium Bandai exclusives marked).
 - **Orders**: orders and preorders with paid and remaining totals.
