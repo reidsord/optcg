@@ -110,6 +110,21 @@ function setStyle(code) {
 // price-history.json keeps a point only when a price moves, so a card's price on a
 // day is its latest point on or before that day.
 
+// Search boxes run their search once typing pauses (so the phone keyboard never waits on it),
+// or right away on Enter / the keyboard's Search or Go key, or when the box loses focus.
+const TYPING_PAUSE = 500;
+function onTyped(input, run, delay = TYPING_PAUSE) {
+  // Only typing that hasn't been searched yet is pending, so Enter after a finished search
+  // doesn't search again (Packs and Trade use Enter to add the highlighted card).
+  let timer = null, pending = false;
+  const flush = () => { clearTimeout(timer); timer = null; if (pending) { pending = false; run(input.value); } };
+  const later = () => { pending = true; clearTimeout(timer); timer = input.value ? setTimeout(flush, delay) : null; if (!input.value) flush(); };
+  input.addEventListener('input', later);
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') flush(); });
+  input.addEventListener('search', flush);
+  input.addEventListener('blur', flush);
+}
+
 const isoDay = (t = Date.now()) => new Date(t).toISOString().slice(0, 10);
 const daysAgo = (n) => isoDay(Date.now() - n * 864e5);
 
@@ -701,8 +716,7 @@ function renderHome(main) {
   renderMovers();
 
   const input = $('#home-q', main);
-  let typing;
-  input.addEventListener('input', () => { clearTimeout(typing); typing = setTimeout(() => { S.homeQ = input.value; renderHomeResults(); }, 120); });
+  onTyped(input, (q) => { S.homeQ = q; renderHomeResults(); });
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && input.value.trim()) location.hash = '#cards?q=' + encodeURIComponent(input.value.trim()); });
   renderHomeResults();
 }
@@ -957,8 +971,7 @@ function renderCards(main) {
   }
 
   const update = (patch) => { writeQuery({ ...f, ...patch }); render(); };
-  let typing;
-  $('#q', main).addEventListener('input', (e) => { clearTimeout(typing); typing = setTimeout(() => { writeQuery({ ...f, q: e.target.value }); renderCardsKeepFocus(); }, 150); });
+  onTyped($('#q', main), (q) => { writeQuery({ ...f, q }); renderCardsKeepFocus(); });
   main.querySelectorAll('[data-preset]').forEach((b) => (b.onclick = () => update({ preset: b.dataset.preset, sort: '' })));
   $('#f-set', main).onchange = (e) => update({ set: e.target.value, ed: '' });
   main.querySelectorAll('[data-ed]').forEach((b) => (b.onclick = () => update({ ed: b.dataset.ed })));
@@ -1216,7 +1229,7 @@ function renderPacks(main) {
     if (clear) clear.onclick = () => { S.packLog = []; store.set('pack-log', null); showLog(); };
   };
 
-  input.addEventListener('input', () => { matches = packMatches(input.value, setCode); sel = 0; showMatches(); });
+  onTyped(input, (q) => { matches = packMatches(q, setCode); sel = 0; showMatches(); });
   input.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
@@ -1516,7 +1529,7 @@ function renderTrade(main) {
 
   main.querySelectorAll('[data-q]').forEach((input) => {
     const side = input.dataset.q;
-    input.addEventListener('input', () => { matches[side] = tradeMatches(input.value, side); shown[side] = TRADE_PAGE; showMatches(side); });
+    onTyped(input, (q) => { matches[side] = tradeMatches(q, side); shown[side] = TRADE_PAGE; showMatches(side); });
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && matches[side][0]) { e.preventDefault(); add(side, matches[side][0]); }
     });
