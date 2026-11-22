@@ -41,6 +41,8 @@ const isBoosterSet = (code) => /^(OP|EB)\d+$/.test(code);
 // Buy list: base cards from main and extra boosters below their target (four copies).
 const buyNeed = (c) =>
   kind(c) === 'base' && isBoosterSet(c.set) && !isSealed(c) && c.rarity !== 'DON!!' && c.qty < c.target ? c.target - c.qty : 0;
+// Set completion counts base-rarity cards only: no alternate arts or parallels, DON!! cards or sealed product.
+const countsForSet = (c) => c.alt !== true && !isSealed(c) && c.rarity !== 'DON!!';
 const isNew = (c) => c.added && Date.now() - Date.parse(c.added) < NEW_DAYS * 864e5;
 const image = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_200w.jpg`;
 const bigImage = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_in_1000x1000.jpg`;
@@ -359,7 +361,7 @@ function setQty(c, qty) {
   changed();
   if (rising && !wasComplete && setProgress(c.set).pct >= 100) {
     confetti();
-    toast(`${c.set} complete! Every card is at its target.`);
+    toast(`${c.set} complete! Every base card is at its target.`);
   }
 }
 
@@ -616,17 +618,19 @@ function renderStats() {
   $('#foot-source').textContent = `Prices: ${S.meta.priceSource || 'TCGplayer'}`;
 }
 
+// target/have/pct are base-rarity copies only (see countsForSet); alt arts are tracked separately for display.
 function setProgress(code) {
-  let target = 0, have = 0, value = 0, baseT = 0, baseH = 0, altT = 0, altH = 0, n = 0;
+  let target = 0, have = 0, value = 0, altT = 0, altH = 0, n = 0;
   for (const c of S.cards) {
     if (c.set !== code) continue;
     n++;
     const h = Math.min(c.qty, c.target);
-    target += c.target; have += h; value += c.qty * (c.price || 0);
-    if (kind(c) === 'base') { baseT += c.target; baseH += h; }
+    value += c.qty * (c.price || 0);
+    if (countsForSet(c)) { target += c.target; have += h; }
     if (kind(c) === 'alt') { altT += c.target; altH += h; }
   }
-  return { target, have, value, baseT, baseH, altT, altH, n, pct: target ? Math.round((have / target) * 100) : 0 };
+  // Floor so a set only shows 100% when every base card is at its target.
+  return { target, have, value, altT, altH, n, pct: target ? Math.floor((have / target) * 100) : 0 };
 }
 
 function renderHome(main) {
@@ -697,8 +701,8 @@ function renderHome(main) {
             <div class="name">${esc(s.name)}</div>
             <div class="value">${money(p.value)}</div>
             <div class="bar"><i style="width:${p.pct}%"></i></div>
-            <div class="sub"><span>${count(p.have)} / ${count(p.target)} copies · ${p.pct}%</span></div>
-            <div class="sub"><span>Base ${p.baseH}/${p.baseT}</span><span>Alt ${p.altH}/${p.altT}</span></div>
+            <div class="sub"><span>${p.target ? `Base ${count(p.have)} / ${count(p.target)} copies · ${p.pct}%` : 'No base cards'}</span></div>
+            ${p.altT ? `<div class="sub"><span>Alt ${p.altH}/${p.altT}</span></div>` : ''}
           </a>`;
         }).join('')}
       </div>`).join('')}`;
@@ -1882,7 +1886,7 @@ function statRows() {
       ['Accessories owned', count(acc.copies)],
     ]],
     ['Sets', [
-      ['Overall completion', `${pct(allHave, allTarget)} (${count(allHave)} of ${count(allTarget)} target copies)`],
+      ['Overall completion (base cards)', `${pct(allHave, allTarget)} (${count(allHave)} of ${count(allTarget)} target copies)`],
       ['Sets complete', `${count(done.length)} of ${count(progress.length)}`],
       ['Closest to complete', closest ? `${closest.s.code} · ${closest.p.pct}%, ${count(closest.p.target - closest.p.have)} copies to go` : '–'],
       ['Most valuable set', bySetValue ? `${bySetValue.s.code} · ${money(bySetValue.p.value)}` : '–'],
