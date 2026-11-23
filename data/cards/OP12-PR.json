@@ -26,7 +26,7 @@
 {"id":"OP12-PR:29","productId":649279,"cardId":"OP12-038","name":"Two-Sword Style Rashomon","rarity":"C","alt":false,"target":4,"qty":0,"price":0.99},
 {"id":"OP12-PR:30","productId":649278,"cardId":"OP12-042","name":"Alvida","rarity":"C","alt":false,"target":4,"qty":0,"price":0.99},
 {"id":"OP12-PR:31","productId":649277,"cardId":"OP12-045","name":"Jango","rarity":"C","alt":false,"target":4,"qty":0,"price":0.21},
-{"id":"OP12-PR:32","productId":649276,"cardId":"OP12-046","name":"Zephyr(Navy)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.91},
+{"id":"OP12-PR:32","productId":649276,"cardId":"OP12-046","name":"Zephyr(Navy)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.87},
 {"id":"OP12-PR:33","productId":649275,"cardId":"OP12-048","name":"Donquixote Rosinante (048)","rarity":"C","alt":false,"target":4,"qty":0,"price":0.99},
 {"id":"OP12-PR:34","productId":649307,"cardId":"OP12-049","name":"Buggy (049)","rarity":"UC","alt":false,"target":4,"qty":0,"price":8.5},
 {"id":"OP12-PR:35","productId":649308,"cardId":"OP12-050","name":"Jaguar.D.Saul","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.25},
@@ -37,7 +37,7 @@
 {"id":"OP12-PR:40","productId":649272,"cardId":"OP12-057","name":"Ice Block Pheasant Peck","rarity":"C","alt":false,"target":4,"qty":0,"price":4.99},
 {"id":"OP12-PR:41","productId":649271,"cardId":"OP12-058","name":"I Will Make Whitebeard the King of the Pirates","rarity":"C","alt":false,"target":4,"qty":1,"price":0.98},
 {"id":"OP12-PR:42","productId":649311,"cardId":"OP12-059","name":"Concasser","rarity":"UC","alt":false,"target":4,"qty":0,"price":4.8},
-{"id":"OP12-PR:43","productId":649270,"cardId":"OP12-064","name":"Vergo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.15},
+{"id":"OP12-PR:43","productId":649270,"cardId":"OP12-064","name":"Vergo","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP12-PR:44","productId":649312,"cardId":"OP12-065","name":"Emporio.Ivankov (065)","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.9},
 {"id":"OP12-PR:45","productId":649269,"cardId":"OP12-066","name":"Carne","rarity":"C","alt":false,"target":4,"qty":0,"price":0.25},
 {"id":"OP12-PR:46","productId":649268,"cardId":"OP12-067","name":"Carmen","rarity":"C","alt":false,"target":4,"qty":2,"price":0.2},
@@ -54,7 +54,7 @@
 {"id":"OP12-PR:57","productId":649317,"cardId":"OP12-083","name":"Inazuma","rarity":"UC","alt":false,"target":4,"qty":1,"price":0.97},
 {"id":"OP12-PR:58","productId":649318,"cardId":"OP12-084","name":"Emporio.Ivankov (084)","rarity":"UC","alt":false,"target":4,"qty":0,"price":1.75},
 {"id":"OP12-PR:59","productId":649261,"cardId":"OP12-085","name":"Karasu","rarity":"C","alt":false,"target":4,"qty":0,"price":0.94},
-{"id":"OP12-PR:60","productId":649260,"cardId":"OP12-088","name":"Bastille","rarity":"C","alt":false,"target":4,"qty":0,"price":0.19},
+{"id":"OP12-PR:60","productId":649260,"cardId":"OP12-088","name":"Bastille","rarity":"C","alt":false,"target":4,"qty":0,"price":0.2},
 {"id":"OP12-PR:61","productId":649259,"cardId":"OP12-090","name":"Belo Betty","rarity":"C","alt":false,"target":4,"qty":0,"price":0.79},
 {"id":"OP12-PR:62","productId":649258,"cardId":"OP12-091","name":"Poker","rarity":"C","alt":false,"target":4,"qty":0,"price":0.24},
 {"id":"OP12-PR:63","productId":649319,"cardId":"OP12-092","name":"Mizerka","rarity":"UC","alt":false,"target":4,"qty":0,"price":0.35},
@@ -74,5 +74,5 @@
 {"id":"OP12-PR:77","productId":649325,"cardId":"OP12-114","name":"Wyper","rarity":"UC","alt":false,"target":4,"qty":0,"price":5.39},
 {"id":"OP12-PR:78","productId":649326,"cardId":"OP12-115","name":"I Love You!!","rarity":"UC","alt":false,"target":4,"qty":0,"price":12.68},
 {"id":"OP12-PR:79","productId":649248,"cardId":"OP12-116","name":"We'll Ring the Bell Waiting for You!!","rarity":"C","alt":false,"target":4,"qty":0,"price":0.29},
-{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":5.34}
+{"id":"OP12-PR:80","productId":649244,"cardId":"","name":"Legacy of the Master - Release Event Pack","rarity":"","alt":false,"target":1,"qty":0,"price":0.01}
 ]
