@@ -637,5 +637,19 @@
     "groupId": 24946,
     "file": "EB06.json",
     "added": "2026-11-15"
+  },
+  {
+    "code": "ST-37",
+    "name": "ST-37: Starter Deck 37 The Desert Princess and the Pirates",
+    "groupId": 24957,
+    "file": "ST-37.json",
+    "added": "2026-11-24"
+  },
+  {
+    "code": "ST-38",
+    "name": "ST-38: Starter Deck 38 Baroque Works",
+    "groupId": 24958,
+    "file": "ST-38.json",
+    "added": "2026-11-24"
   }
 ]
