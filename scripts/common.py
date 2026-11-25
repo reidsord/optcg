@@ -8,7 +8,7 @@ DATA = os.path.join(ROOT, "data")
 
 # Card fields in the order they are written. One card per line keeps git diffs
 # small and lets a price update and a quantity edit merge cleanly.
-CARD_FIELDS = ["id", "productId", "cardId", "name", "rarity", "alt", "target", "qty", "price", "added"]
+CARD_FIELDS = ["id", "productId", "printing", "cardId", "name", "rarity", "alt", "target", "qty", "price", "added"]
 
 ALT_PATTERN = re.compile(
     r"\((?:[^)]*\b(?:Alternate Art|Parallel|SP|Manga|Textured Foil|Dash Pack|Box Topper|"
@@ -78,12 +78,26 @@ def write_json(path, value):
     return write_text(path, json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
+def price_key(card):
+    """Key for a card's price history and price alert. TCGplayer lists some cards as one product
+    with Normal and Foil printings (the Premium Booster DON!! cards); the foil row shares the
+    product id, so its history is kept under "<productId>-foil"."""
+    printing = card.get("printing")
+    return card["productId"] if printing in (None, "Normal") else f"{card['productId']}-{printing.lower()}"
+
+
+def history_order(key):
+    """Sort product ids (ints) before printing keys (strings) in the history files."""
+    return (isinstance(key, str), key)
+
+
 def card_row(card):
     return {k: card[k] for k in CARD_FIELDS if card.get(k) is not None or k in ("qty", "price", "alt")}
 
 
 # ---------- Price and value history ----------
 # price-history.json: one line per product, {"p": productId, "h": [[date, price], ...]}.
+# A foil printing listed under the same product uses "p": "<productId>-foil" (see price_key).
 # A point is stored only when the price moves enough to matter, which keeps the
 # file small while the daily job runs for years.
 PRICE_HISTORY = os.path.join(DATA, "price-history.json")
@@ -98,7 +112,7 @@ def read_price_history():
 
 def write_price_history(history, cutoff=None):
     rows = []
-    for p in sorted(history):
+    for p in sorted(history, key=history_order):
         points = history[p]
         if cutoff:
             # Keep the last point before the cutoff so the price at the cutoff is still known.
