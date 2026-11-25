@@ -19,7 +19,7 @@ import sys
 import urllib.parse
 from datetime import datetime, timezone
 
-from common import DATA, dump_rows, money_round, read_json, write_text
+from common import DATA, dump_rows, history_order, money_round, price_key, read_json, write_text
 
 SETTINGS = f"{DATA}/price-alerts.json"
 STATE = f"{DATA}/price-alert-state.json"
@@ -45,7 +45,8 @@ def money(x):
 
 
 def tcg(c):
-    return f"https://www.tcgplayer.com/product/{c['productId']}"
+    printing = c.get("printing")
+    return f"https://www.tcgplayer.com/product/{c['productId']}" + (f"?Printing={printing}" if printing else "")
 
 
 def inventory(c):
@@ -63,12 +64,13 @@ def label(c):
 def check(cards, settings, state):
     """Return (moves, hits, new_state). Moves are (card, before, after); hits are (card, target)."""
     move_pct, min_price = settings["movePct"], settings["minPrice"]
-    targets = {int(p): t for p, t in (settings.get("targets") or {}).items() if t is not None}
+    # Target keys are product ids, or "<productId>-foil" for a foil printing (see price_key).
+    targets = {(int(p) if str(p).isdigit() else p): t for p, t in (settings.get("targets") or {}).items() if t is not None}
     old = {r["p"]: r for r in state}
     new, moves, hits = {}, [], []
     seen = set()
     for c in cards:
-        p, price = c["productId"], c.get("price")
+        p, price = price_key(c), c.get("price")
         if p in seen or price is None:
             continue
         seen.add(p)
@@ -88,7 +90,7 @@ def check(cards, settings, state):
                 row["below"] = True
         if len(row) > 1:
             new[p] = row
-    return moves, hits, [new[p] for p in sorted(new)]
+    return moves, hits, [new[p] for p in sorted(new, key=history_order)]
 
 
 def move_line(c, before, after):

@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 
 from datetime import timedelta
 
-from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round,
+from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round, price_key,
                     read_json, read_price_history, read_value_history, set_code, set_file, set_groups, write_json,
                     write_price_history, write_text, write_value_history)
 
@@ -46,9 +46,11 @@ def extended(product, key):
     return None
 
 
-def lowest_price(price_rows):
-    """Lowest listed price across printings (Normal/Foil) of one product."""
-    lows = [p["lowPrice"] for p in price_rows if p.get("lowPrice") is not None]
+def lowest_price(price_rows, printing=None):
+    """Lowest listed price of one product: across its printings (Normal/Foil), or only the given
+    printing for a card tracked per printing (Premium Booster DON!! have separate Normal and Foil rows)."""
+    lows = [p["lowPrice"] for p in price_rows
+            if p.get("lowPrice") is not None and (printing is None or p.get("subTypeName") == printing)]
     if not lows:
         return None
     low = round(min(lows), 2)
@@ -111,7 +113,7 @@ def main(dry_run=False):
 
         for code in set_codes:
             for c in cards[code]:
-                low = lowest_price(rows_by_product.get(c["productId"], []))
+                low = lowest_price(rows_by_product.get(c["productId"], []), c.get("printing"))
                 if low is not None and low != c.get("price"):
                     c["price"] = low
                     price_changes += 1
@@ -179,7 +181,7 @@ def record_history(cards, today):
     history = read_price_history()
     for rows in cards.values():
         for c in rows:
-            add_price_point(history.setdefault(c["productId"], []), today, c.get("price"))
+            add_price_point(history.setdefault(price_key(c), []), today, c.get("price"))
     cutoff = (datetime.fromisoformat(today) - timedelta(days=HISTORY_DAYS)).date().isoformat()
     write_price_history(history, cutoff)
 

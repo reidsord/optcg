@@ -46,7 +46,10 @@ const countsForSet = (c) => c.alt !== true && !isSealed(c) && c.rarity !== 'DON!
 const isNew = (c) => c.added && Date.now() - Date.parse(c.added) < NEW_DAYS * 864e5;
 const image = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_200w.jpg`;
 const bigImage = (c) => `https://tcgplayer-cdn.tcgplayer.com/product/${c.productId}_in_1000x1000.jpg`;
-const tcgLink = (c) => `https://www.tcgplayer.com/product/${c.productId}`;
+const tcgLink = (c) => `https://www.tcgplayer.com/product/${c.productId}${c.printing ? `?Printing=${c.printing}` : ''}`;
+// Price history and price alerts are keyed by product id, or "<id>-foil" for a foil printing that
+// shares its product with the normal one (Premium Booster DON!!). Matches price_key in scripts/common.py.
+const priceKey = (c) => (!c.printing || c.printing === 'Normal' ? c.productId : `${c.productId}-${c.printing.toLowerCase()}`);
 
 function setGroup(code) {
   if (/^OP\d+$/.test(code)) return 'Booster sets';
@@ -132,7 +135,7 @@ const daysAgo = (n) => isoDay(Date.now() - n * 864e5);
 
 function priceOn(c, day) {
   let price = null;
-  for (const [d, v] of S.priceHist.get(c.productId) || []) { if (d > day) break; price = v; }
+  for (const [d, v] of S.priceHist.get(priceKey(c)) || []) { if (d > day) break; price = v; }
   return price;
 }
 
@@ -220,7 +223,7 @@ function lineChart(el, points, { height = 220, step = false } = {}) {
 }
 
 function cardPriceSeries(c) {
-  const pts = (S.priceHist.get(c.productId) || []).map(([d, v]) => ({ d, v }));
+  const pts = (S.priceHist.get(priceKey(c)) || []).map(([d, v]) => ({ d, v }));
   if (c.price != null && (!pts.length || pts[pts.length - 1].d < isoDay())) pts.push({ d: isoDay(), v: c.price });
   return pts;
 }
@@ -1089,9 +1092,9 @@ function openCard(id) {
 // to Discord when a card falls to or under its target (scripts/price_alerts.py).
 
 function alertControl(c) {
-  const t = S.priceAlerts.targets[c.productId];
+  const t = S.priceAlerts.targets[priceKey(c)];
   if (!S.canEdit) return t != null ? `<p class="muted small alert-note">Discord alert at or under ${money(t)}.</p>` : '';
-  return `<form class="price-alert" data-alert="${c.productId}">
+  return `<form class="price-alert" data-alert="${priceKey(c)}">
       <label class="field-label" for="alert-price">Discord alert when the price is at or under</label>
       <div class="price-alert-row">
         <input id="alert-price" class="text-input" type="number" inputmode="decimal" min="0" step="0.01" value="${t ?? ''}" placeholder="e.g. ${c.price ? (Math.floor(c.price * 0.85 * 100) / 100).toFixed(2) : '5.00'}">
@@ -1102,7 +1105,7 @@ function alertControl(c) {
 }
 
 async function setPriceTarget(c, price) {
-  const p = String(c.productId);
+  const p = String(priceKey(c));
   const apply = (cfg) => {
     cfg.targets ||= {};
     if (price == null) delete cfg.targets[p]; else cfg.targets[p] = price;
