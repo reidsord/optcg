@@ -39,8 +39,12 @@ const kind = (c) => (c.alt === true ? 'alt' : c.alt === false ? 'base' : 'other'
 const isSealed = (c) => !c.cardId;
 const isBoosterSet = (code) => /^(OP|EB)\d+$/.test(code);
 // Buy list: base cards from main and extra boosters below their target (four copies).
+// Reid's kept: copies set aside in their own section (card field `kept`). They are
+// taken out of `qty` (the main inventory), so owned = qty + kept and nothing counts twice.
+const keptOf = (c) => c.kept || 0;
+const ownedQty = (c) => c.qty + keptOf(c);
 const buyNeed = (c) =>
-  kind(c) === 'base' && isBoosterSet(c.set) && !isSealed(c) && c.rarity !== 'DON!!' && c.qty < c.target ? c.target - c.qty : 0;
+  kind(c) === 'base' && isBoosterSet(c.set) && !isSealed(c) && c.rarity !== 'DON!!' && ownedQty(c) < c.target ? c.target - ownedQty(c) : 0;
 // Set completion counts base-rarity cards only: no alternate arts or parallels, DON!! cards or sealed product.
 const countsForSet = (c) => c.alt !== true && !isSealed(c) && c.rarity !== 'DON!!';
 const isNew = (c) => c.added && Date.now() - Date.parse(c.added) < NEW_DAYS * 864e5;
@@ -329,8 +333,9 @@ function restorePending() {
     for (const [id, p] of Object.entries(saved.cards || {})) {
       const c = S.byId.get(id);
       if (!c) continue;
-      S.pendingCards[id] = { before: c.qty, qty: p.qty, t: p.t };
+      S.pendingCards[id] = { before: c.qty, qty: p.qty, keptBefore: keptOf(c), kept: p.kept ?? keptOf(c), t: p.t };
       c.qty = p.qty;
+      c.kept = p.kept ?? keptOf(c);
     }
     if (saved.orders) { S.orders = saved.orders; S.pendingOrders = true; }
     if (saved.decks) { S.decks = saved.decks; S.pendingDecks = true; }
@@ -342,7 +347,7 @@ function restorePending() {
 function persistPending() {
   const has = hasPending();
   store.set('pending', has ? JSON.stringify({
-    cards: Object.fromEntries(Object.entries(S.pendingCards).map(([id, p]) => [id, { qty: p.qty, t: p.t }])),
+    cards: Object.fromEntries(Object.entries(S.pendingCards).map(([id, p]) => [id, { qty: p.qty, kept: p.kept, t: p.t }])),
     orders: S.pendingOrders ? S.orders : null,
     decks: S.pendingDecks ? S.decks : null,
     accessories: S.pendingAcc ? S.accessories : null,
@@ -356,16 +361,30 @@ function setQty(c, qty) {
   qty = Math.max(0, Math.min(999, qty | 0));
   if (qty === c.qty) return;
   const rising = qty > c.qty, wasComplete = rising && setProgress(c.set).pct >= 100;
-  const p = S.pendingCards[c.id];
-  const before = p ? p.before : c.qty;
-  c.qty = qty;
-  if (qty === before) delete S.pendingCards[c.id];
-  else S.pendingCards[c.id] = { before, qty, t: new Date().toISOString() };
-  changed();
+  trackCard(c, qty, keptOf(c));
   if (rising && !wasComplete && setProgress(c.set).pct >= 100) {
     confetti();
     toast(`${c.set} complete! Every base card is at its target.`);
   }
+}
+
+// Record a card's new main and kept quantities as one pending change.
+function trackCard(c, qty, kept) {
+  const p = S.pendingCards[c.id];
+  const before = p ? p.before : c.qty, keptBefore = p ? p.keptBefore ?? keptOf(c) : keptOf(c);
+  c.qty = qty;
+  c.kept = kept;
+  if (qty === before && kept === keptBefore) delete S.pendingCards[c.id];
+  else S.pendingCards[c.id] = { before, qty, keptBefore, kept, t: new Date().toISOString() };
+  changed();
+}
+
+// Move n copies from the main inventory into Reid's kept (a negative n returns them).
+function moveKept(c, n) {
+  n = Math.max(-keptOf(c), Math.min(c.qty, n | 0));
+  if (!n) return 0;
+  trackCard(c, c.qty - n, keptOf(c) + n);
+  return n;
 }
 
 function confetti() {
@@ -413,17 +432,24 @@ async function save() {
 
   const updaters = {};
   const byFile = {};
-  for (const [id, p] of Object.entries(cards)) (byFile[S.byId.get(id).file] ||= {})[id] = p.qty;
+  for (const [id, p] of Object.entries(cards)) (byFile[S.byId.get(id).file] ||= {})[id] = p;
   for (const [file, qtys] of Object.entries(byFile)) {
     updaters[`data/cards/${file}`] = (text) => {
       const rows = JSON.parse(text || '[]');
-      for (const r of rows) if (r.id in qtys) r.qty = qtys[r.id];
+      for (const r of rows) {
+        const p = qtys[r.id];
+        if (!p) continue;
+        r.qty = p.qty;
+        if (p.kept != null) { if (p.kept > 0) r.kept = p.kept; else delete r.kept; }
+      }
       return dumpRows(rows);
     };
   }
   const entries = Object.entries(cards).map(([id, p]) => {
     const c = S.byId.get(id);
-    return { t: p.t, id, set: c.set, name: c.name, before: p.before, after: p.qty };
+    const e = { t: p.t, id, set: c.set, name: c.name, before: p.before, after: p.qty };
+    if (p.kept != null && p.kept !== (p.keptBefore ?? p.kept)) Object.assign(e, { keptBefore: p.keptBefore, keptAfter: p.kept });
+    return e;
   }).sort((a, b) => b.t.localeCompare(a.t));
   if (entries.length) {
     updaters['data/history.json'] = (text) => dumpRows([...entries, ...JSON.parse(text || '[]')].slice(0, HISTORY_LIMIT));
@@ -434,20 +460,21 @@ async function save() {
   if (acc) updaters['data/accessories.json'] = (text) => mergeAccessories(acc, text);
 
   const parts = [];
-  if (entries.length) parts.push(entries.length === 1 ? `${entries[0].name} ${entries[0].before}→${entries[0].after}` : `${entries.length} quantities`);
+  const keptMove = (e) => (e.keptAfter > e.keptBefore ? `Move ${e.name} to Reid's kept ${e.keptBefore}→${e.keptAfter}` : `Return ${e.name} from Reid's kept ${e.keptBefore}→${e.keptAfter}`);
+  if (entries.length) parts.push(entries.length === 1 ? (entries[0].keptAfter != null ? keptMove(entries[0]) : `${entries[0].name} ${entries[0].before}→${entries[0].after}`) : `${entries.length} quantities`);
   if (orders) parts.push('orders');
   if (notes != null) parts.push('notes');
   if (decks) parts.push('decks');
   if (acc) parts.push('accessories');
 
   try {
-    await commitFiles(updaters, `Update ${parts.join(', ')}`);
+    await commitFiles(updaters, parts.length === 1 && entries[0]?.keptAfter != null ? parts[0] : `Update ${parts.join(', ')}`);
     S.history = [...entries, ...S.history].slice(0, HISTORY_LIMIT);
     S.lastSaved = new Date();
   } catch (e) {
     // Put the changes back (newer edits made while saving win) and retry later.
     for (const [id, p] of Object.entries(cards)) {
-      if (S.pendingCards[id]) S.pendingCards[id].before = p.before;
+      if (S.pendingCards[id]) Object.assign(S.pendingCards[id], { before: p.before, keptBefore: p.keptBefore });
       else S.pendingCards[id] = p;
     }
     if (orders && !S.pendingOrders) S.pendingOrders = true;
@@ -604,17 +631,26 @@ function fmtDate(iso, withTime = false) {
 
 function totals(list = S.cards) {
   let value = 0, copies = 0, owned = 0;
-  for (const c of list) { if (c.qty > 0) { owned++; copies += c.qty; value += c.qty * (c.price || 0); } }
+  for (const c of list) { const n = ownedQty(c); if (n > 0) { owned++; copies += n; value += n * (c.price || 0); } }
   return { value, copies, owned };
 }
 
-// Collection value counts cards and accessories; copies and variants are cards only.
+// Reid's kept on its own: copies, distinct cards and value.
+function keptTotals() {
+  let value = 0, copies = 0, cards = 0, unpriced = 0;
+  for (const c of S.cards) { const n = keptOf(c); if (n > 0) { cards++; copies += n; value += n * (c.price || 0); if (c.price == null) unpriced++; } }
+  return { value, copies, cards, unpriced };
+}
+
+// Collection value counts cards (main inventory plus Reid's kept) and accessories; copies and variants are cards only.
 const collectionValue = () => totals().value + accTotals().value;
 
 function renderStats() {
-  const t = totals(), acc = accTotals().value, sealed = totals(S.cards.filter(isSealed)).value;
+  const t = totals(), acc = accTotals().value, kept = keptTotals().value;
+  const sealed = S.cards.filter(isSealed).reduce((n, c) => n + c.qty * (c.price || 0), 0);
   $('#stat-value').textContent = money(t.value + acc);
-  $('#stat-split').innerHTML = [['Cards', t.value - sealed], ['Sealed', sealed], ['Accessories', acc]]
+  $('#stat-split').innerHTML = [['Cards', t.value - kept - sealed], ["Reid's kept", kept], ['Sealed', sealed], ['Accessories', acc]]
+    .filter(([label, v]) => label !== "Reid's kept" || v > 0)
     .map(([label, v]) => `<span><span class="label">${label}</span> ${money(v)}</span>`).join('');
   $('#stat-prices').textContent = fmtDate(S.meta.pricesUpdatedAt);
   $('#stat-prices').title = S.meta.priceSource || '';
@@ -627,8 +663,8 @@ function setProgress(code) {
   for (const c of S.cards) {
     if (c.set !== code) continue;
     n++;
-    const h = Math.min(c.qty, c.target);
-    value += c.qty * (c.price || 0);
+    const h = Math.min(ownedQty(c), c.target);
+    value += ownedQty(c) * (c.price || 0);
     if (countsForSet(c)) { target += c.target; have += h; }
     if (kind(c) === 'alt') { altT += c.target; altH += h; }
   }
@@ -765,16 +801,16 @@ function renderMovers() {
   const el = $('#movers');
   if (!el) return;
   const moves = S.cards
-    .filter((c) => c.qty > 0)
+    .filter((c) => ownedQty(c) > 0)
     .map((c) => ({ c, ch: weekChange(c) }))
     .filter((m) => m.ch && m.ch.d)
-    .sort((a, b) => Math.abs(b.c.qty * b.ch.d) - Math.abs(a.c.qty * a.ch.d))
+    .sort((a, b) => Math.abs(ownedQty(b.c) * b.ch.d) - Math.abs(ownedQty(a.c) * a.ch.d))
     .slice(0, 6);
   el.innerHTML = moves.length
     ? `<ul class="mover-list">${moves.map(({ c, ch }) => {
-        const up = ch.d > 0, total = c.qty * ch.d;
+        const up = ch.d > 0, total = ownedQty(c) * ch.d;
         return `<li data-id="${esc(c.id)}"><button type="button" class="mover" data-open>
-          <span class="mover-name"><b>${esc(c.name)}</b><span class="muted">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${c.qty} owned · ${money(ch.was)} → ${money(c.price)}</span></span>
+          <span class="mover-name"><b>${esc(c.name)}</b><span class="muted">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''} · ${ownedQty(c)} owned · ${money(ch.was)} → ${money(c.price)}</span></span>
           <span class="mover-amt ${up ? 'delta-up' : 'delta-down'}">${up ? '▲ +' : '▼ −'}${money(Math.abs(total))}</span>
         </button></li>`;
       }).join('')}</ul>`
@@ -830,7 +866,7 @@ function filterCards(f) {
   let list = S.cards.filter((c) => {
     if (sets && !sets.has(c.set)) return false;
     if (f.own === 'owned' && !(c.qty > 0)) return false;
-    if (f.own === 'none' && c.qty > 0) return false;
+    if (f.own === 'none' && ownedQty(c) > 0) return false;
     if (f.own === 'short' && !(c.qty < c.target)) return false;
     if (f.own === 'extra' && !(c.qty > c.target)) return false;
     if (f.variant === 'base' && kind(c) !== 'base') return false;
@@ -839,7 +875,7 @@ function filterCards(f) {
     if (f.variant === 'other' && (kind(c) !== 'other' || isSealed(c))) return false;
     if (f.rarity && c.rarity !== f.rarity) return false;
     if (f.preset === 'owned' && !(c.qty > 0)) return false;
-    if (f.preset === 'missing' && c.qty > 0) return false;
+    if (f.preset === 'missing' && ownedQty(c) > 0) return false;
     if (f.preset === 'buy' && !buyNeed(c)) return false;
     if (f.preset === 'top' && !(c.qty > 0)) return false;
     if (f.preset === 'new' && !isNew(c)) return false;
@@ -875,8 +911,11 @@ function cardInfo(c, f) {
   if (f.preset === 'buy') bits.push(`Need ${buyNeed(c)}`);
   else if (c.qty < c.target && c.qty > 0) bits.push(`${c.qty}/${c.target}`);
   if (kind(c) === 'alt') bits.push('Alt');
+  if (keptOf(c)) bits.push(`${keptOf(c)} in Reid's kept`);
   return bits.filter(Boolean).join(' · ');
 }
+
+const badgeText = (c) => (c.qty > 0 ? `${c.qty} owned` : keptOf(c) ? 'All kept' : 'Not owned');
 
 function cardHtml(c, f, view) {
   const img = `<img src="${image(c)}" alt="" loading="lazy" decoding="async" data-fallback="${esc(c.name)}">`;
@@ -892,7 +931,7 @@ function cardHtml(c, f, view) {
     <a class="art" href="${tcgLink(c)}" target="_blank" rel="noopener" data-open aria-label="Details for ${esc(c.name)}">
       ${img}
       ${isNew(c) ? '<span class="badge new">New</span>' : ''}
-      <span class="badge${c.qty > 0 ? ' owned' : ''}">${c.qty > 0 ? `${c.qty} owned` : 'Not owned'}</span>
+      <span class="badge${c.qty > 0 ? ' owned' : ''}">${badgeText(c)}</span>
     </a>
     <div class="body">
       <div class="meta">${esc(c.set)}${c.cardId ? ' · ' + esc(c.cardId) : ''}</div>
@@ -1001,6 +1040,15 @@ function renderCardsKeepFocus() {
 
 // Quantity steppers and broken images, handled once for every list.
 document.addEventListener('click', (e) => {
+  const keep = e.target.closest('[data-keep]');
+  if (keep) {
+    const c = S.byId.get(keep.closest('[data-id]').dataset.id);
+    const n = moveKept(c, Number(keep.dataset.keep));
+    showQty(c);
+    if (S.view === 'kept' && !keep.closest('dialog')) S.keptRefresh?.();
+    else if (n) { toast(n > 0 ? `Moved 1 ${c.name} to Reid's kept.` : `Returned 1 ${c.name} to the inventory.`); if (S.view === 'kept') S.keptRefresh?.(); }
+    return;
+  }
   const btn = e.target.closest('[data-step]');
   if (btn) {
     const c = S.byId.get(btn.closest('[data-id]').dataset.id);
@@ -1021,8 +1069,9 @@ function showQty(c) {
   document.querySelectorAll(`[data-id="${CSS.escape(c.id)}"]`).forEach((host) => {
     const own = (sel) => [...host.querySelectorAll(sel)].filter((el) => el.closest('[data-id]') === host);
     own('output').forEach((o) => (o.textContent = c.qty));
-    own('.badge:not(.new)').forEach((b) => { b.textContent = c.qty > 0 ? `${c.qty} owned` : 'Not owned'; b.classList.toggle('owned', c.qty > 0); });
+    own('.badge:not(.new)').forEach((b) => { b.textContent = badgeText(c); b.classList.toggle('owned', c.qty > 0); });
     own('[data-worth]').forEach((w) => (w.textContent = worthText(c)));
+    own('[data-kept]').forEach((k) => (k.outerHTML = keptControl(c)));
   });
 }
 document.addEventListener('error', (e) => {
@@ -1037,7 +1086,16 @@ document.addEventListener('error', (e) => {
 
 // ---------- Card details ----------
 
-const worthText = (c) => `${c.qty} owned · target ${c.target}${c.price != null ? ` · worth ${money(c.qty * c.price)}` : ''}`;
+const worthText = (c) => `${c.qty} owned${keptOf(c) ? ` + ${keptOf(c)} kept` : ''} · target ${c.target}${c.price != null ? ` · worth ${money(ownedQty(c) * c.price)}` : ''}`;
+
+// Card sheet line for Reid's kept: move a copy in from the main inventory or return one.
+function keptControl(c) {
+  const k = keptOf(c);
+  if (isSealed(c) && !k) return '<span data-kept hidden></span>';
+  const text = k ? `${k} in <a href="#kept" data-close>Reid's kept</a>` : "None in Reid's kept";
+  const buttons = S.canEdit ? `<button type="button" class="btn small-btn" data-keep="1"${c.qty > 0 ? '' : ' disabled'}>Move 1 to kept</button>${k ? '<button type="button" class="btn small-btn" data-keep="-1">Return 1</button>' : ''}` : '';
+  return `<div class="sheet-kept" data-kept><span class="muted small">${text}</span>${buttons}</div>`;
+}
 
 function openCard(id) {
   const c = S.byId.get(id);
@@ -1065,6 +1123,7 @@ function openCard(id) {
             <span class="muted small">${ch ? `${money(ch.was)} a week ago · ` : ''}lowest listed on TCGplayer</span>
           </div>
           <div class="sheet-qty">${qtyControl(c)}<span class="muted small" data-worth>${esc(worthText(c))}</span></div>
+          ${keptControl(c)}
           ${alertControl(c)}
           <h3>Price history</h3>
           <div class="chart small-chart" id="card-chart"></div>
@@ -1299,7 +1358,7 @@ function checkDeck(text) {
     const printings = S.cards.filter((c) => c.cardId.toUpperCase() === id && !isSealed(c));
     const priced = printings.filter((c) => c.price != null).sort((a, b) => a.price - b.price);
     const base = printings.find((c) => kind(c) === 'base') || printings[0];
-    const own = printings.reduce((n, c) => n + c.qty, 0);
+    const own = printings.reduce((n, c) => n + ownedQty(c), 0);
     const cheapest = priced[0] || null;
     const missing = Math.max(0, need - own);
     rows.push({ id, need, own, missing, base, cheapest, cost: missing * (cheapest?.price || 0) });
@@ -1625,7 +1684,9 @@ function editOrder(index) {
 }
 
 function renderHistory(main) {
-  const pending = Object.entries(S.pendingCards).map(([id, p]) => ({ t: p.t, id, name: S.byId.get(id).name, set: S.byId.get(id).set, before: p.before, after: p.qty, pending: true }));
+  const pending = Object.entries(S.pendingCards).map(([id, p]) => ({ t: p.t, id, name: S.byId.get(id).name, set: S.byId.get(id).set, before: p.before, after: p.qty, pending: true,
+    ...(p.kept != null && p.kept !== (p.keptBefore ?? p.kept) ? { keptBefore: p.keptBefore, keptAfter: p.kept } : {}) }));
+  const isKept = (h) => h.keptAfter != null;
   const rows = [...pending.sort((a, b) => b.t.localeCompare(a.t)), ...S.history];
   main.innerHTML = `
     <div class="section-head" style="margin-top:0"><h2>Recent changes</h2><span class="hint">Every saved change is also kept in the GitHub history.</span></div>
@@ -1634,18 +1695,176 @@ function renderHistory(main) {
       <tbody>${rows.slice(0, 300).map((h, i) => {
         const c = S.byId.get(h.id);
         const cls = h.after > h.before ? 'delta-up' : 'delta-down';
-        const undo = S.canEdit && c && c.qty === h.after && !h.pending ? `<button class="link-btn" data-undo="${i}" type="button">Undo</button>` : '';
+        const undo = S.canEdit && c && c.qty === h.after && (!isKept(h) || keptOf(c) === h.keptAfter) && !h.pending ? `<button class="link-btn" data-undo="${i}" type="button">Undo</button>` : '';
+        const kept = isKept(h) ? ` <span class="kept-tag">${h.keptAfter > h.keptBefore ? 'to' : 'from'} Reid's kept ${h.keptBefore}→${h.keptAfter}</span>` : '';
         return `<tr><td class="muted">${h.pending ? 'Saving…' : esc(fmtDate(h.t, true))}</td>
-          <td>${esc(h.name)} <span class="muted">· ${esc(h.set)}</span></td>
+          <td>${esc(h.name)} <span class="muted">· ${esc(h.set)}</span>${kept}</td>
           <td class="n">${h.before}</td><td class="n ${cls}">${h.after}</td>${S.canEdit ? `<td class="n">${undo}</td>` : ''}</tr>`;
       }).join('')}</tbody></table></div>`
       : `<p class="empty">No changes yet. Quantity edits will show up here.${S.meta.importedAt ? ` History starts from the move on ${esc(fmtDate(S.meta.importedAt))}.` : ''}</p>`}`;
   main.querySelectorAll('[data-undo]').forEach((b) => (b.onclick = () => {
     const h = rows[+b.dataset.undo];
-    setQty(S.byId.get(h.id), h.before);
+    if (isKept(h)) trackCard(S.byId.get(h.id), h.before, h.keptBefore);
+    else setQty(S.byId.get(h.id), h.before);
     render();
     toast(`${h.name} set back to ${h.before}.`);
   }));
+}
+
+// ---------- Reid's kept ----------
+// Cards Reid is keeping, held apart from the main inventory in each card's `kept` field.
+// Moving a copy in takes it out of `qty`; returning it puts it back, so the collection
+// value counts every copy once.
+
+const KEPT_PAGE = 50;
+const keptCards = () => S.cards.filter((c) => keptOf(c) > 0);
+
+// Which copies a card number should come from: base printings you own (the card's own
+// set first, then the plain printing over named variants, then the one you have most of),
+// then other non-alt printings such as promos. Alternate arts and parallels are never
+// picked automatically.
+function keptSources(cardId) {
+  const own = (c) => c.qty > 0 && !isSealed(c) && c.cardId === cardId;
+  const home = cardId.replace(/-\d+$/, '');
+  const isHome = (c) => ownPrefix(S.setByCode.get(c.set) || { code: c.set }).startsWith(home);
+  const plain = (c) => !c.name.replace(/\s*\((\d+|[A-Z]+\d*-\d+)\)/g, '').includes('(');
+  const homeFirst = (a, b) => isHome(b) - isHome(a) || plain(b) - plain(a) || b.qty - a.qty;
+  const base = S.cards.filter((c) => own(c) && kind(c) === 'base').sort(homeFirst);
+  const other = S.cards.filter((c) => own(c) && kind(c) === 'other').sort(homeFirst);
+  return [...base, ...other];
+}
+
+// Plan moving a pasted list into kept: [{ c, n }] moves and [{ id, want, got }] shortfalls.
+function planKept(wanted) {
+  const moves = [], short = [];
+  for (const [id, want] of wanted) {
+    let left = want;
+    for (const c of keptSources(id)) {
+      if (!left) break;
+      const n = Math.min(left, c.qty);
+      moves.push({ c, n });
+      left -= n;
+    }
+    if (left) short.push({ id, want, got: want - left, alts: S.cards.filter((c) => c.cardId === id && kind(c) === 'alt' && c.qty > 0).reduce((k, c) => k + c.qty, 0) });
+  }
+  return { moves, short };
+}
+
+function renderKept(main) {
+  main.innerHTML = `<div class="kept">
+    <div class="trade-summary callout" id="kept-summary"></div>
+    <div class="trade-grid">
+      <section class="trade-side" aria-label="Kept cards">
+        <div class="section-head"><h2>Kept cards</h2><span class="hint">− returns a copy to the inventory</span></div>
+        <div id="kept-lines"></div>
+      </section>
+      <section class="trade-side" aria-label="Move cards in">
+        <div class="section-head"><h2>Move cards in</h2><span class="hint">Takes copies out of the main inventory</span></div>
+        <label class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="kept-q" placeholder="Search your cards" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-label="Search your cards to move into Reid's kept"></label>
+        <div class="trade-matches" id="kept-matches"></div>
+        <details class="kept-paste callout">
+          <summary>Move a list in</summary>
+          <p class="muted small">One card per line, like <code>4xOP15-085</code>. Copies come from base printings you own (alternate arts are left alone).</p>
+          <textarea id="kept-list" rows="6" spellcheck="false" placeholder="4xOP15-085&#10;2xOP17-084"></textarea>
+          <button type="button" class="btn primary" id="kept-list-go">${S.canEdit ? 'Review and move' : 'Sign in to move'}</button>
+        </details>
+      </section>
+    </div></div>`;
+
+  let matches = [], shown = KEPT_PAGE;
+  const showSummary = () => {
+    const t = keptTotals();
+    $('#kept-summary', main).innerHTML = `
+      <div><div class="muted small">Reid's kept value</div><div class="big">${money(t.value)}</div></div>
+      <div><div class="muted small">Copies</div><div class="big">${count(t.copies)}</div></div>
+      <div><div class="muted small">Different cards</div><div class="big">${count(t.cards)}</div></div>
+      <div class="small muted kept-note">Counted once in the collection value: kept copies are not in the main inventory.${t.unpriced ? ` ${t.unpriced} unpriced ${t.unpriced === 1 ? 'card counts' : 'cards count'} as $0.` : ''}</div>`;
+  };
+  const showLines = () => {
+    const list = keptCards();
+    $('#kept-lines', main).innerHTML = list.length
+      ? `<div class="list">${list.map((c) => tradeRow(c, `
+          ${S.canEdit ? `<span class="stepper"><button type="button" data-keep="-1" aria-label="Return one ${esc(c.name)} to the inventory">−</button><output>${keptOf(c)}</output><button type="button" data-keep="1" aria-label="Move one more ${esc(c.name)} in"${c.qty > 0 ? '' : ' disabled'}>+</button></span>` : `<span class="qty-ro">${keptOf(c)} kept</span>`}
+          <span class="trade-line">${c.price != null ? money(keptOf(c) * c.price) : '–'}${S.canEdit ? `<button type="button" class="link-btn" data-keep-all aria-label="Return every ${esc(c.name)} to the inventory">Return all</button>` : ''}</span>`,
+          `${c.price != null ? money(c.price) + ' each' : 'no price'} · ${c.qty} in inventory`)).join('')}</div>
+        <div class="trade-side-total"><span>Total</span><strong>${money(keptTotals().value)}</strong></div>`
+      : '<p class="muted small">Nothing kept yet. Search or paste a list to move cards in.</p>';
+  };
+  const showMatches = () => {
+    const box = $('#kept-matches', main);
+    if (!$('#kept-q', main).value.trim()) { box.innerHTML = ''; return; }
+    const more = matches.length - shown;
+    const scroll = box.querySelector('.trade-results')?.scrollTop || 0;
+    box.innerHTML = matches.length
+      ? `<div class="trade-results-head muted small"><span>${count(matches.length)} ${matches.length === 1 ? 'match' : 'matches'}</span><button type="button" class="link-btn" data-done>Done</button></div>
+        <div class="list trade-results">${matches.slice(0, shown).map((c, i) => tradeRow(c,
+          `<span class="price">${c.price != null ? money(c.price) : '–'}</span><button type="button" class="btn primary pack-add" data-kept-add="${i}" aria-label="Move one ${esc(c.name)} into Reid's kept"${S.canEdit && c.qty > 0 ? '' : ' disabled'}>${c.qty > 0 ? 'Move 1' : 'All kept'}</button>`,
+          `${c.qty} in inventory${keptOf(c) ? ` · ${keptOf(c)} kept` : ''}`)).join('')}
+        ${more > 0 ? `<button type="button" class="link-btn trade-more" data-more>Show ${count(Math.min(more, KEPT_PAGE))} more of ${count(more)}</button>` : ''}</div>`
+      : '<p class="empty small">None of your cards match.</p>';
+    const results = box.querySelector('.trade-results');
+    if (results) results.scrollTop = scroll;
+  };
+  const refresh = () => { showSummary(); showLines(); showMatches(); };
+  S.keptRefresh = refresh;
+  const search = (q) => {
+    q = q.trim();
+    const lower = q.toLowerCase();
+    const list = q ? filterCards({ q, preset: 'owned', set: '', own: '', variant: '', rarity: '', sort: '' }).filter((c) => !isSealed(c)) : [];
+    const rank = (c) => (c.cardId.toLowerCase() === lower ? 0 : c.name.toLowerCase().startsWith(lower) ? 1 : 2);
+    matches = list.map((c, i) => [rank(c), i, c]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((r) => r[2]);
+    shown = KEPT_PAGE;
+    showMatches();
+  };
+  const input = $('#kept-q', main);
+  onTyped(input, search);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && matches[0] && S.canEdit) { e.preventDefault(); moveKept(matches[0], 1); refresh(); }
+  });
+
+  const reviewList = () => {
+    if (!S.canEdit) { openAccount(); return; }
+    const wanted = parseDeck($('#kept-list', main).value);
+    if (!wanted.size) { toast('No card numbers found. Use one card per line, like 4xOP15-085.'); return; }
+    const { moves, short } = planKept(wanted);
+    const d = $('#trade-dialog');
+    d.innerHTML = `<form method="dialog">
+      <h2>Move into Reid's kept?</h2>
+      <p>${moves.length ? `Moves ${count(moves.reduce((n, m) => n + m.n, 0))} copies of ${count(moves.length)} ${moves.length === 1 ? 'card' : 'cards'} out of the main inventory.` : 'None of these cards are in the main inventory.'}</p>
+      ${moves.length ? `<ul class="trade-confirm">${moves.map((m) => `<li><span>${esc(m.c.name)}<span class="muted small"> · ${esc(m.c.set)} · ${esc(m.c.cardId)}</span></span>
+        <span class="trade-confirm-qty">${m.n} <span class="muted small">${m.c.price != null ? money(m.n * m.c.price) : ''}</span></span></li>`).join('')}</ul>` : ''}
+      ${short.length ? `<p class="warn-text small">Not enough base copies in the inventory for: ${short.map((x) => `${esc(x.id)} (${x.got} of ${x.want}${x.alts ? `, ${x.alts} alt art owned` : ''})`).join(', ')}. Move alternate arts by hand if you want them kept.</p>` : ''}
+      <div class="dialog-actions"><span class="spacer"></span>
+        <button class="btn" value="cancel">Cancel</button>
+        <button class="btn primary" value="move"${moves.length ? '' : ' disabled'}>Move cards</button></div></form>`;
+    d.onclose = () => {
+      if (d.returnValue !== 'move') return;
+      for (const m of moves) moveKept(m.c, m.n);
+      $('#kept-list', main).value = '';
+      if (S.view === 'kept') render();
+      toast(`Moved ${count(moves.length)} ${moves.length === 1 ? 'card' : 'cards'} into Reid's kept.`, {
+        label: 'Undo', run: () => { for (const m of moves) moveKept(m.c, -m.n); if (S.view === 'kept') render(); },
+      });
+    };
+    d.returnValue = '';
+    d.showModal();
+  };
+  $('#kept-list-go', main).onclick = reviewList;
+
+  $('.kept', main).addEventListener('click', (e) => {
+    const add = e.target.closest('[data-kept-add]');
+    if (add) { moveKept(matches[+add.dataset.keptAdd], 1); refresh(); return; }
+    if (e.target.closest('[data-more]')) { shown += KEPT_PAGE; showMatches(); return; }
+    if (e.target.closest('[data-done]')) { input.value = ''; matches = []; showMatches(); return; }
+    const all = e.target.closest('[data-keep-all]');
+    if (all) {
+      const c = S.byId.get(all.closest('[data-id]').dataset.id), n = keptOf(c);
+      moveKept(c, -n); refresh();
+      toast(`Returned ${n} ${c.name} to the inventory.`, { label: 'Undo', run: () => { moveKept(c, n); if (S.view === 'kept') render(); } });
+    }
+  });
+  refresh();
 }
 
 // ---------- Accessories ----------
@@ -1825,10 +2044,10 @@ function editAccessory(item, cat = 'playmats') {
 // ---------- Stats ----------
 
 function statRows() {
-  const owned = S.cards.filter((c) => c.qty > 0);
+  const owned = S.cards.filter((c) => ownedQty(c) > 0);
   const cards = owned.filter((c) => !isSealed(c)), sealed = owned.filter(isSealed);
   const sum = (list, f) => list.reduce((n, c) => n + f(c), 0);
-  const val = (c) => c.qty * (c.price || 0);
+  const val = (c) => ownedQty(c) * (c.price || 0);
   const top = (list, f) => list.reduce((best, c) => (!best || f(c) > f(best) ? c : best), null);
   const cardLabel = (c) => (c ? `${c.name}${c.cardId ? ` (${c.cardId})` : ''} · ${c.set}` : '–');
   const pct = (a, b) => (b ? `${Math.round((a / b) * 100)}%` : '–');
@@ -1851,17 +2070,18 @@ function statRows() {
   // Cards
   const unique = new Set(cards.filter((c) => c.cardId).map((c) => c.cardId)).size;
   const alts = cards.filter((c) => kind(c) === 'alt');
-  const rarity = (r) => sum(cards.filter((c) => c.rarity === r), (c) => c.qty);
-  const copies = sum(cards, (c) => c.qty);
+  const rarity = (r) => sum(cards.filter((c) => c.rarity === r), (c) => ownedQty(c));
+  const copies = sum(cards, (c) => ownedQty(c));
   const byName = new Map();
-  for (const c of cards) if (c.cardId && c.rarity !== 'DON!!') byName.set(baseName(c), (byName.get(baseName(c)) || 0) + c.qty);
+  for (const c of cards) if (c.cardId && c.rarity !== 'DON!!') byName.set(baseName(c), (byName.get(baseName(c)) || 0) + ownedQty(c));
   const favorite = [...byName].sort((a, b) => b[1] - a[1])[0];
   const paid = S.orders.reduce((n, o) => n + (Number.isFinite(o.paid) ? o.paid : 0), 0);
 
   return [
     ['Collection', [
       ['Total value', money(total)],
-      ['Cards', money(cardValue)],
+      ['Cards', money(cardValue - sum(cards, (c) => keptOf(c) * (c.price || 0)))],
+      ["Reid's kept", money(sum(cards, (c) => keptOf(c) * (c.price || 0)))],
       ['Sealed', money(sealedValue)],
       ['Accessories', money(acc.value)],
       ['Change in the last 30 days', change(ago(30))],
@@ -1874,17 +2094,17 @@ function statRows() {
       ['Different card numbers owned', count(unique)],
       ['Alternate arts and parallels owned', count(alts.length)],
       ['Secret rares (SEC) owned', count(rarity('SEC'))],
-      ['SP cards owned', count(sum(cards.filter((c) => /\(SP\)/.test(c.name)), (c) => c.qty))],
+      ['SP cards owned', count(sum(cards.filter((c) => /\(SP\)/.test(c.name)), (c) => ownedQty(c)))],
       ['Treasure rares (TR) owned', count(rarity('TR'))],
       ['Average value per copy', money(copies ? cardValue / copies : 0)],
       ['Cards worth $100 or more', count(cards.filter((c) => (c.price || 0) >= 100).length)],
-      ['Bulk (copies under $1)', `${count(sum(cards.filter((c) => (c.price || 0) < 1), (c) => c.qty))} worth ${money(sum(cards.filter((c) => (c.price || 0) < 1), val))}`],
+      ['Bulk (copies under $1)', `${count(sum(cards.filter((c) => (c.price || 0) < 1), (c) => ownedQty(c)))} worth ${money(sum(cards.filter((c) => (c.price || 0) < 1), val))}`],
       ['Most valuable card', (() => { const c = top(cards, (c) => c.price || 0); return c ? `${cardLabel(c)} · ${money(c.price)}` : '–'; })()],
-      ['Most copies of one card', (() => { const c = top(cards.filter((c) => c.rarity !== 'DON!!'), (c) => c.qty); return c ? `${cardLabel(c)} · ${count(c.qty)}` : '–'; })()],
+      ['Most copies of one card', (() => { const c = top(cards.filter((c) => c.rarity !== 'DON!!'), (c) => ownedQty(c)); return c ? `${cardLabel(c)} · ${count(ownedQty(c))}` : '–'; })()],
       ['Most collected character', favorite ? `${favorite[0]} · ${count(favorite[1])} copies` : '–'],
     ]],
     ['Sealed and accessories', [
-      ['Sealed products owned', count(sum(sealed, (c) => c.qty))],
+      ['Sealed products owned', count(sum(sealed, (c) => ownedQty(c)))],
       ['Most valuable sealed product', (() => { const c = top(sealed, (c) => c.price || 0); return c ? `${c.name} · ${money(c.price)}` : '–'; })()],
       ['Accessories owned', count(acc.copies)],
     ]],
@@ -1916,13 +2136,14 @@ function renderStatsTab(main) {
 function render() {
   S.cleanup?.();
   S.cleanup = null;
+  S.keptRefresh = null;
   S.chartCleanup?.();
   S.chartCleanup = null;
   const view = (location.hash.slice(1).split('?')[0] || 'home');
-  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'accessories', 'stats', 'events', 'orders', 'history'].includes(view) ? view : 'home';
+  S.view = ['home', 'cards', 'packs', 'decks', 'trade', 'kept', 'accessories', 'stats', 'events', 'orders', 'history'].includes(view) ? view : 'home';
   document.querySelectorAll('.tabs a').forEach((a) => { if (a.dataset.tab === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const main = $('#main');
-  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, accessories: renderAccessories, stats: renderStatsTab, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
+  ({ home: renderHome, cards: renderCards, packs: renderPacks, decks: renderDecks, trade: renderTrade, kept: renderKept, accessories: renderAccessories, stats: renderStatsTab, events: (m) => renderEvents(m, { getJson, ref: S.sha }), orders: renderOrders, history: renderHistory })[S.view](main);
   // Links from Discord alerts open one card: #cards?q=OP01-001&card=OP01:5
   const cardLink = new URLSearchParams(location.hash.split('?')[1] || '').get('card');
   if (cardLink && S.byId.has(cardLink)) openCard(cardLink);

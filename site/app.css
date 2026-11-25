@@ -506,3 +506,12 @@ dialog select.acc-select { width: 100%; min-height: 40px; }
 .stats-table th { font-weight: 400; color: var(--muted); font-size: 14px; }
 .stats-table td.n { white-space: normal; font-weight: 600; }
 .stats-table tr:first-child th, .stats-table tr:first-child td { border-top: 0; }
+
+/* Reid's kept */
+.sheet-kept { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.sheet-kept .small-btn { padding: 4px 10px; font-size: 13px; min-height: 0; }
+.kept-tag { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 12px; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); white-space: nowrap; }
+.kept-note { flex-basis: 100%; }
+.kept-paste { margin-top: 12px; }
+.kept-paste summary { cursor: pointer; font-weight: 600; }
+.kept-paste textarea { margin: 8px 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }

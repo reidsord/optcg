@@ -8,7 +8,7 @@ DATA = os.path.join(ROOT, "data")
 
 # Card fields in the order they are written. One card per line keeps git diffs
 # small and lets a price update and a quantity edit merge cleanly.
-CARD_FIELDS = ["id", "productId", "printing", "cardId", "name", "rarity", "alt", "target", "qty", "price", "added"]
+CARD_FIELDS = ["id", "productId", "printing", "cardId", "name", "rarity", "alt", "target", "qty", "kept", "price", "added"]
 
 ALT_PATTERN = re.compile(
     r"\((?:[^)]*\b(?:Alternate Art|Parallel|SP|Manga|Textured Foil|Dash Pack|Box Topper|"
@@ -89,6 +89,11 @@ def price_key(card):
 def history_order(key):
     """Sort product ids (ints) before printing keys (strings) in the history files."""
     return (isinstance(key, str), key)
+
+
+def owned_qty(card):
+    """Copies owned: the main inventory (qty) plus Reid's kept (kept), which is held apart from qty."""
+    return (card.get("qty") or 0) + (card.get("kept") or 0)
 
 
 def card_row(card):

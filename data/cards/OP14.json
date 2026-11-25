@@ -119,7 +119,7 @@
 {"id":"OP14:122","productId":671424,"cardId":"OP14-093","name":"Mr.4(Babe)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP14:123","productId":671425,"cardId":"OP14-094","name":"Mr.5(Gem)","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP14:124","productId":671426,"cardId":"OP14-095","name":"Mr.9","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP14:125","productId":671427,"cardId":"OP14-096","name":"Ground Death","rarity":"R","alt":false,"target":4,"qty":4,"price":5.5},
+{"id":"OP14:125","productId":671427,"cardId":"OP14-096","name":"Ground Death","rarity":"R","alt":false,"target":4,"qty":2,"price":5.5,"kept":2},
 {"id":"OP14:126","productId":670874,"cardId":"OP14-096","name":"Ground Death (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":123.49},
 {"id":"OP14:127","productId":671428,"cardId":"OP14-097","name":"Hurry Up and Make Me the Pirate King!","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP14:128","productId":671429,"cardId":"OP14-098","name":"Crescent Cutlass","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},

@@ -14,6 +14,12 @@ JSON files in this repo.
 - **Trade**: search cards into an Out column (cards you own) and an In column
   (any card) to see each card's value, each side's total and the difference.
   The trade stays in that browser and never changes quantities.
+- **Reid's kept**: cards Reid is keeping, held apart from the main inventory
+  with their own total value. Moving a copy in (search, a pasted list like
+  `4xOP15-085`, or **Move 1 to kept** on a card's details) takes it out of the
+  main inventory; − or **Return all** puts it back. The collection value counts
+  each copy once, and set progress and the buy list count kept copies as owned.
+  Pasted lists only take base printings; alternate arts are moved by hand.
 - **Accessories**: playmats, sleeves, deck boxes, binders, toploaders, storage,
   dice and counters, playmat tubes and anything else, with quantities and prices.
   Paste an item's TCGplayer link to price it at the lowest listed price each
@@ -34,7 +40,7 @@ JSON files in this repo.
 | --- | --- |
 | `site/` | The website (plain HTML, CSS and JavaScript, no build step). |
 | `data/sets.json` | Tracked sets with their TCGplayer group ids (the site sorts them by group and number). Pre-release and release event sets use a `-PR` code. A set split out of others (EB04, printed inside OP14 and OP15) lists every source group in `groupIds` and claims new cards by `cardPrefix`. |
-| `data/cards/*.json` | One file per set, one card per line. |
+| `data/cards/*.json` | One file per set, one card per line. `qty` is the main inventory; `kept` (when present) is copies in Reid's kept, which are not in `qty`. |
 | `data/orders.json`, `data/notes.json` | Orders and the notes box. |
 | `data/history.json` | The latest 1,000 quantity changes. |
 | `data/meta.json` | When prices were updated, plus the settings the daily job uses. |

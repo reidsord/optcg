@@ -16,7 +16,7 @@
 {"id":"OP04:19","productId":512613,"cardId":"OP04-013","name":"Pell (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":1,"price":1.2},
 {"id":"OP04:20","productId":516740,"cardId":"OP04-014","name":"Monkey.D.Luffy (014)","rarity":"UC","alt":false,"target":4,"qty":8,"price":0.08},
 {"id":"OP04:21","productId":516741,"cardId":"OP04-015","name":"Roronoa Zoro","rarity":"R","alt":false,"target":4,"qty":4,"price":0.05},
-{"id":"OP04:22","productId":516742,"cardId":"OP04-016","name":"Bad Manners Kick Course","rarity":"R","alt":false,"target":4,"qty":11,"price":0.9},
+{"id":"OP04:22","productId":516742,"cardId":"OP04-016","name":"Bad Manners Kick Course","rarity":"R","alt":false,"target":4,"qty":9,"price":0.9,"kept":2},
 {"id":"OP04:23","productId":516743,"cardId":"OP04-017","name":"Happiness Punch","rarity":"C","alt":false,"target":4,"qty":9,"price":0.01},
 {"id":"OP04:24","productId":516744,"cardId":"OP04-018","name":"Enchanting Vertigo Dance","rarity":"UC","alt":false,"target":4,"qty":7,"price":0.01},
 {"id":"OP04:25","productId":510896,"cardId":"OP04-019","name":"Donquixote Doflamingo (019)","rarity":"L","alt":false,"target":4,"qty":4,"price":0.07},
