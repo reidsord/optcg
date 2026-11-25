@@ -92,7 +92,7 @@
 {"id":"OP07:95","productId":545868,"cardId":"OP07-074","name":"Monda","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP07:96","productId":545869,"cardId":"OP07-075","name":"Slow-Slow Beam","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP07:97","productId":545870,"cardId":"OP07-076","name":"Slow-Slow Beam Sword","rarity":"C","alt":false,"target":4,"qty":4,"price":0.12},
-{"id":"OP07:98","productId":545871,"cardId":"OP07-077","name":"We're Going to Claim the One Piece!!!","rarity":"R","alt":false,"target":4,"qty":4,"price":3.82},
+{"id":"OP07:98","productId":545871,"cardId":"OP07-077","name":"We're Going to Claim the One Piece!!!","rarity":"R","alt":false,"target":4,"qty":2,"price":3.82,"kept":2},
 {"id":"OP07:99","productId":545872,"cardId":"OP07-078","name":"Megaton Nine-Tails Rush","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP07:100","productId":545873,"cardId":"OP07-079","name":"Rob Lucci (079)","rarity":"L","alt":false,"target":4,"qty":3,"price":0.02},
 {"id":"OP07:101","productId":545874,"cardId":"OP07-079","name":"Rob Lucci (079) (Parallel)","rarity":"L","alt":true,"target":1,"qty":0,"price":12.91},

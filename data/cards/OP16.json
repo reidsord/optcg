@@ -43,7 +43,7 @@
 {"id":"OP16:46","productId":696018,"cardId":"OP16-033","name":"Morley","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP16:47","productId":696019,"cardId":"OP16-034","name":"Monkey.D.Luffy (034)","rarity":"R","alt":false,"target":4,"qty":14,"price":0.01},
 {"id":"OP16:48","productId":696020,"cardId":"OP16-034","name":"Monkey.D.Luffy (034) (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":5.19},
-{"id":"OP16:49","productId":696021,"cardId":"OP16-035","name":"Roronoa Zoro (035)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"OP16:49","productId":696021,"cardId":"OP16-035","name":"Roronoa Zoro (035)","rarity":"C","alt":false,"target":4,"qty":3,"price":0.01,"kept":1},
 {"id":"OP16:50","productId":696022,"cardId":"OP16-036","name":"Mr.2.Bon.Kurei(Bentham) (036)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP16:51","productId":696023,"cardId":"OP16-037","name":"Mr.3(Galdino) (037)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP16:52","productId":696024,"cardId":"OP16-038","name":"Let's Go!! To the Navy Headquarters..","rarity":"R","alt":false,"target":4,"qty":9,"price":0.02},

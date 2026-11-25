@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 
 from datetime import timedelta
 
-from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round, price_key,
+from common import (DATA, HISTORY_DAYS, add_price_point, card_row, classify, dump_rows, money_round, owned_qty, price_key,
                     read_json, read_price_history, read_value_history, set_code, set_file, set_groups, write_json,
                     write_price_history, write_text, write_value_history)
 
@@ -95,7 +95,7 @@ def main(dry_run=False):
     prefix = {s["code"]: s["cardPrefix"] for s in sets if s.get("cardPrefix")}
 
     def value():
-        return sum((c.get("qty") or 0) * (c.get("price") or 0) for rows in cards.values() for c in rows)
+        return sum(owned_qty(c) * (c.get("price") or 0) for rows in cards.values() for c in rows)
 
     value_before = value()
     price_changes, new_cards, failed = 0, [], []
@@ -185,10 +185,10 @@ def record_history(cards, today):
     cutoff = (datetime.fromisoformat(today) - timedelta(days=HISTORY_DAYS)).date().isoformat()
     write_price_history(history, cutoff)
 
-    owned = [c for rows in cards.values() for c in rows if (c.get("qty") or 0) > 0]
-    value = money_round(sum(c["qty"] * (c.get("price") or 0) for c in owned) + accessories_value())
+    owned = [c for rows in cards.values() for c in rows if owned_qty(c) > 0]
+    value = money_round(sum(owned_qty(c) * (c.get("price") or 0) for c in owned) + accessories_value())
     days = [r for r in read_value_history() if r["date"] != today]
-    days.append({"date": today, "value": value, "copies": sum(c["qty"] for c in owned)})
+    days.append({"date": today, "value": value, "copies": sum(owned_qty(c) for c in owned)})
     write_value_history(days)
 
 

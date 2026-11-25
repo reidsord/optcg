@@ -8,7 +8,7 @@
 {"id":"OP15:165","productId":685300,"cardId":"EB04-004","name":"Zeff","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:166","productId":685301,"cardId":"EB04-005","name":"Trafalgar Law","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:167","productId":685302,"cardId":"EB04-006","name":"Moda","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP15:168","productId":685303,"cardId":"EB04-007","name":"Roronoa Zoro (EB04-007)","rarity":"SR","alt":false,"target":4,"qty":4,"price":14.99},
+{"id":"OP15:168","productId":685303,"cardId":"EB04-007","name":"Roronoa Zoro (EB04-007)","rarity":"SR","alt":false,"target":4,"qty":2,"price":14.99,"kept":2},
 {"id":"OP15:169","productId":685304,"cardId":"EB04-007","name":"Roronoa Zoro (EB04-007) (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":56.48},
 {"id":"OP15:170","productId":685305,"cardId":"EB04-008","name":"Distorted Future","rarity":"R","alt":false,"target":4,"qty":7,"price":0.01},
 {"id":"OP15:171","productId":685306,"cardId":"EB04-009","name":"It's My Student's Farewell. I Want It to Be Proper.","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},

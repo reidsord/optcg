@@ -19,7 +19,7 @@ import sys
 import urllib.parse
 from datetime import datetime, timezone
 
-from common import DATA, dump_rows, history_order, money_round, price_key, read_json, write_text
+from common import DATA, dump_rows, history_order, money_round, owned_qty, price_key, read_json, write_text
 
 SETTINGS = f"{DATA}/price-alerts.json"
 STATE = f"{DATA}/price-alert-state.json"
@@ -76,7 +76,7 @@ def check(cards, settings, state):
         seen.add(p)
         row = {"p": p}
         prev = old.get(p, {})
-        if (c.get("qty") or 0) > 0 and price > 0:
+        if owned_qty(c) > 0 and price > 0:
             base = prev.get("base")
             if base and abs(price - base) / base >= move_pct and max(price, base) >= min_price:
                 moves.append((c, base, price))
@@ -95,14 +95,14 @@ def check(cards, settings, state):
 
 def move_line(c, before, after):
     pct = (after - before) / before
-    qty = c.get("qty") or 0
+    qty = owned_qty(c)
     arrow = "▲" if after > before else "▼"
     return (f"{arrow} **{abs(pct):.0%}** {label(c)}\n"
             f"{money(before)} → **{money(after)}** · you own {qty} ({'+' if after > before else '−'}{money(abs(after - before) * qty)})")
 
 
 def hit_line(c, target):
-    have = c.get("qty") or 0
+    have = owned_qty(c)
     return f"{label(c)}\nNow **{money(c['price'])}**, at or under your {money(target)} target · you own {have}"
 
 
@@ -128,8 +128,8 @@ def embed_size(e):
 
 
 def discord_payloads(moves, hits, today, test=False):
-    ups = sorted([m for m in moves if m[2] > m[1]], key=lambda m: -(m[2] - m[1]) * (m[0].get("qty") or 0))
-    downs = sorted([m for m in moves if m[2] < m[1]], key=lambda m: (m[2] - m[1]) * (m[0].get("qty") or 0))
+    ups = sorted([m for m in moves if m[2] > m[1]], key=lambda m: -(m[2] - m[1]) * owned_qty(m[0]))
+    downs = sorted([m for m in moves if m[2] < m[1]], key=lambda m: (m[2] - m[1]) * owned_qty(m[0]))
     embeds = []
     if hits:
         embeds.extend(embeds_for(f"{len(hits)} card{'s' * (len(hits) != 1)} hit your price target", TARGET,
@@ -142,7 +142,7 @@ def discord_payloads(moves, hits, today, test=False):
                             [move_line(*m) for m in downs[:MAX_LINES]], len(downs)))
     if not embeds:
         return []
-    net = sum((a - b) * (c.get("qty") or 0) for c, b, a in moves)
+    net = sum((a - b) * owned_qty(c) for c, b, a in moves)
     content = f"**{'Test: ' if test else ''}Price alerts for {today}**"
     if moves:
         content += f" · net {'+' if net >= 0 else '−'}{money(abs(net))} on the cards below"
@@ -164,7 +164,7 @@ def write_payloads(path, payloads):
 
 def test_payloads(cards, settings):
     """A sample built from your most valuable cards, to check the webhook works."""
-    owned = sorted([c for c in cards if (c.get("qty") or 0) > 0 and c.get("price")], key=lambda c: -c["price"] * c["qty"])
+    owned = sorted([c for c in cards if owned_qty(c) > 0 and c.get("price")], key=lambda c: -c["price"] * owned_qty(c))
     moves = [(c, money_round(c["price"] / (1 + settings["movePct"])), c["price"]) for c in owned[:2]]
     moves += [(c, money_round(c["price"] / (1 - settings["movePct"])), c["price"]) for c in owned[2:3]]
     hits = [(c, money_round(c["price"] + 1)) for c in owned[3:4]]

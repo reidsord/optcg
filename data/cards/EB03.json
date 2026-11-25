@@ -69,7 +69,7 @@
 {"id":"EB03:72","productId":672799,"cardId":"EB03-048","name":"Rebecca","rarity":"R","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"EB03:73","productId":672800,"cardId":"EB03-049","name":"I Knew You People Were Behind This.","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"EB03:74","productId":672801,"cardId":"EB03-050","name":"Conis","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"EB03:75","productId":672802,"cardId":"EB03-051","name":"Charlotte Smoothie","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"EB03:75","productId":672802,"cardId":"EB03-051","name":"Charlotte Smoothie","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01,"kept":4},
 {"id":"EB03:76","productId":672803,"cardId":"EB03-052","name":"Shirahoshi","rarity":"R","alt":false,"target":4,"qty":10,"price":0.1},
 {"id":"EB03:77","productId":672804,"cardId":"EB03-053","name":"Nami (053)","rarity":"SR","alt":false,"target":4,"qty":4,"price":8},
 {"id":"EB03:78","productId":672805,"cardId":"EB03-053","name":"Nami (053) (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":34.93},
