@@ -12,7 +12,7 @@
 {"id":"OP15:15","productId":685346,"cardId":"OP15-007","name":"Gin (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":3},
 {"id":"OP15:16","productId":685347,"cardId":"OP15-008","name":"Krieg (OP15-008)","rarity":"SR","alt":false,"target":4,"qty":4,"price":0.37},
 {"id":"OP15:17","productId":685348,"cardId":"OP15-008","name":"Krieg (OP15-008) (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":1,"price":5},
-{"id":"OP15:18","productId":685349,"cardId":"OP15-009","name":"Koby (OP15-009)","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"OP15:18","productId":685349,"cardId":"OP15-009","name":"Koby (OP15-009)","rarity":"UC","alt":false,"target":4,"qty":1,"price":0.01,"kept":3},
 {"id":"OP15:19","productId":685350,"cardId":"OP15-010","name":"Nezumi","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP15:20","productId":685351,"cardId":"OP15-011","name":"Pearl","rarity":"R","alt":false,"target":4,"qty":8,"price":0.01},
 {"id":"OP15:21","productId":685352,"cardId":"OP15-012","name":"Buggy","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},

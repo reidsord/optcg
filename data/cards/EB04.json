@@ -22,7 +22,7 @@
 {"id":"OP14:168","productId":666534,"cardId":"EB04-015","name":"Jinbe - EB04-015","rarity":"R","alt":false,"target":4,"qty":11,"price":0.01},
 {"id":"OP14:169","productId":671331,"cardId":"EB04-016","name":"Bird Neptunian","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP14:170","productId":671332,"cardId":"EB04-017","name":"Mystoms","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP14:171","productId":671333,"cardId":"EB04-018","name":"Megalo","rarity":"R","alt":false,"target":4,"qty":5,"price":4.2},
+{"id":"OP14:171","productId":671333,"cardId":"EB04-018","name":"Megalo","rarity":"R","alt":false,"target":4,"qty":2,"price":4.2,"kept":3},
 {"id":"OP14:172","productId":666532,"cardId":"EB04-018","name":"Megalo (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":2,"price":28.05},
 {"id":"OP14:173","productId":666535,"cardId":"EB04-019","name":"Eleclaw","rarity":"R","alt":false,"target":4,"qty":7,"price":0.01},
 {"id":"OP14:174","productId":671334,"cardId":"EB04-020","name":"Shark Brick Fist","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},

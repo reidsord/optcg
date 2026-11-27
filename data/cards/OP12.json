@@ -43,7 +43,7 @@
 {"id":"OP12:46","productId":643765,"cardId":"OP12-034","name":"Perona (Alternate Art)","rarity":"SR","alt":true,"target":1,"qty":0,"price":26.34},
 {"id":"OP12:47","productId":643766,"cardId":"OP12-035","name":"Morgan","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP12:48","productId":643767,"cardId":"OP12-036","name":"Roronoa Zoro (036)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP12:49","productId":643768,"cardId":"OP12-037","name":"Demon Aura Nine Sword Style Asura Blades Drawn Dead Man's Game","rarity":"R","alt":false,"target":4,"qty":4,"price":1},
+{"id":"OP12:49","productId":643768,"cardId":"OP12-037","name":"Demon Aura Nine Sword Style Asura Blades Drawn Dead Man's Game","rarity":"R","alt":false,"target":4,"qty":2,"price":1,"kept":2},
 {"id":"OP12:50","productId":643769,"cardId":"OP12-037","name":"Demon Aura Nine Sword Style Asura Blades Drawn Dead Man's Game (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":95.5},
 {"id":"OP12:51","productId":643770,"cardId":"OP12-038","name":"Two-Sword Style Rashomon","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP12:52","productId":643771,"cardId":"OP12-039","name":"Luffy Is the Man Who Will Become the King of Pirates!!!","rarity":"R","alt":false,"target":4,"qty":16,"price":0.08},
