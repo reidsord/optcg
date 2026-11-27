@@ -35,7 +35,7 @@
 {"id":"OP09:38","productId":596952,"cardId":"OP09-026","name":"Sakazuki","rarity":"R","alt":false,"target":4,"qty":9,"price":0.01},
 {"id":"OP09:39","productId":596953,"cardId":"OP09-027","name":"Sabo (027)","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP09:40","productId":596954,"cardId":"OP09-028","name":"Sanji (028)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
-{"id":"OP09:41","productId":596955,"cardId":"OP09-029","name":"Tony Tony.Chopper","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"OP09:41","productId":596955,"cardId":"OP09-029","name":"Tony Tony.Chopper","rarity":"C","alt":false,"target":4,"qty":0,"price":0.01,"kept":4},
 {"id":"OP09:42","productId":596956,"cardId":"OP09-030","name":"Trafalgar Law","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP09:43","productId":596957,"cardId":"OP09-031","name":"Donquixote Doflamingo","rarity":"R","alt":false,"target":4,"qty":10,"price":0.01},
 {"id":"OP09:44","productId":596958,"cardId":"OP09-032","name":"Donquixote Rosinante (032)","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},

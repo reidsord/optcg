@@ -35,7 +35,7 @@
 {"id":"OP17:38","productId":712606,"cardId":"OP17-026","name":"Fugar","rarity":"UC","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP17:39","productId":708210,"cardId":"OP17-027","name":"Benn.Beckman","rarity":"R","alt":false,"target":4,"qty":7,"price":0.01},
 {"id":"OP17:40","productId":712085,"cardId":"OP17-027","name":"Benn.Beckman (Alternate Art)","rarity":"R","alt":true,"target":1,"qty":0,"price":3},
-{"id":"OP17:41","productId":705920,"cardId":"OP17-028","name":"Bonk Punch & Monster","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
+{"id":"OP17:41","productId":705920,"cardId":"OP17-028","name":"Bonk Punch & Monster","rarity":"C","alt":false,"target":4,"qty":1,"price":0.01,"kept":3},
 {"id":"OP17:42","productId":708076,"cardId":"OP17-029","name":"Hongo","rarity":"R","alt":false,"target":4,"qty":14,"price":0.01},
 {"id":"OP17:43","productId":712607,"cardId":"OP17-030","name":"Monkey.D.Luffy (030)","rarity":"C","alt":false,"target":4,"qty":4,"price":0.01},
 {"id":"OP17:44","productId":711422,"cardId":"OP17-031","name":"Yasopp","rarity":"SR","alt":false,"target":4,"qty":5,"price":0.1},
